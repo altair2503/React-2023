@@ -1,0 +1,48 @@
+.background
+{
+    width: 100%;
+    height: 100vh;
+    background: #121212;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputs
+{
+    justify-content: center;
+    align-items: center;
+}
+
+button
+{   
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color: #25DC60;
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+
+button:hover
+{
+  background: #4dff85;
+}
+
+.text
+{
+    font-size: 13px;
+    color: white;
+}
+
+.text a
+{
+    color: #25DC60;
+    text-decoration: none;
+}
