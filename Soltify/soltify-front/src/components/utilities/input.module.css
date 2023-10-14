@@ -1,0 +1,63 @@
+.input_block
+{
+  position: relative;
+  margin-bottom: 30px;
+}
+.input_block:focus-within input
+{
+  border-color: #25DC60;
+}
+.input_block:focus-within label
+{
+  color: #25DC60;
+}
+.input_block.fill_all input
+{
+  border-color: #25DC60;
+}
+.input_block.fill_all label
+{
+  color: #25DC60;
+}
+input
+{
+  width: 340px;
+  height: 54px;
+
+  border-radius: 12px;
+  border: 2px solid #F1F2F3;
+  background: transparent;
+  box-sizing: border-box;
+
+  font-size: 13px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+
+  padding: 0 24px;
+  outline: none;
+
+  color: #FFF;
+}
+input.password_input
+{
+  padding-right: 54px;
+}
+input::placeholder
+{
+  color: rgba(241, 242, 243, 0.75);
+}
+.input_block label
+{
+  background: #121212;
+
+  position: absolute;
+  left: 15px;
+  top: -8px;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  color: rgba(241, 242, 243, 0.95);
+
+  padding: 0 10px;
+}
