@@ -50,11 +50,11 @@ header
 }
 .shape_f
 {
-    width: 545px;
-    height: 545px;
+    width: 580px;
+    height: 580px;
 
     background: linear-gradient(to right, #1B1E58, #5BA29B);
-    box-shadow: 0 0 250px #1c2750;
+    box-shadow: 0 0 200px #1c2750;
     border-radius: 50%;
 }
 .shape_s
@@ -67,7 +67,7 @@ header
     border-radius: 50%;
 
     margin-left: -135px;
-    margin-bottom: 2px;
+    margin-bottom: 10px;
 }
 
 .model img
@@ -77,6 +77,62 @@ header
     bottom: 0;
     transform: translateX(-50%);
 
-    width: 525px;
+    width: 580px;
     margin-bottom: 130px;
+}
+
+.shapes:nth-child(2)
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+.shapes:nth-child(2) .shape_f,
+.shapes:nth-child(2) .shape_s
+{
+    opacity: 0;
+}
+
+.sign_buttons
+{
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 50px;
+    gap: 20px;
+}
+.link_sign_in,
+.link_sign_up
+{
+    height: 58px;
+    width: 160px;
+
+    background: #25DC60;
+    box-sizing: border-box;
+    border-radius: 30px;
+
+    padding-bottom: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 25px;
+    font-weight: 500;
+
+    color: #fff;
+    text-decoration: none;
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+}
+.link_sign_up
+{
+    background: rgba(119, 119, 119, 0.2);
+    backdrop-filter: blur(5px);
 }

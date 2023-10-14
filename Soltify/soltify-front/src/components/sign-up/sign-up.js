@@ -1,6 +1,8 @@
 import Input from "../utilities/input";
 import styles from "./sign-up.module.css"
 
+import React from "react";
+
 const SignUp = ()=>{
     return (
         <div className={styles.container}>

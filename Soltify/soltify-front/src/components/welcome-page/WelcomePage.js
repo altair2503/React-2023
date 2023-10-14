@@ -13,7 +13,15 @@ const WelcomePage = () => {
                     <div className={styles.shape_f}></div>
                     <div className={styles.shape_s}></div>
                 </div>
+                {/*<div className={styles.shapes}>*/}
+                {/*    <div className={styles.shape_f}></div>*/}
+                {/*    <div className={styles.shape_s}></div>*/}
+                {/*</div>*/}
                 <img src={logo} alt="model" />
+            </div>
+            <div className={styles.sign_buttons}>
+                <a href="" className={styles.link_sign_in}>Log in</a>
+                <a href="" className={styles.link_sign_up}>Sign up</a>
             </div>
         </div>
     )
