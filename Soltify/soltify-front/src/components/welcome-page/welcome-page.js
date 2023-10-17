@@ -1,12 +1,19 @@
 import styles from './welcome-page.module.css';
 import React from "react";
 
-import logo from '../../assets/model.png';
+import model from '../../assets/model1.png';
+import logo from '../../assets/logo.png';
 
 const WelcomePage = () => {
     return (
         <div className={styles.background}>
-            <header></header>
+            <header>
+                <img src={logo} className={styles.logo} alt={logo} />
+                <ul>
+                    <li><a href="" className={styles.git_link}>Home</a></li>
+                    <li><a href="https://github.com/azikkw/React-2023/tree/main/Soltify" className={styles.git_link} target="_blank">GitHub/Soltify</a></li>
+                </ul>
+            </header>
             <span className={styles.title}>Soltify</span>
             <div className={styles.model}>
                 <div className={styles.shapes}>
@@ -17,9 +24,10 @@ const WelcomePage = () => {
                     <div className={styles.shape_f}></div>
                     <div className={styles.shape_s}></div>
                 </div>
-                <img src={logo} alt="model" />
+                <img src={model} alt="model" />
                 <div className={styles.adv_l}>
-                    Listen to songs <span style={{fontSize: "40px", fontWeight: "500"}}>anywhere</span> <br/> and <span style={{fontSize: "40px", fontWeight: "500"}}>anytime</span> you want
+                    {/*Listen to songs anywhere <br/> and <span style={{fontSize: "40px", fontWeight: "500"}}>anytime</span> you want*/}
+                    add <span style={{fontSize: "48px", fontWeight: "500"}}>your favorite</span> <br/> songs to Soltify lib
                 </div>
                 <p className={styles.adv_c}>Music for everyone</p>
                 <div className={styles.adv_r}>

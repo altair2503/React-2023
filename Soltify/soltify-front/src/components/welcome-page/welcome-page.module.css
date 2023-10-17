@@ -15,7 +15,17 @@
 header
 {
     width: 100%;
-    height: 200px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    padding: 30px 45px;
+}
+.logo
+{
+    width: 65px;
 }
 
 .title
@@ -32,7 +42,19 @@ header
     -moz-background-clip: text;
     -moz-text-fill-color: transparent;
 
-    margin-top: -150px;
+    margin-top: -115px;
+}
+header ul
+{
+    display: flex;
+    gap: 40px;
+}
+.git_link
+{
+    font-size: 25px;
+    color: #FFFFFF;
+
+    text-decoration: none;
 }
 
 .model
@@ -65,8 +87,8 @@ header
     width: 420px;
     height: 420px;
 
-    background: linear-gradient(to right, #e5275d, #ff6c0f);
-    box-shadow: 0 0 150px #d74c18;
+    background: linear-gradient(to right, #d72154, #ff7620);
+    box-shadow: 0 0 100px #d74c18;
     border-radius: 50%;
 
     margin-left: -135px;
@@ -78,22 +100,25 @@ header
     left: 0;
     top: 0;
     z-index: 3;
-    margin-top: 20px;
+    margin-top: 520px;
 }
 .shapes:nth-child(2) .shape_f,
 .shapes:nth-child(2) .shape_s
 {
     width: 580px;
     height: 580px;
-    opacity: 1;
+    opacity: .8;
 }
 .shapes:nth-child(2) .shape_f
 {
-    box-shadow: 0 -500px 1000px #052241;
+    box-shadow: 50px -450px 500px rgba(3, 20, 52, .5),
+                80px -500px 300px rgba(23, 159, 185, .25),
+                110px -350px 500px rgba(0, 0, 0, .1);
 }
 .shapes:nth-child(2) .shape_s
 {
-    box-shadow: 0 -500px 1000px rgba(147, 27, 68, 0.54);
+    box-shadow: 0 -400px 500px rgba(91, 0, 43, .5),
+                -100px -400px 500px rgba(213, 39, 32, .3);
 }
 
 .model img
@@ -147,7 +172,7 @@ header
 }
 .link_sign_up
 {
-    background: rgba(98, 98, 98, 0.2);
+    background: rgba(82, 82, 82, 0.3);
     backdrop-filter: blur(5px);
 }
 
@@ -158,16 +183,17 @@ header
     top: 0;
     z-index: 0;
 
-    margin-left: -325px;
-    margin-top: -15px;
+    margin-left: -205px;
+    margin-top: -38px;
 
     color: #A4A3A3;
 
     font-size: 32px;
+    line-height: 1.42;
 }
 .adv_l span
 {
-    background-image: linear-gradient(to right, #FE6603, #5A3941, #1f2e64);
+    background-image: linear-gradient(to right, #FE6603, #882139, #1f2e64);
     background-size: 100%;
     background-repeat: repeat;
 
@@ -187,10 +213,11 @@ header
 
     color: #fff;
 
-    font-size: 50px;
+    font-size: 48px;
+    letter-spacing: 1px;
     font-weight: 400;
 
-    margin-top: 221px;
+    margin-top: 225px;
 
     white-space: nowrap;
 }
@@ -201,7 +228,7 @@ header
     top: 0;
     z-index: 0;
 
-    margin-right: -110px;
+    margin-right: -140px;
     margin-top: 55px;
 
     color: #A4A3A3;
