@@ -1,5 +1,5 @@
 import Input from "../utilities/input/input";
-import styles from "./authorization.module.css";
+import styles from "./authorization.module.css"
 
 import React from "react";
 
@@ -21,7 +21,7 @@ const SignUp = ()=>{
                     <Input props={{name: 'Password', type: 'password'}}/>
                     <Input props={{name: 'Password verificaton', type: 'password'}}/>
                     <button>Sign up</button>
-                    <a href="" className={styles.sign_in_link}>Already have an account? <span>Sign in</span></a>
+                    <a href="/login" className={styles.sign_in_link}>Already have an account? <span>Sign in</span></a>
                 </div>
             </div>
         </div>
