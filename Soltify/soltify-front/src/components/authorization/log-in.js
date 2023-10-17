@@ -1,4 +1,4 @@
-import Input from "../utilities/input";
+import Input from "../utilities/input/input";
 import styles from "./authorization.module.css"
 
 const LogIn = ()=> { 

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import WelcomePage from './components/welcome-page/WelcomePage';
+import WelcomePage from './components/welcome-page/welcome-page';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import SignUp from './components/authorization/sign-up';
 import LogIn from './components/authorization/log-in';
