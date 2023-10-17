@@ -4,6 +4,9 @@ import React from "react";
 import logo from '../../assets/model.png';
 
 const WelcomePage = () => {
+    
+
+
     return (
         <div className={styles.background}>
             <header></header>
@@ -20,8 +23,8 @@ const WelcomePage = () => {
                 <img src={logo} alt="model" />
             </div>
             <div className={styles.sign_buttons}>
-                <a href="" className={styles.link_sign_in}>Log in</a>
-                <a href="" className={styles.link_sign_up}>Sign up</a>
+                <a href="/login" className={styles.link_sign_in}>Log in</a>
+                <a href="/sign-up" className={styles.link_sign_up}>Sign up</a>
             </div>
         </div>
     )
