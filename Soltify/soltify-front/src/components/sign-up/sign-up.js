@@ -1,4 +1,4 @@
-import Input from "../utilities/input";
+import Input from "../utilities/input/input";
 import styles from "./sign-up.module.css"
 
 import React from "react";
