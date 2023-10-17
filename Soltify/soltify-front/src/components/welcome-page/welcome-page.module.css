@@ -78,27 +78,18 @@ header
     left: 0;
     top: 0;
     z-index: 3;
-    margin-top: 520px;
+    margin-top: 20px;
 }
 .shapes:nth-child(2) .shape_f,
 .shapes:nth-child(2) .shape_s
 {
     width: 580px;
     height: 580px;
-    opacity: .5;
+    opacity: 1;
 }
 .shapes:nth-child(2) .shape_f
 {
-    /*box-shadow: 0 -500px 1000px #052241;*/
-
-    box-shadow: 0 0 0 #fff,
-    0 0 0 #fff,
-    0 0 0 #fff,
-    0 -100px 4200px #1c2750,
-    0 -200px 8200px #1c2750,
-    0 -300px 9200px #0e3b41,
-    0 -400px 102000px #0e3b41,
-    0 -500px 151000px #0e3b41;
+    box-shadow: 0 -500px 1000px #052241;
 }
 .shapes:nth-child(2) .shape_s
 {

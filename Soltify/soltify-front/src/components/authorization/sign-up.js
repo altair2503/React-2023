@@ -1,10 +1,5 @@
-<<<<<<< HEAD:Soltify/soltify-front/src/components/sign-up/sign-up.js
 import Input from "../utilities/input/input";
-import styles from "./sign-up.module.css"
-=======
-import Input from "../utilities/input";
-import styles from "./authorization.module.css"
->>>>>>> f067b35b01d3b066d009122f31867e2a718e1b93:Soltify/soltify-front/src/components/authorization/sign-up.js
+import styles from "./authorization.module.css";
 
 import React from "react";
 
