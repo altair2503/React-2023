@@ -21,8 +21,6 @@ const LogIn = ()=> {
             </div>
         </div>
         </div>
-
-
     )
 };
 
