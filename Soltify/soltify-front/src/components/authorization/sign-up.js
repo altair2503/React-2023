@@ -3,11 +3,11 @@ import styles from "./authorization.module.css"
 import React, {useState} from "react";
 
 const SignUp = ()=>{
-    const [firstname, setFirstName] = useState();
-    const [lastname, setLastName] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [password1, setPassword1] = useState();
+    // const [firstname, setFirstName] = useState();
+    // const [lastname, setLastName] = useState();
+    // const [email, setEmail] = useState();
+    // const [password, setPassword] = useState();
+    // const [password1, setPassword1] = useState();
 
     return (
         <div className={styles.container}>
