@@ -1,9 +1,14 @@
 import Input from "../utilities/input/input";
 import styles from "./authorization.module.css"
-
-import React from "react";
+import React, {useState} from "react";
 
 const SignUp = ()=>{
+    const [firstname, setFirstName] = useState();
+    const [lastname, setLastName] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [password1, setPassword1] = useState();
+
     return (
         <div className={styles.container}>
             <div className={styles.background}>
@@ -17,7 +22,7 @@ const SignUp = ()=>{
                 <div className={styles.inputs}>
                     <Input props={{name: 'First name'}}/>
                     <Input props={{name: 'Last name'}}/>
-                    <Input props={{name: 'Username'}}/>
+                    <Input props={{name: 'Email'}}/>
                     <Input props={{name: 'Password', type: 'password'}}/>
                     <Input props={{name: 'Password verificaton', type: 'password'}}/>
                     <button>Sign up</button>

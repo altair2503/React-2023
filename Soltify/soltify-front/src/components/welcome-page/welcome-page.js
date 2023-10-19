@@ -37,6 +37,7 @@ const WelcomePage = () => {
             <div className={styles.sign_buttons}>
                 <a href="login" className={styles.link_sign_in}>Log in</a>
                 <a href="sign-up" className={styles.link_sign_up}>Sign up</a>
+
             </div>
         </div>
     )
