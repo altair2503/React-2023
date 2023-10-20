@@ -22,6 +22,8 @@ import welcomePage from "./components/welcome-page/welcome-page";
 //   }
 // ]
 
+import HomePage from "./components/home-page/home-page";
+
 
 const router = createBrowserRouter([
   {
@@ -35,13 +37,13 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: "/login",
+    path: "/log-in",
     element: <LogIn />,
     errorElement: <ErrorPage />
   },
   {
-    path: "/player",
-    element: <Player />,
+    path: "/home",
+    element: <HomePage />,
     errorElement: <ErrorPage />
   }
 ])
