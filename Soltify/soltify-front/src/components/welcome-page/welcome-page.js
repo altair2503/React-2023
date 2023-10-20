@@ -1,6 +1,6 @@
-import styles from './welcome-page.module.css';
 import React from "react";
 
+import styles from './welcome-page.module.css';
 import model from '../../assets/model1.png';
 import logo from '../../assets/logo.png';
 
@@ -26,7 +26,6 @@ const WelcomePage = () => {
                 </div>
                 <img src={model} alt="model" />
                 <div className={styles.adv_l}>
-                    {/*Listen to songs anywhere <br/> and <span style={{fontSize: "40px", fontWeight: "500"}}>anytime</span> you want*/}
                     add <span style={{fontSize: "43px", fontWeight: "500"}}>your favorite</span> <br/> songs to Soltify lib
                 </div>
                 <p className={styles.adv_c}>Music for everyone</p>
@@ -35,8 +34,8 @@ const WelcomePage = () => {
                 </div>
             </div>
             <div className={styles.sign_buttons}>
-                <a href="login" className={styles.link_sign_in}>Log in</a>
-                <a href="sign-up" className={styles.link_sign_up}>Sign up</a>
+                <a href="/log-in" className={styles.link_sign_in}>Log in</a>
+                <a href="/sign-up" className={styles.link_sign_up}>Sign up</a>
 
             </div>
         </div>

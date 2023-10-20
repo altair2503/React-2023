@@ -8,6 +8,7 @@ import SignUp from './components/authorization/sign-up';
 import LogIn from './components/authorization/log-in';
 import ErrorPage from './components/error-page/error-page';
 import Player from "./components/player/player";
+import HomePage from "./components/home-page/home-page";
 
 const router = createBrowserRouter([
   {
@@ -21,13 +22,13 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: "/login",
+    path: "/log-in",
     element: <LogIn />,
     errorElement: <ErrorPage />
   },
   {
-    path: "/player",
-    element: <Player />,
+    path: "/home",
+    element: <HomePage />,
     errorElement: <ErrorPage />
   }
 ])
