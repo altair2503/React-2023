@@ -9,10 +9,24 @@ import Player from "./components/player/player";
 
 function App() {
   return (
-    // <WelcomePage />
-    // <SignUp/>
-    // <LogIn />
-      <Player />
+      <div className={"background"}>
+        <div className={"background_layer"}>
+          <div className={"home_top"}>
+            <div className={"menu"}>
+
+            </div>
+            <div className={"home_container"}>
+              <div className={"top_bar"}>
+
+              </div>
+              <div className={"content"}>
+
+              </div>
+            </div>
+          </div>
+          <Player />
+        </div>
+      </div>
   );
 }
 

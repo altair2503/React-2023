@@ -1,12 +1,16 @@
-.background
+.player_background
 {
     width: 100%;
-    height: 100vh;
+    height: 100%;
 
     background: url("../../assets/music.jpg") center no-repeat;
     background-size: cover;
+
+    position: absolute;
+    left: 0;
+    top: 0;
 }
-.background_layer
+.player_background_layer
 {
     width: 100%;
     height: 100%;
@@ -225,21 +229,23 @@ ion-icon
 }
 
 
-.background.mini
+.player_background.mini
 {
     width: 100%;
     height: fit-content;
+
     background: transparent;
+    position: relative;
 }
-.background.mini .background_layer
+.player_background.mini .player_background_layer
 {
     position: relative;
     justify-content: start;
     height: fit-content;
 
-    background: rgba(255, 255, 255, .2);
-    -webkit-backdrop-filter: blur(0px);
-    backdrop-filter: blur(0px);
+    background: rgba(200, 200, 200, .2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
 
     border: 1px solid rgba(255, 255, 255, .5);
     border-radius: 15px;
@@ -250,7 +256,7 @@ ion-icon
     gap: 0;
 }
 
-.background.mini .close
+.player_background.mini .close
 {
     display: none;
 }
@@ -262,7 +268,7 @@ ion-icon
 
 .song_img
 {}
-.background.mini .song_img img
+.player_background.mini .song_img img
 {
     width: 75px;
     height: 75px;
@@ -270,7 +276,7 @@ ion-icon
     border-radius: 3px;
 }
 
-.background.mini .player_controllers
+.player_background.mini .player_controllers
 {
     width: 100%;
 
@@ -279,7 +285,7 @@ ion-icon
     flex-direction: row;
 }
 
-.background.mini .song_details
+.player_background.mini .song_details
 {
     color: #FFFFFF;
 
@@ -289,20 +295,20 @@ ion-icon
 
     margin-left: 25px;
 }
-.background.mini .name
+.player_background.mini .name
 {
     font-size: 20px;
 
     margin-bottom: 0;
     order: 2;
 }
-.background.mini .artist
+.player_background.mini .artist
 {
     font-size: 14px;
     order: 1;
 }
 
-.background.mini .song_center
+.player_background.mini .song_center
 {
     margin-bottom: 7px;
 
@@ -311,7 +317,7 @@ ion-icon
     transform: translateX(-50%);
 }
 
-.background.mini .song_progress
+.player_background.mini .song_progress
 {
     width: 100%;
     height: 3px;
@@ -319,27 +325,27 @@ ion-icon
     margin-top: 0;
     order: 2;
 }
-.background.mini .progress_bar::before
+.player_background.mini .progress_bar::before
 {
     height: 10px;
     width: 10px;
 }
-.background.mini .timer
+.player_background.mini .timer
 {
     margin-top: -23px;
     font-size: 12px;
 }
 
-.background.mini .player_navigation
+.player_background.mini .player_navigation
 {
     margin: 0 0 20px 0;
     order: 1;
 }
-.background.mini .center ion-icon
+.player_background.mini .center ion-icon
 {
     font-size: 27px;
 }
-.background.mini .play_pause
+.player_background.mini .play_pause
 {
     padding: 8px;
 }
@@ -348,7 +354,7 @@ ion-icon
 {
     display: none;
 }
-.background.mini .player_options
+.player_background.mini .player_options
 {
     display: block;
 
@@ -359,23 +365,23 @@ ion-icon
 
     margin-top: 2px;
 }
-.background.mini .player_options ion-icon
+.player_background.mini .player_options ion-icon
 {
     cursor: pointer;
     font-size: 25px;
     color: #FFFFFF;
 }
-.background.mini .player_options ion-icon:first-child
+.player_background.mini .player_options ion-icon:first-child
 {
     margin-right: 15px;
 }
 
-.background.mini .song_volume
+.player_background.mini .song_volume
 {
     margin-bottom: 8px;
     width: 140px;
 }
-.background.mini .volume_progress
+.player_background.mini .volume_progress
 {
     width: 100%;
     height: 3px;
@@ -383,20 +389,20 @@ ion-icon
     margin: 0 0 0 10px;
     order: 2;
 }
-.background.mini .volume_progress_bar::before
+.player_background.mini .volume_progress_bar::before
 {
     height: 10px;
     width: 10px;
 }
-.background.mini .song_volume ion-icon
+.player_background.mini .song_volume ion-icon
 {
     font-size: 24px;
 }
-.background.mini .song_volume ion-icon:first-child
+.player_background.mini .song_volume ion-icon:first-child
 {
     display: none;
 }
-.background.mini .song_volume ion-icon:last-child
+.player_background.mini .song_volume ion-icon:last-child
 {
     order: 1;
 

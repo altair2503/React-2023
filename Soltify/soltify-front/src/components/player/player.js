@@ -29,8 +29,8 @@ const Player = () => {
     }
 
     return (
-        <div className={!playerActive ? "background mini" : "background"}>
-            <div className="background_layer">
+        <div className={!playerActive ? "player_background mini" : "player_background"}>
+            <div className="player_background_layer">
                 <div className="close" onClick={() => playerActiveCondition(false)}>
                     <ion-icon name="close-outline"></ion-icon>
                 </div>
