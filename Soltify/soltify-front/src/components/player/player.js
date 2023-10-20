@@ -150,7 +150,7 @@ const Player = () => {
             setIndex(prev => prev - 1);
             audioPlayer.current.src = playlist[index - 1].url;
             audioPlayer.current.play();
-        } else{
+        } else {
             audioPlayer.current.src = playlist[0].url;
             audioPlayer.current.play();
         }
