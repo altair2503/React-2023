@@ -8,7 +8,22 @@ import SignUp from './components/authorization/sign-up';
 import LogIn from './components/authorization/log-in';
 import ErrorPage from './components/error-page/error-page';
 import Player from "./components/player/player";
+import welcomePage from "./components/welcome-page/welcome-page";
+
+// export const publicRoutes = [
+//   {
+//     path: "/welcome",
+//     Component: welcomePage
+//   }
+// ]
+// export const privateRoutes = [
+//   {
+//     path: "player"
+//   }
+// ]
+
 import HomePage from "./components/home-page/home-page";
+
 
 const router = createBrowserRouter([
   {
