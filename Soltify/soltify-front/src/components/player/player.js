@@ -1,114 +1,84 @@
-import { useEffect, useState } from "react";
-import useSound from "use-sound";
-import music from "../../assets/music/2.mp3"
+import React, {useEffect, useState} from "react";
+import './player.css';
 
+import songImg from '../../assets/music.jpg'
 
+const Player = () => {
 
-const  Player = ()=> {
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [time, setTime] = useState({
-        min: "",
-        sec: ""
-    });
-    const [currTime, setCurrTime] = useState({
-        min: "",
-        sec: ""
-    });
-    const [seconds, setSeconds] = useState()
+    const [playerActive, setPlayerActive] = useState(false);
 
-    const [play, { pause, duration, sound}] = useSound(music)
-
-    
     useEffect(() => {
-        const sec = duration / 100;
-        const min = Math.floor(sec / 600);
-        const secRemain = Math.floor(sec % 60);
-        setTime({
-            min: min,
-            sec: secRemain
-        });
-    }, [isPlaying])
-    
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if(sound) {
-                setSeconds(sound.seek([]));
-                const min = Math.floor(sound.seek([]) / 60);
-                const sec = Math.floor(sound.seek([]) % 60);
-                setCurrTime({
-                    min, 
-                    sec,
-                });
-            }
-        }, 1)
-        return ()=> clearInterval(interval)
-    }, [sound]);
-    
-    const playingButton = ()=> {
-    if(isPlaying){
-        pause();
-        setIsPlaying(false);
-        } else{
-            play();
-            setIsPlaying(true);
+        if(localStorage.getItem("playerCondition") === "true") {
+            setPlayerActive(true)
+        } else setPlayerActive(false)
+    }, []);
+
+    function changeImageCursor(event) {
+        event.target.offsetWidth < 400 ? event.target.style.cursor = 'pointer' : event.target.style.cursor = 'default'
+    }
+
+    function playerActiveCondition(condition) {
+        if(condition) {
+            setPlayerActive(true)
+            localStorage.setItem("playerCondition", "true")
+        }
+        else {
+            setPlayerActive(false)
+            localStorage.setItem("playerCondition", "false")
         }
     }
-    
+
     return (
-    <div className="component">
-      <div>
-        <div className="time">
-          <p>
-            {currTime.min}:{currTime.sec}
-          </p>
-          <p>
-            {time.min}:{time.sec}
-          </p>
+        <div className={!playerActive ? "player_background mini" : "player_background"}>
+            <div className="player_background_layer">
+                <div className="close" onClick={() => playerActiveCondition(false)}>
+                    <ion-icon name="close-outline"></ion-icon>
+                </div>
+                <div className="song_img" onClick={() => playerActiveCondition(true)} onMouseMove={(event) => changeImageCursor(event)}>
+                    <img src={songImg} alt={songImg} />
+                </div>
+                <div className="player_controllers">
+                    <div className="song_details">
+                        <div className="name">She's On My Mind (Acoustic)</div>
+                        <div className="artist">JP Cooper — She's On My Mind</div>
+                    </div>
+                    <div className="song_center">
+                        <div className="song_progress">
+                            <div className="progress_bar"></div>
+                            <div className="timer">
+                                <span className="current">1:24</span>
+                                <span className="duration">2:32</span>
+                            </div>
+                            <audio className="main_audio"></audio>
+                        </div>
+                        <div className="player_navigation">
+                            <ion-icon name="shuffle-outline" id="random"></ion-icon>
+                            <div className="center">
+                                <ion-icon name="play-skip-back-outline"></ion-icon>
+                                <div className="play_pause">
+                                    <ion-icon name="play" id="play"></ion-icon>
+                                    <ion-icon name="pause-outline" id="pause"></ion-icon>
+                                </div>
+                                <ion-icon name="play-skip-forward-outline"></ion-icon>
+                            </div>
+                            <ion-icon name="repeat-outline" id="repeat"></ion-icon>
+                        </div>
+                    </div>
+                    <div className="player_options">
+                        <ion-icon name="ellipsis-horizontal"></ion-icon>
+                        <ion-icon name="scan-outline" onClick={() => playerActiveCondition(true)}></ion-icon>
+                    </div>
+                    <div className="song_volume">
+                        <ion-icon name="volume-off-outline"></ion-icon>
+                        <div className="volume_progress">
+                            <div className="volume_progress_bar"></div>
+                        </div>
+                        <ion-icon name="volume-high-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>
         </div>
-        <input
-          type="range"
-          min="0"
-          max={duration / 1000}
-          default="0"
-          value={seconds}
-          className="timeline"
-          onChange={(e) => {
-            sound.seek([e.target.value]);
-          }}
-        />
-      </div>
-      <div>
-        <button className="playButton">
-        </button>
-        {!isPlaying ? (
-          <button className="playButton" onClick={playingButton}>
-            play
-          </button>
-        ) : (
-          <button className="playButton" onClick={playingButton}>
-            pause
-          </button>
-        )}
-        <button className="playButton">
-        </button>
-      </div>
-    </div>
-  );
+    )
 }
 
 export default Player;
-
-// import React from "react";
-// import styles from './player.module.css'
-
-// const Player = () => {
-//   return (
-//       <div className={styles.background}>
-//           <div className={styles.background_layer}>
-
-//           </div>
-//       </div>
-//   )
-// }
-
-// export default Player;

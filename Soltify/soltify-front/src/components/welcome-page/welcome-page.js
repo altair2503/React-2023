@@ -27,11 +27,11 @@ const WelcomePage = () => {
                 <img src={model} alt="model" />
                 <div className={styles.adv_l}>
                     {/*Listen to songs anywhere <br/> and <span style={{fontSize: "40px", fontWeight: "500"}}>anytime</span> you want*/}
-                    add <span style={{fontSize: "48px", fontWeight: "500"}}>your favorite</span> <br/> songs to Soltify lib
+                    add <span style={{fontSize: "43px", fontWeight: "500"}}>your favorite</span> <br/> songs to Soltify lib
                 </div>
                 <p className={styles.adv_c}>Music for everyone</p>
                 <div className={styles.adv_r}>
-                    <span style={{fontSize: "50px", fontWeight: "500"}}>0₸</span> for <strong style={{fontFamily: "Noto Sans JP"}}>∞</strong> month <br/> of Premium
+                    <span style={{fontSize: "43px", fontWeight: "500"}}>0₸</span> for <strong style={{fontFamily: "Noto Sans JP"}}>∞</strong> month <br/> of Premium
                 </div>
             </div>
             <div className={styles.sign_buttons}>

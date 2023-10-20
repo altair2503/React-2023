@@ -25,12 +25,12 @@ header
 }
 .logo
 {
-    width: 65px;
+    width: 55px;
 }
 
 .title
 {
-    font-size: 140px;
+    font-size: 115px;
     font-weight: 600;
 
     background-image: linear-gradient(to right, #1DDB62, #EFFE06);
@@ -42,16 +42,17 @@ header
     -moz-background-clip: text;
     -moz-text-fill-color: transparent;
 
-    margin-top: -115px;
+    margin-top: -90px;
 }
 header ul
 {
     display: flex;
     gap: 40px;
+    list-style: none;
 }
 .git_link
 {
-    font-size: 25px;
+    font-size: 23px;
     color: #FFFFFF;
 
     text-decoration: none;
@@ -62,7 +63,7 @@ header ul
     width: fit-content;
     position: relative;
 
-    margin-bottom: -130px;
+    margin-bottom: -155px;
 }
 
 .shapes
@@ -75,8 +76,8 @@ header ul
 }
 .shape_f
 {
-    width: 580px;
-    height: 580px;
+    width: 530px;
+    height: 530px;
 
     background: linear-gradient(to right, #1B1E58, #5BA29B);
     box-shadow: 0 0 200px #1c2750;
@@ -84,8 +85,8 @@ header ul
 }
 .shape_s
 {
-    width: 420px;
-    height: 420px;
+    width: 390px;
+    height: 390px;
 
     background: linear-gradient(to right, #d72154, #ff7620);
     box-shadow: 0 0 100px #d74c18;
@@ -105,8 +106,8 @@ header ul
 .shapes:nth-child(2) .shape_f,
 .shapes:nth-child(2) .shape_s
 {
-    width: 580px;
-    height: 580px;
+    width: 530px;
+    height: 530px;
     opacity: .8;
 }
 .shapes:nth-child(2) .shape_f
@@ -130,50 +131,8 @@ header ul
 
     z-index: 2;
 
-    width: 580px;
+    width: 515px;
     margin-bottom: 130px;
-}
-
-.sign_buttons
-{
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-
-    z-index: 4;
-
-    display: flex;
-    align-items: center;
-
-    margin-bottom: 50px;
-    gap: 20px;
-}
-.link_sign_in,
-.link_sign_up
-{
-    height: 58px;
-    width: 160px;
-
-    background: #25DC60;
-    border-radius: 30px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-size: 25px;
-    font-weight: 500;
-
-    color: #fff;
-    text-decoration: none;
-
-    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
-}
-.link_sign_up
-{
-    background: rgba(82, 82, 82, 0.3);
-    backdrop-filter: blur(5px);
 }
 
 .adv_l
@@ -183,13 +142,13 @@ header ul
     top: 0;
     z-index: 0;
 
-    margin-left: -205px;
-    margin-top: -38px;
+    margin-left: -182px;
+    margin-top: -35px;
 
     color: #A4A3A3;
 
-    font-size: 32px;
-    line-height: 1.42;
+    font-size: 28px;
+    line-height: 1.4;
 }
 .adv_l span
 {
@@ -213,11 +172,11 @@ header ul
 
     color: #fff;
 
-    font-size: 48px;
+    font-size: 42px;
     letter-spacing: 1px;
     font-weight: 400;
 
-    margin-top: 225px;
+    margin-top: 200px;
 
     white-space: nowrap;
 }
@@ -228,13 +187,13 @@ header ul
     top: 0;
     z-index: 0;
 
-    margin-right: -140px;
-    margin-top: 55px;
+    margin-right: -135px;
+    margin-top: 58px;
 
     color: #A4A3A3;
 
-    font-size: 32px;
-    line-height: 1.23;
+    font-size: 28px;
+    line-height: 1.2;
 }
 .adv_r span
 {
@@ -246,4 +205,46 @@ header ul
     -webkit-text-fill-color: transparent;
     -moz-background-clip: text;
     -moz-text-fill-color: transparent;
+}
+
+.sign_buttons
+{
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+
+    z-index: 4;
+
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 32px;
+    gap: 20px;
+}
+.link_sign_in,
+.link_sign_up
+{
+    height: 50px;
+    width: 145px;
+
+    background: #25DC60;
+    border-radius: 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 23px;
+    font-weight: 500;
+
+    color: #fff;
+    text-decoration: none;
+
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+}
+.link_sign_up
+{
+    background: rgba(82, 82, 82, 0.3);
+    backdrop-filter: blur(5px);
 }
