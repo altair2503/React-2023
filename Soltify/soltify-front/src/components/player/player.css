@@ -61,15 +61,21 @@
 }
 .name
 {
-    font-size: 29px;
+    font-size: 27px;
     margin-bottom: 3px;
 }
 .artist
 {
-    font-size: 20px;
+    font-size: 19px;
     opacity: .7;
 }
 
+.song_center
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .song_progress
 {
     width: 470px;
@@ -116,14 +122,6 @@
     margin-top: 4px;
 
     font-size: 14px;
-}
-.current
-{
-
-}
-.duration
-{
-
 }
 
 .player_navigation,
@@ -224,4 +222,186 @@ ion-icon
 {
     font-size: 24px;
     color: rgba(255, 255, 255, .8);
+}
+
+
+.background.mini
+{
+    width: 100%;
+    height: fit-content;
+    background: transparent;
+}
+.background.mini .background_layer
+{
+    position: relative;
+    justify-content: start;
+    height: fit-content;
+
+    background: rgba(255, 255, 255, .2);
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
+
+    border: 1px solid rgba(255, 255, 255, .5);
+    border-radius: 15px;
+
+    box-sizing: border-box;
+
+    padding: 17px 25px 10px;
+    gap: 0;
+}
+
+.background.mini .close
+{
+    display: none;
+}
+.close ion-icon
+{
+    font-size: 35px;
+    color: rgba(255, 255, 255, .55);
+}
+
+.song_img
+{}
+.background.mini .song_img img
+{
+    width: 75px;
+    height: 75px;
+
+    border-radius: 3px;
+}
+
+.background.mini .player_controllers
+{
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.background.mini .song_details
+{
+    color: #FFFFFF;
+
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+
+    margin-left: 25px;
+}
+.background.mini .name
+{
+    font-size: 20px;
+
+    margin-bottom: 0;
+    order: 2;
+}
+.background.mini .artist
+{
+    font-size: 14px;
+    order: 1;
+}
+
+.background.mini .song_center
+{
+    margin-bottom: 7px;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.background.mini .song_progress
+{
+    width: 100%;
+    height: 3px;
+
+    margin-top: 0;
+    order: 2;
+}
+.background.mini .progress_bar::before
+{
+    height: 10px;
+    width: 10px;
+}
+.background.mini .timer
+{
+    margin-top: -23px;
+    font-size: 12px;
+}
+
+.background.mini .player_navigation
+{
+    margin: 0 0 20px 0;
+    order: 1;
+}
+.background.mini .center ion-icon
+{
+    font-size: 27px;
+}
+.background.mini .play_pause
+{
+    padding: 8px;
+}
+
+.player_options
+{
+    display: none;
+}
+.background.mini .player_options
+{
+    display: block;
+
+    position: absolute;
+    right: 180px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    margin-top: 2px;
+}
+.background.mini .player_options ion-icon
+{
+    cursor: pointer;
+    font-size: 25px;
+    color: #FFFFFF;
+}
+.background.mini .player_options ion-icon:first-child
+{
+    margin-right: 15px;
+}
+
+.background.mini .song_volume
+{
+    margin-bottom: 8px;
+    width: 140px;
+}
+.background.mini .volume_progress
+{
+    width: 100%;
+    height: 3px;
+
+    margin: 0 0 0 10px;
+    order: 2;
+}
+.background.mini .volume_progress_bar::before
+{
+    height: 10px;
+    width: 10px;
+}
+.background.mini .song_volume ion-icon
+{
+    font-size: 24px;
+}
+.background.mini .song_volume ion-icon:first-child
+{
+    display: none;
+}
+.background.mini .song_volume ion-icon:last-child
+{
+    order: 1;
+
+    font-size: 38px;
+    --ionicon-stroke-width: 25px;
+
+    color: #FFFFFF;
 }
