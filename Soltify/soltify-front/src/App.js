@@ -4,14 +4,15 @@ import LogIn from './components/authorization/log-in';
 import SignUp from './components/authorization/sign-up';
 import React from "react";
 import Player from "./components/player/player";
+import {BrowserRouter} from "react-router-dom";
 
 
 
 function App() {
   return (
-    // <WelcomePage />
-    // <SignUp/>
-    // <LogIn />
+      // <WelcomePage />
+      // <SignUp/>
+      // <LogIn />
       <Player />
   );
 }
