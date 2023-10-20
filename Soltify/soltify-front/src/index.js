@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom';
+import App from "./App";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import WelcomePage from './components/welcome-page/welcome-page';
@@ -9,20 +10,9 @@ import LogIn from './components/authorization/log-in';
 import ErrorPage from './components/error-page/error-page';
 import Player from "./components/player/player";
 import welcomePage from "./components/welcome-page/welcome-page";
-
-// export const publicRoutes = [
-//   {
-//     path: "/welcome",
-//     Component: welcomePage
-//   }
-// ]
-// export const privateRoutes = [
-//   {
-//     path: "player"
-//   }
-// ]
-
 import HomePage from "./components/home-page/home-page";
+import PersonalAcc from "./components/PersonalAcc";
+import Protected from "./components/Protected";
 
 
 const router = createBrowserRouter([
@@ -45,7 +35,18 @@ const router = createBrowserRouter([
     path: "/home",
     element: <HomePage />,
     errorElement: <ErrorPage />
-  }
+  },
+  // {
+  //   path: "/personal",
+  //   element: <PersonalAcc/>,
+  //   errorElement: <ErrorPage/>
+  // },
+  {
+    path: "/personal",
+    element: <Protected/>,
+    errorElement: <ErrorPage/>,
+  },
+
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -55,7 +56,13 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// // If you want to start measuring performance in your app, pass a function
+// // to log results (for example: reportWebVitals(console.log))
+// // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+//
+// ReactDOM.render (
+//     <App />,
+//     document.getElementById('root')
+// );

@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 
 import React, {useState} from "react";
-import { useNavigate } from 'react-router-dom';
+import {Navigate, Route, useNavigate} from 'react-router-dom';
 
 
 const SignUp = ()=>{
@@ -18,16 +18,36 @@ const SignUp = ()=>{
 
     const navigate = useNavigate();
 
-    const signUp = (e) => {
-        e.preventDefault();
-
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            console.log(userCredential)
-        })
-        .catch((error) => {
+    const signUp = async (e) => {
+        e.preventDefault()
+        if (password !== password1) {
+            console.log("Passwords do not match");
+            return
+        }
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            console.log(userCredential);
+            const user =  userCredential.user;
+            localStorage.setItem('token', user.accessToken);
+            localStorage.setItem('user', JSON.stringify(user));
+            navigate("/personal");
+        } catch (error) {
             console.log(error)
-        });
+        }
+
+
+
+        // createUserWithEmailAndPassword(auth, email, password)
+        // .then((userCredential) => {
+        //     console.log(userCredential)
+        //     const user = userCredential.user;
+        //     localStorage.setItem('token', user.accessToken);
+        //     navigate("/home")
+        //
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        // });
     };
 
     return (
