@@ -1,16 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-
+import ReactDOM from 'react-dom';
+import App from "./App";
+import './index.css';
+import WelcomePage from './components/welcome-page/welcome-page';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-
 import './index.css';
-
 import ErrorPage from './components/error-page/error-page';
-import WelcomePage from './components/welcome-page/welcome-page';
 import SignUp from './components/authorization/sign-up';
 import LogIn from './components/authorization/log-in';
+import Player from "./components/player/player";
+import welcomePage from "./components/welcome-page/welcome-page";
 import HomePage from "./components/home-page/home-page";
+import PersonalAcc from "./components/PersonalAcc";
+import Protected from "./components/Protected";
 
 
 const router = createBrowserRouter([
@@ -33,7 +36,18 @@ const router = createBrowserRouter([
     path: "",
     element: <HomePage />,
     errorElement: <ErrorPage />
-  }
+  },
+  // {
+  //   path: "/personal",
+  //   element: <PersonalAcc/>,
+  //   errorElement: <ErrorPage/>
+  // },
+  {
+    path: "/personal",
+    element: <Protected/>,
+    errorElement: <ErrorPage/>,
+  },
+
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -43,7 +57,13 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// // If you want to start measuring performance in your app, pass a function
+// // to log results (for example: reportWebVitals(console.log))
+// // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+//
+// ReactDOM.render (
+//     <App />,
+//     document.getElementById('root')
+// );

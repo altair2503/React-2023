@@ -4,13 +4,20 @@ import LogIn from './components/authorization/log-in';
 import SignUp from './components/authorization/sign-up';
 import React from "react";
 import Player from "./components/player/player";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, Outlet} from "react-router-dom";
+import Navbar from "./oldmethod/Navbar";
 
 
 
 function App() {
   return (
-      <div></div>
+      // <WelcomePage />
+      // <SignUp/>
+      // <LogIn />
+      <Outlet/>
+      // <BrowserRouter>
+      //   <Navbar/>
+      // </BrowserRouter>
   );
 }
 

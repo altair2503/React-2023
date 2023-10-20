@@ -1,30 +1,46 @@
 import Input from "../utilities/input/input";
 import styles from "./authorization.module.css";
 
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
 import { auth } from "../../firebase";
 
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-const LogIn = ()=> {
+const LogIn = key=> {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
 
-    const signIn = (e) => {
+    const signIn = async (e) => {
         e.preventDefault();
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            console.log(user)
+            localStorage.setItem('token', user.accessToken);
+            localStorage.setItem('user', JSON.stringify(user));
+            navigate("/personal");
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            console.log(userCredential)
-        })
-        .catch((error) => {
-            console.log(error)
-        });
-    };
+
+
+        // const signIn = (e) => {
+        // e.preventDefault();
+        //
+        // signInWithEmailAndPassword(auth, email, password)
+        // .then((userCredential) => {
+        //     console.log(userCredential)
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        // });
+        // };
 
     return (
         <div className={styles.container}>
