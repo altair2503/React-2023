@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from "./App";
 import './index.css';
-import reportWebVitals from './reportWebVitals';
 import WelcomePage from './components/welcome-page/welcome-page';
+import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import reportWebVitals from './reportWebVitals';
+import './index.css';
+import ErrorPage from './components/error-page/error-page';
 import SignUp from './components/authorization/sign-up';
 import LogIn from './components/authorization/log-in';
-import ErrorPage from './components/error-page/error-page';
 import Player from "./components/player/player";
 import welcomePage from "./components/welcome-page/welcome-page";
 import HomePage from "./components/home-page/home-page";
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: "/home",
+    path: "",
     element: <HomePage />,
     errorElement: <ErrorPage />
   },
