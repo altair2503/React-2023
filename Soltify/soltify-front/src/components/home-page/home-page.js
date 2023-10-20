@@ -1,6 +1,8 @@
 import React from "react";
 import './home-page.css';
 
+import user from '../../assets/music.jpg';
+
 import Player from "../player/player";
 
 const HomePage = () => {
@@ -13,7 +15,15 @@ const HomePage = () => {
                     </div>
                     <div className={"home_container"}>
                         <div className={"top_bar"}>
-
+                            <div className={"search"}>
+                                <input type="text" placeholder="Search..."/>
+                                <button className={"search_btn"}>
+                                    <ion-icon name="search-outline"></ion-icon>
+                                </button>
+                            </div>
+                            <a href="" className={"user_link"}>
+                                <img src={user} alt={user} />
+                            </a>
                         </div>
                         <div className={"content"}>
 
