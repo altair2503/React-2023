@@ -1,0 +1,413 @@
+.player_background
+{
+    width: 100%;
+    height: 100%;
+
+    background: url("../../assets/music.jpg") center no-repeat;
+    background-size: cover;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.player_background_layer
+{
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+
+    background:  rgba(0, 0, 0, .6);
+    -webkit-backdrop-filter: blur(60px);
+    backdrop-filter: blur(60px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 150px;
+}
+
+.close
+{
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 20px;
+}
+.close ion-icon
+{
+    font-size: 35px;
+    color: rgba(255, 255, 255, .55);
+}
+
+.song_img
+{}
+.song_img img
+{
+    width: 440px;
+    height: 440px;
+
+    border-radius: 5px;
+}
+
+.player_controllers
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.song_details
+{
+    text-align: center;
+    color: #FFFFFF;
+}
+.name
+{
+    font-size: 27px;
+    margin-bottom: 3px;
+}
+.artist
+{
+    font-size: 19px;
+    opacity: .7;
+}
+
+.song_center
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.song_progress
+{
+    width: 470px;
+    height: 4px;
+
+    background: rgba(255, 255, 255, .65);
+    border-radius: 5px;
+
+    margin-top: 45px;
+
+    cursor: pointer;
+}
+.song_progress .progress_bar
+{
+    height: inherit;
+    width: 55%;
+
+    position: relative;
+
+    background: #fff;
+    border-radius: inherit;
+}
+.progress_bar::before
+{
+    content: "";
+
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    height: 13px;
+    width: 13px;
+
+    background: inherit;
+    border-radius: 50%;
+}
+.timer
+{
+    display: flex;
+    justify-content: space-between;
+
+    color: rgba(255, 255, 255, .65);
+    margin-top: 4px;
+
+    font-size: 14px;
+}
+
+.player_navigation,
+.play_pause,
+.center
+{
+    display: flex;
+    align-items: center;
+}
+ion-icon
+{
+    cursor: pointer;
+}
+.player_navigation
+{
+    margin: 50px auto 40px;
+}
+.center
+{
+    align-items: center;
+    margin: 0 45px;
+}
+.center ion-icon
+{
+    color: #efefef;
+    font-size: 30px;
+}
+.play_pause
+{
+    margin: 0 12px;
+    padding: 10px;
+
+    background: #fff;
+    border-radius: 50%;
+
+    font-size: 28px;
+}
+#play
+{
+    color: #000;
+}
+#pause
+{
+    color: #000;
+    display: none;
+}
+#random,
+#repeat
+{
+    font-size: 23px;
+    color: #efefef;
+}
+
+.song_volume
+{
+    display: flex;
+    align-items: center;
+    width: 390px;
+}
+.volume_progress
+{
+    width: 100%;
+    height: 4px;
+
+    background: rgba(255, 255, 255, .65);
+    border-radius: 5px;
+
+    margin: 0 8px 0 5px;
+
+    cursor: pointer;
+}
+.volume_progress .volume_progress_bar
+{
+    height: inherit;
+    width: 10%;
+
+    position: relative;
+
+    background: #fff;
+    border-radius: inherit;
+}
+.volume_progress_bar::before
+{
+    content: "";
+
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    height: 13px;
+    width: 13px;
+
+    background: inherit;
+    border-radius: 50%;
+}
+.song_volume ion-icon
+{
+    font-size: 24px;
+    color: rgba(255, 255, 255, .8);
+}
+
+
+.player_background.mini
+{
+    width: 100%;
+    height: fit-content;
+
+    background: transparent;
+    position: relative;
+}
+.player_background.mini .player_background_layer
+{
+    position: relative;
+    justify-content: start;
+    height: fit-content;
+
+    background: rgba(200, 200, 200, .2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+
+    border: 1px solid rgba(255, 255, 255, .5);
+    border-radius: 15px;
+
+    box-sizing: border-box;
+
+    padding: 17px 25px 10px;
+    gap: 0;
+}
+
+.player_background.mini .close
+{
+    display: none;
+}
+.close ion-icon
+{
+    font-size: 35px;
+    color: rgba(255, 255, 255, .55);
+}
+
+.song_img
+{}
+.player_background.mini .song_img img
+{
+    width: 75px;
+    height: 75px;
+
+    border-radius: 3px;
+}
+
+.player_background.mini .player_controllers
+{
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.player_background.mini .song_details
+{
+    color: #FFFFFF;
+
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+
+    margin-left: 25px;
+}
+.player_background.mini .name
+{
+    font-size: 20px;
+
+    margin-bottom: 0;
+    order: 2;
+}
+.player_background.mini .artist
+{
+    font-size: 14px;
+    order: 1;
+}
+
+.player_background.mini .song_center
+{
+    margin-bottom: 7px;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.player_background.mini .song_progress
+{
+    width: 100%;
+    height: 3px;
+
+    margin-top: 0;
+    order: 2;
+}
+.player_background.mini .progress_bar::before
+{
+    height: 10px;
+    width: 10px;
+}
+.player_background.mini .timer
+{
+    margin-top: -23px;
+    font-size: 12px;
+}
+
+.player_background.mini .player_navigation
+{
+    margin: 0 0 20px 0;
+    order: 1;
+}
+.player_background.mini .center ion-icon
+{
+    font-size: 27px;
+}
+.player_background.mini .play_pause
+{
+    padding: 8px;
+}
+
+.player_options
+{
+    display: none;
+}
+.player_background.mini .player_options
+{
+    display: block;
+
+    position: absolute;
+    right: 180px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    margin-top: 2px;
+}
+.player_background.mini .player_options ion-icon
+{
+    cursor: pointer;
+    font-size: 25px;
+    color: #FFFFFF;
+}
+.player_background.mini .player_options ion-icon:first-child
+{
+    margin-right: 15px;
+}
+
+.player_background.mini .song_volume
+{
+    margin-bottom: 8px;
+    width: 140px;
+}
+.player_background.mini .volume_progress
+{
+    width: 100%;
+    height: 3px;
+
+    margin: 0 0 0 10px;
+    order: 2;
+}
+.player_background.mini .volume_progress_bar::before
+{
+    height: 10px;
+    width: 10px;
+}
+.player_background.mini .song_volume ion-icon
+{
+    font-size: 24px;
+}
+.player_background.mini .song_volume ion-icon:first-child
+{
+    display: none;
+}
+.player_background.mini .song_volume ion-icon:last-child
+{
+    order: 1;
+
+    font-size: 38px;
+    --ionicon-stroke-width: 25px;
+
+    color: #FFFFFF;
+}
