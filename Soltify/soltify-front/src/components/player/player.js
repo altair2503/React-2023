@@ -151,7 +151,8 @@ const Player = () => {
             audioPlayer.current.src = playlist[index - 1].url;
             audioPlayer.current.play();
         } else{
-            audioPlayer.current.src = playlist[0].url;
+            setIndex(prev => playlist.length - 1);
+            audioPlayer.current.src = playlist[playlist.length-1].url;
             audioPlayer.current.play();
         }
         if(!isPlaying){
@@ -181,7 +182,7 @@ const Player = () => {
     }
 
     useEffect(()=> {
-        if(elapsed && elapsed === duration){
+        if(elapsed && elapsed == duration){
             if(repeat){
                 setElapsed(0)
                 audioPlayer.current.play()
