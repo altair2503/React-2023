@@ -1,6 +1,8 @@
 import Input from "../utilities/input/input";
 import styles from "./authorization.module.css"
 import React, {useState} from "react";
+import {createUserWithEmailAndPassword} from "firebase/auth";
+
 
 const SignUp = ()=>{
     // const [firstname, setFirstName] = useState();
@@ -8,6 +10,16 @@ const SignUp = ()=>{
     // const [email, setEmail] = useState();
     // const [password, setPassword] = useState();
     // const [password1, setPassword1] = useState();
+    // const signUp = (e) => {
+    //     e.preventDefault();
+    //     createUserWithEmailAndPassword(auth,email, password)
+    //         .then((userCredential) => {
+    //             console.log(userCredential)
+    //         })
+    //         .catch((error) => {
+    //             console.log(error)
+    //         });
+    // };
 
     return (
         <div className={styles.container}>
@@ -22,7 +34,7 @@ const SignUp = ()=>{
                 <div className={styles.inputs}>
                     <Input props={{name: 'First name'}}/>
                     <Input props={{name: 'Last name'}}/>
-                    <Input props={{name: 'Email'}}/>
+                    <Input props={{name: 'Email', type: 'email'}}/>
                     <Input props={{name: 'Password', type: 'password'}}/>
                     <Input props={{name: 'Password verificaton', type: 'password'}}/>
                     <button>Sign up</button>

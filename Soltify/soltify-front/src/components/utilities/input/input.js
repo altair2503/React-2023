@@ -1,5 +1,6 @@
 import styles from './input.module.css'
 import React from "react";
+import SignUp from "../../authorization/sign-up";
 
 const Input = ({props}) => {
     return (
