@@ -91,11 +91,15 @@
     margin-top: 45px;
 
     cursor: pointer;
+
+    position: relative;
 }
 .song_progress .progress_bar
 {
     height: inherit;
-    width: 55%;
+    width: 0;
+
+    pointer-events: none;
 
     position: relative;
 
@@ -162,15 +166,13 @@ ion-icon
     border-radius: 50%;
 
     font-size: 28px;
+
+    cursor: pointer;
 }
-#play
-{
-    color: #000;
-}
+#play,
 #pause
 {
     color: #000;
-    display: none;
 }
 #random,
 #repeat
@@ -200,12 +202,14 @@ ion-icon
 .volume_progress .volume_progress_bar
 {
     height: inherit;
-    width: 10%;
+    width: 100%;
 
     position: relative;
 
     background: #fff;
     border-radius: inherit;
+
+    pointer-events: none;
 }
 .volume_progress_bar::before
 {
