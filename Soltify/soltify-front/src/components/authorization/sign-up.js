@@ -7,7 +7,6 @@ import { auth, db } from "../../firebase";
 import React, {useState} from "react";
 import {Navigate, Route, useNavigate} from 'react-router-dom';
 import { doc, setDoc } from "firebase/firestore"; 
-import { doc, setDoc } from "firebase/firestore";
 
 
 
