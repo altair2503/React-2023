@@ -13,6 +13,8 @@ import welcomePage from "./components/welcome-page/welcome-page";
 import HomePage from "./components/home-page/home-page";
 import PersonalAcc from "./components/PersonalAcc";
 import Protected from "./components/Protected";
+import ReactDOM from "react-dom"
+
 
 
 const router = createBrowserRouter([
