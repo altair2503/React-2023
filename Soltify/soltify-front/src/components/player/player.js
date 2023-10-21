@@ -7,41 +7,49 @@ import end from "../../assets/music/3.mp3"
 import babymama from "../../assets/music/4.mp3"
 import brend from "../../assets/music/5.mp3"
 
-import songImg from '../../assets/music.jpg';
+import animalsImg from '../../assets/music/1.png';
+import riverImg from '../../assets/music/2.webp';
+import endImg from '../../assets/music/3.jpeg';
+import babymamImg from '../../assets/music/4.jpeg';
+import brendImg from '../../assets/music/5.jpeg';
 
 let playlist = [
     {
         id: 1,
         name: "Животные",
         artist: "Скриптонит",
-        url: animals
+        url: animals,
+        img: animalsImg
     },
     {
         id: 2,
-        name: "У реки два берега",
+        name: "Ты не верь слезам",
         artist: "Скриптонит",
-        url: river
+        url: river,
+        img: riverImg
     },
     {
         id: 3,
         name: "До конца",
         artist: "Скриптонит",
-        url: end
+        url: end,
+        img: endImg
     },
     {
         id: 4,
         name: "Бэби мама",
         artist: "Скриптонит",
-        url: babymama
+        url: babymama,
+        img: babymamImg
     },
     {
         id: 5,
         name: "Мультибрендовый",
         artist: "Скриптонит",
-        url: brend
+        url: brend,
+        img: brendImg
     },
 ];
-
 let prevPlaylist = playlist.slice();
 
 const Player = () => {
@@ -183,27 +191,29 @@ const Player = () => {
     }
 
     const toggleMix = () => {
-        console.log(mixed, ...playlist)
+      console.log(mixed, ...playlist)
         if(mixed === false){
-            let shuffledArray = playlist.slice(index + 1);
-            let shuffleArray =  async() => {
-                let array = shuffledArray.slice();
-                for (let i = array.length - 1; i > 0; i--) {
-                    let j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array
-            }
-
+          let shuffledArray = playlist.slice(index + 1);
+          let shuffleArray =  async() => {
+              let array = shuffledArray.slice();
+              for (let i = array.length - 1; i > 0; i--) {
+                  let j = Math.floor(Math.random() * (i + 1));
+                  [array[i], array[j]] = [array[j], array[i]];
+              }
+              return array
+          }
+          shuffleArray().then((res) => {
+              playlist = [...playlist.slice(0, index+1), ...res]
+          })
+          setMixed(true)
             shuffleArray().then((res) => {
                 playlist = [...playlist.slice(0, index+1), ...res]
             })
             setMixed(true)
         } else {
-            playlist = [...playlist.slice(0, index+1), ...prevPlaylist.slice(index+1, prevPlaylist.length)]
-            setMixed(false)
+          playlist = [...playlist.slice(0, index+1), ...prevPlaylist.slice(index+1, prevPlaylist.length)]
+          setMixed(false)
         }
-
     }
 
     useEffect(()=> {
@@ -230,19 +240,20 @@ const Player = () => {
         }
     }
 
-    const findSong = (song)=>{
+    const findSong = (song)=> {
       return playlist.find((song) => song.url === song)
     }
 
     return (
         <div className={!playerActive ? "player_background mini" : "player_background"}>
+            <img src={playlist[index].img} alt={playlist[index].img} className={"player_background_img"} />
             <div className="player_background_layer">
                 <audio src={currentSong} ref={audioPlayer} muted={mute} onTimeUpdate={getCurrentDuration}/>
                 <div className="close" onClick={() => playerActiveCondition(false)}>
                     <ion-icon name="close-outline"></ion-icon>
                 </div>
                 <div className="song_img" onClick={() => playerActiveCondition(true)} onMouseMove={(event) => changeImageCursor(event)}>
-                    <img src={songImg} alt={songImg} />
+                    <img src={playlist[index].img} alt={playlist[index].img} />
                 </div>
                 <div className="player_controllers">
                     <div className="song_details">
@@ -258,7 +269,7 @@ const Player = () => {
                             </div>
                         </div>
                         <div className="player_navigation">
-                            <ion-icon name="shuffle-outline" class="random" onClick={toggleMix}></ion-icon>
+                            <ion-icon name="shuffle-outline" class="random" onClick={toggleMix} style={mixed ? { color: "#25dc60" } : { color: "#efefef" }}></ion-icon>
                             <div className="center">
                                 <ion-icon name="play-skip-back-outline" onClick={toggleSkipBackward}></ion-icon>
                                 <div className="play_pause" onClick={togglePlay}>
