@@ -90,21 +90,20 @@
 
     margin-top: 45px;
 
-    cursor: pointer;
-
     position: relative;
+    cursor: pointer;
 }
 .song_progress .progress_bar
 {
     height: inherit;
     width: 0;
 
-    pointer-events: none;
-
     position: relative;
 
     background: #fff;
     border-radius: inherit;
+
+    pointer-events: none;
 }
 .progress_bar::before
 {
@@ -174,16 +173,22 @@ ion-icon
 {
     color: #000;
 }
-#random,
-#repeat
+.random,
+.repeat
 {
     font-size: 23px;
     color: #efefef;
 }
-#random:hover,
-#repeat:hover
+.random:hover,
+.repeat:hover
 {
-    color: #FFFFFF;
+    color: #fff;
+}
+.random.on,
+.repeat.on
+{
+    font-size: 23px;
+    color: #25DC60;
 }
 
 .song_volume
@@ -365,7 +370,7 @@ ion-icon
 }
 .player_background.mini .player_options
 {
-    display: block;
+    display: flex;
 
     position: absolute;
     right: 180px;
