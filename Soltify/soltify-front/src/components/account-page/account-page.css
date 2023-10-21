@@ -1,0 +1,49 @@
+.acc_title
+{
+    font-size: 25px;
+    color: #FFFFFF;
+}
+.user_info
+{
+    margin-top: 30px;
+    display: flex;
+
+    gap: 70px;
+}
+.user_info_left
+{
+    width: 250px;
+    height: 250px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.user_info_left img
+{
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+}
+.log_out_btn
+{
+    margin-top: 35px;
+    width: 135px;
+    height: 48px;
+    border-radius: 25px;
+}
+.user_info_right
+{
+    color: #FFFFFF;
+    padding-top: 20px;
+}
+.user_name
+{
+    font-size: 38px;
+}
+.user_email
+{
+    color: rgba(255, 255, 255, .8);
+    margin-bottom: 40px;
+}

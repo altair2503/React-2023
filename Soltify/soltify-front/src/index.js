@@ -16,6 +16,8 @@ import Protected from "./components/Protected";
 import ContentPage from "./components/content/content-page";
 import ReactDOM from "react-dom"
 import PlaylistPage from "./components/playlist/playlist-page";
+import AccountPage from "./components/account-page/account-page";
+import CreatePlaylistPage from "./components/create-playlist-page/create-playlist-page";
 
 
 const router = createBrowserRouter([
@@ -47,6 +49,16 @@ const router = createBrowserRouter([
       {
         path: "/playlists/oryssha-olender",
         element: <PlaylistPage/>,
+        errorElement: <ErrorPage/>
+      },
+      {
+        path: "/account",
+        element: <AccountPage/>,
+        errorElement: <ErrorPage/>
+      },
+      {
+        path: "/create-playlist",
+        element: <CreatePlaylistPage/>,
         errorElement: <ErrorPage/>
       }
     ]

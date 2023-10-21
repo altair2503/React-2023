@@ -10,7 +10,7 @@ const WelcomePage = () => {
             <header>
                 <img src={logo} className={styles.logo} alt={logo} />
                 <ul>
-                    <li><a href="" className={styles.git_link}>Home</a></li>
+                    <li><a href="/" className={styles.git_link}>Home</a></li>
                     <li><a href="https://github.com/azikkw/React-2023/tree/main/Soltify" className={styles.git_link} target="_blank">GitHub/Soltify</a></li>
                 </ul>
             </header>

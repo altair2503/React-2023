@@ -12,6 +12,7 @@ import riverImg from '../../assets/music/2.webp';
 import endImg from '../../assets/music/3.jpeg';
 import babymamImg from '../../assets/music/4.jpeg';
 import brendImg from '../../assets/music/5.jpeg';
+import {useNavigate} from "react-router-dom";
 
 let playlist = [
     {
@@ -73,6 +74,8 @@ const Player = () => {
     const [progress, setProgress] = useState(0);
 
     const progressRef = useRef();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         if(localStorage.getItem("playerCondition") === "true") {
@@ -245,7 +248,7 @@ const Player = () => {
     }
 
     return (
-        <div className={!playerActive ? "player_background mini" : "player_background"}>
+        <div className={!playerActive ? "player_background mini" : "player_background"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
             <img src={playlist[index].img} alt={playlist[index].img} className={"player_background_img"} />
             <div className="player_background_layer">
                 <audio src={currentSong} ref={audioPlayer} muted={mute} onTimeUpdate={getCurrentDuration}/>

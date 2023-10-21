@@ -30,7 +30,7 @@ const LogIn = key=> {
             } else {
                 console.error("User object is undefined")
             }
-            navigate("/personal");
+            navigate("/");
         } catch (error) {
             console.error(error);
         }
@@ -42,7 +42,6 @@ const LogIn = key=> {
         const usersCollection = collection(db, "users");
         const userQuery = query(usersCollection, where("uid", "==", user.uid));
 
-<<<<<<< HEAD
         try {
             const querySnapshot = await getDocs(userQuery);
             if (querySnapshot.size > 0) {
@@ -69,8 +68,6 @@ const LogIn = key=> {
         // });
         // };
 
-=======
->>>>>>> e8a74f89309060115bb6e0180945532410e193ca
     return (
         <div className={styles.container}>
         <div className={styles.background}>
