@@ -1,33 +1,121 @@
 import React, {useEffect, useRef, useState} from "react";
 import './player.css';
-import { db } from "../../firebase";
-import {doc, getDoc, getDocs, collection, onSnapshot } from "firebase/firestore";
+// import { db } from "../../firebase";
+// import {doc, getDoc, getDocs, collection, onSnapshot } from "firebase/firestore";
 
 import animals from "../../assets/music/1.mp3"
 import river from "../../assets/music/2.mp3"
 import end from "../../assets/music/3.mp3"
 import babymama from "../../assets/music/4.mp3"
 import brend from "../../assets/music/5.mp3"
+import raim1 from "../../assets/music/RaiM1.mp3"
+
+import dar1 from "../../assets/music/dar1.mp3"
+import dar2 from "../../assets/music/dar2.mp3"
+import dar3 from "../../assets/music/dar3.mp3"
+import ice1 from "../../assets/music/ice1.mp3"
+import ice2 from "../../assets/music/ice2.mp3"
+import snoop from "../../assets/music/snoop.mp3"
 
 import animalsImg from '../../assets/music/1.png';
 import riverImg from '../../assets/music/2.webp';
 import endImg from '../../assets/music/3.jpeg';
 import babymamImg from '../../assets/music/4.jpeg';
 import brendImg from '../../assets/music/5.jpeg';
+import raim1img from '../../assets/music/Dosym Raim.jpeg';
+import dar1img from '../../assets/music/uide.jpeg';
+import dar2img from '../../assets/music/kun men ayim.jpeg';
+import dar3img from '../../assets/music/shyrailym.jpeg';
+import ice1img from "../../assets/music/ice cube.jpeg"
+import ice2img from "../../assets/music/ice cube 2.jpeg"
+import snoopimg from "../../assets/music/snoop dog.jpeg"
+
 import {useNavigate} from "react-router-dom";
 
 let playlist = [
+  {
+    name: "Животные",
+    artist: "Скриптонит",
+    url: animals,
+    img: animalsImg
+  }, 
+  {
+    name: "Не верь слезам",
+    artist: "Скриптонит",
+    url: river,
+    img: riverImg
+  }, 
+  {
+    name: "До конца",
+    artist: "Скриптонит",
+    url: end,
+    img: endImg
+  }, 
+  {
+    name: "Мультибрендовый",
+    artist: "Скриптонит",
+    url: brend,
+    img: brendImg
+  }, 
+  {
+    name: "Baby mama",
+    artist: "Скриптонит",
+    url: babymama,
+    img: babymamImg
+  }, 
+  {
+    name: "Досым",
+    artist: "Раим",
+    url: raim1,
+    img: raim1img
+  }, 
+  {
+    name: "Yuide",
+    artist: "Darkhan Juzz",
+    url: dar1,
+    img: dar1img
+  },
+  {
+    name:  "Күн мен Айым",
+    artist: "Darkhan Juzz",
+    url: dar2,
+    img: dar2img
+  },
+  {
+    name: "Shyrailym",
+    artist: "Darkhan Juzz",
+    url: dar3,
+    img: dar3img
+  },
+  {
+    name: "You know how to do it",
+    artist: "Ice Cube",
+    url: ice1,
+    img: ice1img
+  },
+  {
+    name: "It was a good day",
+    artist: "Ice Cube",
+    url: ice2,
+    img: ice2img
+  },
+  {
+    name: "Riders in the storm",
+    artist: "Snoop doog",
+    url: snoop,
+    img: snoopimg
+  },
 ];
 
-const dbInstance = collection(db, 'songs');
-await getDocs(dbInstance).then( (response) => {
-  playlist = ([...response.docs.map( (item) => {
-    return { ...item.data(), id:item.id
-    }})
-  ]).slice()
-  }).catch( (err) => { alert(err.message) }
-).finally( () => {
-})
+// const dbInstance = collection(db, 'songs');
+// await getDocs(dbInstance).then( (response) => {
+//   playlist = ([...response.docs.map( (item) => {
+//     return { ...item.data(), id:item.id
+//     }})
+//   ]).slice()
+//   }).catch( (err) => { alert(err.message) }
+// ).finally( () => {
+// })
 
 let prevPlaylist = playlist.slice();
 
@@ -130,7 +218,7 @@ const Player = () => {
         else audioPlayer.current.pause()
 
         setIsPlaying(prev => !prev)
-        getArtist(playlist[index].artistID)
+        // getArtist(playlist[index].artistID)
     }
 
     const toggleSkipForward = () => {
@@ -146,7 +234,7 @@ const Player = () => {
         if(!isPlaying){
             setIsPlaying(true)
         }
-        getArtist(playlist[index].artistID)
+        // getArtist(playlist[index].artistID)
     }
 
     const toggleSkipBackward = () => {
@@ -162,7 +250,7 @@ const Player = () => {
         if(!isPlaying){
             setIsPlaying(true)
         }
-        getArtist(playlist[index].artistID)
+        // getArtist(playlist[index].artistID)
     }
 
     const toggleReply = () => {
@@ -208,7 +296,7 @@ const Player = () => {
                 audioPlayer.current.play()
             } else toggleSkipForward()
         }
-        getArtist(playlist[index].artistID)
+        // getArtist(playlist[index].artistID)
     }, [elapsed]);
 
     function changeImageCursor(event) {
@@ -231,15 +319,15 @@ const Player = () => {
     }
 
 
-    const getArtist = (uid) => {
-      const colUsers = collection(db, "users");
-      const docRef = doc(colUsers, uid);
-      onSnapshot(docRef, (doc) => { // @ts-ignore
-        console.log(doc.data())
-        console.log(doc.data()['username'])
-        setArtist(doc.data()['username'])
-      });
-    }
+    // const getArtist = (uid) => {
+    //   const colUsers = collection(db, "users");
+    //   const docRef = doc(colUsers, uid);
+    //   onSnapshot(docRef, (doc) => { // @ts-ignore
+    //     console.log(doc.data())
+    //     console.log(doc.data()['username'])
+    //     setArtist(doc.data()['username'])
+    //   });
+    // }
 
 
   
@@ -258,7 +346,7 @@ const Player = () => {
                 <div className="player_controllers">
                     <div className="song_details">
                         <div className="name">{playlist[index].name}</div>
-                        <div className="artist"> {artist}</div>
+                        <div className="artist"> {playlist[index].artist}</div>
                     </div>
                     <div className="song_center">
                         <div className="song_progress" ref={progressRef} onMouseMove={(e) => progressMoving(e)} onMouseDown={(e) => changeCurrent(e)}>
