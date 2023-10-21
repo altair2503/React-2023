@@ -2,7 +2,6 @@ import React from 'react';
 import App from "./App";
 import './index.css';
 import WelcomePage from './components/welcome-page/welcome-page';
-import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
