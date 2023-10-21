@@ -7,6 +7,7 @@ import { auth, db } from "../../firebase";
 import React, {useState} from "react";
 import {Navigate, Route, useNavigate} from 'react-router-dom';
 import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc } from "firebase/firestore";
 
 
 
@@ -36,28 +37,16 @@ const SignUp = ()=>{
                     lastname: lastname,
                     email: email
                 });
+                const user =  cred.user;
+                localStorage.setItem('token', user.accessToken);
+                localStorage.setItem('user', JSON.stringify(user));
+            }).finally(()=>{
+                navigate("/personal");
             });
-            const user =  userCredential.user;
-            localStorage.setItem('token', user.accessToken);
-            localStorage.setItem('user', JSON.stringify(user));
-            navigate("/personal");
+
         } catch (error) {
             console.log(error)
         }
-
-
-
-        // createUserWithEmailAndPassword(auth, email, password)
-        // .then((userCredential) => {
-        //     console.log(userCredential)
-        //     const user = userCredential.user;
-        //     localStorage.setItem('token', user.accessToken);
-        //     navigate("/home")
-        //
-        // })
-        // .catch((error) => {
-        //     console.log(error)
-        // });
     };
 
     return (
@@ -74,24 +63,24 @@ const SignUp = ()=>{
                 <form onSubmit={signUp}>
                     <div className={styles.inputs}>
                         <Input props={{name: 'First name'}}
-                            value={firstname}
-                            onChange={(e) => setFirstName(e.target.value)}
+                               value={firstname}
+                               onChange={(e) => setFirstName(e.target.value)}
                         />
                         <Input props={{name: 'Last name'}}
-                            value={lastname}
-                            onChange={(e) => setLastName(e.target.value)}
+                               value={lastname}
+                               onChange={(e) => setLastName(e.target.value)}
                         />
                         <Input props={{name: 'Email', type: 'email'}}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                               value={email}
+                               onChange={(e) => setEmail(e.target.value)}
                         />
                         <Input props={{name: 'Password', type: 'password'}}
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                               value={password}
+                               onChange={(e) => setPassword(e.target.value)}
                         />
                         <Input props={{name: 'Password verification', type: 'password'}}
-                            value={password1}
-                            onChange={(e) => setPassword1(e.target.value)}
+                               value={password1}
+                               onChange={(e) => setPassword1(e.target.value)}
                         />
                         <button type="submit">Sign up</button>
                         <a href="/log-in" className={styles.sign_in_link}>Already have an account? <span>Log in</span></a>

@@ -73,15 +73,13 @@ const Player = () => {
 
         if(audioPlayer) audioPlayer.current.volume = volume / 100;
 
-        if(isPlaying){
-            setInterval(() => {
-                const _duration = Math.floor(audioPlayer?.current?.duration);
-                const _elapsed = Math.floor(audioPlayer?.current?.currentTime);
+        setInterval(() => {
+            const _duration = Math.floor(audioPlayer?.current?.duration);
+            const _elapsed = Math.floor(audioPlayer?.current?.currentTime);
 
-                setDuration(_duration);
-                setElapsed(_elapsed);
-            }, 100);
-        }
+            setDuration(_duration);
+            setElapsed(_elapsed);
+        }, 100);
 
     }, [
         volume, isPlaying
@@ -106,6 +104,16 @@ const Player = () => {
         let clickedOffSetX = e.nativeEvent.offsetX;
 
         audioPlayer.current.currentTime = (clickedOffSetX / progressWidth) * duration;
+
+        const currentProgress = (audioPlayer.current?.currentTime / audioPlayer.current?.duration) * 100;
+        setProgress(currentProgress);
+
+        document.querySelector(".progress_bar").style.width = `${progress}%`;
+
+        if(!isPlaying) {
+            audioPlayer.current.play();
+            setIsPlaying(true);
+        }
     }
 
     function changeVolume(e) {
@@ -119,12 +127,12 @@ const Player = () => {
 
     function formatTime(time) {
         if(time && !isNaN(time)){
-            const minutes = Math.floor(time / 60) < 10 ? `0${Math.floor(time / 60)}` : Math.floor(time / 60);
+            const minutes = Math.floor(time / 60);
             const seconds = Math.floor(time % 60) < 10 ? `0${Math.floor(time % 60)}` : Math.floor(time % 60);
 
             return `${minutes}:${seconds}`;
         }
-        return '00:00';
+        return '0:00';
     }
 
     const togglePlay = () => {
@@ -165,10 +173,12 @@ const Player = () => {
     }
 
     const toggleReply = () => {
-        if(!repeat){
-          setRepeat(true)
-        } else{
-          setRepeat(false)
+        if(!repeat) {
+            setRepeat(true)
+            document.querySelector(".repeat").classList.add("on");
+        } else {
+            setRepeat(false)
+            document.querySelector(".repeat").classList.remove("on");
         }
     }
 
@@ -184,7 +194,6 @@ const Player = () => {
               }
               return array
           }
-  
           shuffleArray().then((res) => {
               playlist = [...playlist.slice(0, index+1), ...res]
           })
@@ -193,12 +202,13 @@ const Player = () => {
           playlist = [...playlist.slice(0, index+1), ...prevPlaylist.slice(index+1, prevPlaylist.length)]
           setMixed(false)
         }
-        
-
+        shuffleArray().then((res) => {
+            playlist = [...playlist.slice(0, index+1), ...res]
+        })
     }
 
     useEffect(()=> {
-        if(elapsed && elapsed == duration){
+        if(elapsed && elapsed === duration){
             if(repeat){
                 setElapsed(0)
                 audioPlayer.current.play()
@@ -249,7 +259,7 @@ const Player = () => {
                             </div>
                         </div>
                         <div className="player_navigation">
-                            <ion-icon name="shuffle-outline" id="random" onClick={toggleMix}></ion-icon>
+                            <ion-icon name="shuffle-outline" class="random" onClick={toggleMix}></ion-icon>
                             <div className="center">
                                 <ion-icon name="play-skip-back-outline" onClick={toggleSkipBackward}></ion-icon>
                                 <div className="play_pause" onClick={togglePlay}>
@@ -257,11 +267,14 @@ const Player = () => {
                                 </div>
                                 <ion-icon name="play-skip-forward-outline" onClick={toggleSkipForward}></ion-icon>
                             </div>
-                            <ion-icon name="repeat-outline" id="repeat" onClick={toggleReply}></ion-icon>
+                            <ion-icon name="repeat-outline" class="repeat" onClick={toggleReply}></ion-icon>
                         </div>
                     </div>
                     <div className="player_options">
-                        <ion-icon name="ellipsis-horizontal"></ion-icon>
+                        <div>
+                            <ion-icon name="ellipsis-horizontal"></ion-icon>
+
+                        </div>
                         <ion-icon name="scan-outline" onClick={() => playerActiveCondition(true)}></ion-icon>
                     </div>
                     <div className="song_volume">
