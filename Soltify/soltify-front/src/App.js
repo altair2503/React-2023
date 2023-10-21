@@ -11,7 +11,6 @@ import Navbar from "./oldmethod/Navbar";
 
 function App() {
   return (
-<<<<<<< HEAD
       // <WelcomePage />
       // <SignUp/>
       // <LogIn />
@@ -19,9 +18,6 @@ function App() {
       // <BrowserRouter>
       //   <Navbar/>
       // </BrowserRouter>
-=======
-      <div></div>
->>>>>>> 9c6eb25a9a5ef1342848f79f39aca4b8cd0b0d48
   );
 }
 
