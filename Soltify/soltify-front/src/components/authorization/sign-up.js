@@ -40,7 +40,7 @@ const SignUp = ()=>{
                 localStorage.setItem('token', user.accessToken);
                 localStorage.setItem('user', JSON.stringify(user));
             }).finally(()=>{
-                navigate("/personal");
+                navigate("/log-in");
             });
 
         } catch (error) {

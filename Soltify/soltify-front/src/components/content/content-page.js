@@ -167,16 +167,13 @@ const ContentPage = () => {
           <div className={"contentTopCharts"}>
               <span className={"contentTitle"}>Top Charts</span>
           </div>
-          <div className={"contentItemCard"}>
-              <span>Recently Played</span>
-              <div className={"song_list"}>
-                  {
-                      playlist.map((song, index) => {
-                          return <PlaylistMusicItem props={song} />
-                      })
-                  }
-              </div>
-          </div>
+            <div className={"song_list"}>
+                {
+                    playlist.map((song, index) => {
+                        return <PlaylistMusicItem props={song} />
+                    })
+                }
+            </div>
       </div>
   )
 }
