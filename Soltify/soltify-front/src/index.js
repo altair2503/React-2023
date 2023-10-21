@@ -16,6 +16,7 @@ import Protected from "./components/Protected";
 import ContentPage from "./components/content/content-page";
 import ReactDOM from "react-dom"
 
+
 const router = createBrowserRouter([
   {
     path: "/welcome",
