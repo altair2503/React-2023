@@ -182,6 +182,7 @@ const Player = () => {
     }
 
     const toggleMix = () => {
+        console.log(mixed, ...playlist)
         if(mixed === false){
             let shuffledArray = playlist.slice(index + 1);
             let shuffleArray =  async() => {
@@ -226,7 +227,7 @@ const Player = () => {
         }
     }
 
-    const findSong = (song)=>{
+    const findSong = (song)=> {
       return playlist.find((song) => song.url === song)
     }
 

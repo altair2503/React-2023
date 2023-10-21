@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from "./App";
 import './index.css';
 import WelcomePage from './components/welcome-page/welcome-page';
@@ -14,7 +13,12 @@ import welcomePage from "./components/welcome-page/welcome-page";
 import HomePage from "./components/home-page/home-page";
 import PersonalAcc from "./components/PersonalAcc";
 import Protected from "./components/Protected";
+<<<<<<< HEAD
 import ContentPage from "./components/content/content-page";
+=======
+import ReactDOM from "react-dom"
+
+>>>>>>> aa8b7fea4de07a4b306d6228f92634cf29423dc3
 
 
 const router = createBrowserRouter([
