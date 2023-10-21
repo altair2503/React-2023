@@ -13,13 +13,8 @@ import welcomePage from "./components/welcome-page/welcome-page";
 import HomePage from "./components/home-page/home-page";
 import PersonalAcc from "./components/PersonalAcc";
 import Protected from "./components/Protected";
-<<<<<<< HEAD
 import ContentPage from "./components/content/content-page";
-=======
 import ReactDOM from "react-dom"
-
->>>>>>> aa8b7fea4de07a4b306d6228f92634cf29423dc3
-
 
 const router = createBrowserRouter([
   {
@@ -40,7 +35,14 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "",
+        element: <ContentPage/>,
+        errorElement: <ErrorPage/>
+      }
+    ]
   },
   {
     path: "/personal",

@@ -231,3 +231,10 @@
 
     border-radius: 25px;
 }
+
+.content
+{
+    flex: 1;
+    background: red;
+    height: 450px;
+}

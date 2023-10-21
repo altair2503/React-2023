@@ -2,7 +2,7 @@ import React from "react";
 
 const ContentPage = () => {
   return (
-      <div>Hello</div>
+      <div style={{color: "#fff"}}>lkmfa,sfasjfjkasnfkjasnkjnHello</div>
   )
 }
 

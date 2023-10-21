@@ -48,9 +48,6 @@ const HomePage = () => {
                             </a>
                         </div>
                         <div className={"content"}>
-                            {/*<Routes>*/}
-                            {/*    <Route path="/content" element={<ContentPage/>}/>*/}
-                            {/*</Routes>*/}
                         </div>
                     </div>
                 </div>
