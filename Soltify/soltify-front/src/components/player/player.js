@@ -1,5 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import './player.css';
+import { db } from "../../firebase";
+import {doc, getDoc, getDocs, collection, onSnapshot } from "firebase/firestore";
 
 import animals from "../../assets/music/1.mp3"
 import river from "../../assets/music/2.mp3"
@@ -15,47 +17,63 @@ import brendImg from '../../assets/music/5.jpeg';
 import {useNavigate} from "react-router-dom";
 
 let playlist = [
-    {
-        id: 1,
-        name: "Животные",
-        artist: "Скриптонит",
-        url: animals,
-        img: animalsImg
-    },
-    {
-        id: 2,
-        name: "Ты не верь слезам",
-        artist: "Скриптонит",
-        url: river,
-        img: riverImg
-    },
-    {
-        id: 3,
-        name: "До конца",
-        artist: "Скриптонит",
-        url: end,
-        img: endImg
-    },
-    {
-        id: 4,
-        name: "Бэби мама",
-        artist: "Скриптонит",
-        url: babymama,
-        img: babymamImg
-    },
-    {
-        id: 5,
-        name: "Мультибрендовый",
-        artist: "Скриптонит",
-        url: brend,
-        img: brendImg
-    },
+    // {
+    //     id: 1,
+    //     name: "Животные",
+    //     artist: "Скриптонит",
+    //     url: animals,
+    //     img: animalsImg
+    // },
+    // {
+    //     id: 2,
+    //     name: "Ты не верь слезам",
+    //     artist: "Скриптонит",
+    //     url: river,
+    //     img: riverImg
+    // },
+    // {
+    //     id: 3,
+    //     name: "До конца",
+    //     artist: "Скриптонит",
+    //     url: end,
+    //     img: endImg
+    // },
+    // {
+    //     id: 4,
+    //     name: "Бэби мама",
+    //     artist: "Скриптонит",
+    //     url: babymama,
+    //     img: babymamImg
+    // },
+    // {
+    //     id: 5,
+    //     name: "Мультибрендовый",
+    //     artist: "Скриптонит",
+    //     url: brend,
+    //     img: brendImg
+    // },
 ];
+
+
+
+
+const dbInstance = collection(db, 'songs');
+await getDocs(dbInstance).then( (response) => {
+  playlist = ([...response.docs.map( (item) => {
+    return { ...item.data(), id:item.id
+    }})
+  ]).slice()
+  }).catch( (err) => { alert(err.message) }
+).finally( () => {
+  
+})
+
 let prevPlaylist = playlist.slice();
 
 const Player = () => {
 
     const [playerActive, setPlayerActive] = useState(false);
+    const [artist, setArtist] = useState("")
 
     const audioPlayer = useRef()
 
@@ -151,6 +169,7 @@ const Player = () => {
         else audioPlayer.current.pause()
 
         setIsPlaying(prev => !prev)
+        getArtist(playlist[index].artistID)
     }
 
     const toggleSkipForward = () => {
@@ -166,6 +185,7 @@ const Player = () => {
         if(!isPlaying){
             setIsPlaying(true)
         }
+        getArtist(playlist[index].artistID)
     }
 
     const toggleSkipBackward = () => {
@@ -181,6 +201,7 @@ const Player = () => {
         if(!isPlaying){
             setIsPlaying(true)
         }
+        getArtist(playlist[index].artistID)
     }
 
     const toggleReply = () => {
@@ -226,6 +247,7 @@ const Player = () => {
                 audioPlayer.current.play()
             } else toggleSkipForward()
         }
+        getArtist(playlist[index].artistID)
     }, [elapsed]);
 
     function changeImageCursor(event) {
@@ -247,6 +269,20 @@ const Player = () => {
       return playlist.find((song) => song.url === song)
     }
 
+
+    const getArtist = (uid) => {
+      const colUsers = collection(db, "users");
+      const docRef = doc(colUsers, uid);
+      onSnapshot(docRef, (doc) => { // @ts-ignore
+        console.log(doc.data())
+        console.log(doc.data()['username'])
+        setArtist(doc.data()['username'])
+      });
+    }
+
+
+  
+
     return (
         <div className={!playerActive ? "player_background mini" : "player_background"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
             <img src={playlist[index].img} alt={playlist[index].img} className={"player_background_img"} />
@@ -261,7 +297,7 @@ const Player = () => {
                 <div className="player_controllers">
                     <div className="song_details">
                         <div className="name">{playlist[index].name}</div>
-                        <div className="artist">{playlist[index].artist}</div>
+                        <div className="artist"> {artist}</div>
                     </div>
                     <div className="song_center">
                         <div className="song_progress" ref={progressRef} onMouseMove={(e) => progressMoving(e)} onMouseDown={(e) => changeCurrent(e)}>

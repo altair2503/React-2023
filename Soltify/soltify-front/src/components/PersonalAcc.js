@@ -23,7 +23,6 @@ const PersonalAcc = () => {
             {/*<h2>{user && user.email}</h2>*/}
             {/*<button onClick={Logout}>Logout</button>*/}
         </div>
-
     );
 };
 
