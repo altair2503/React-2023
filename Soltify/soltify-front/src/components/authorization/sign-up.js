@@ -2,10 +2,13 @@ import Input from "../utilities/input/input";
 import styles from "./authorization.module.css";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 
 import React, {useState} from "react";
 import {Navigate, Route, useNavigate} from 'react-router-dom';
+import { doc, setDoc } from "firebase/firestore"; 
+
+
 
 
 const SignUp = ()=>{
@@ -25,8 +28,15 @@ const SignUp = ()=>{
             return
         }
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(userCredential);
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password).then((cred)=> {
+                console.log("created")
+                console.log(cred)
+                setDoc(doc(db, "users", cred.user.uid), {
+                    name: firstname,
+                    lastname: lastname,
+                    email: email
+                });
+            });
             const user =  userCredential.user;
             localStorage.setItem('token', user.accessToken);
             localStorage.setItem('user', JSON.stringify(user));
