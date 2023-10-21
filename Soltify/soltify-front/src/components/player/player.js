@@ -42,6 +42,8 @@ let playlist = [
     },
 ];
 
+let prevPlaylist = playlist.slice();
+
 const Player = () => {
 
     const [playerActive, setPlayerActive] = useState(false);
@@ -54,14 +56,15 @@ const Player = () => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(50);
     const [mute, setMute] = useState(false);
-    const [repeat, setRepeat] = useState(false)
+    const [repeat, setRepeat] = useState(false);
+    const [mixed, setMixed] = useState(false);
 
     const [elapsed, setElapsed] = useState(0);
     const [duration, setDuration] = useState(0);
 
-    const [progress, setProgress] = useState(0)
+    const [progress, setProgress] = useState(0);
 
-    const progressRef = useRef()
+    const progressRef = useRef();
 
     useEffect(() => {
         if(localStorage.getItem("playerCondition") === "true") {
@@ -79,6 +82,7 @@ const Player = () => {
                 setElapsed(_elapsed);
             }, 100);
         }
+
     }, [
         volume, isPlaying
     ]);
@@ -161,23 +165,35 @@ const Player = () => {
     }
 
     const toggleReply = () => {
-        setRepeat(!repeat);
+        if(!repeat){
+          setRepeat(true)
+        } else{
+          setRepeat(false)
+        }
     }
 
     const toggleMix = () => {
-        let shuffledArray = playlist.slice(index + 1);
-        let shuffleArray =  async() => {
-            let array = shuffledArray.slice();
-            for (let i = array.length - 1; i > 0; i--) {
-                let j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array
+      console.log(mixed, ...playlist)
+        if(mixed === false){
+          let shuffledArray = playlist.slice(index + 1);
+          let shuffleArray =  async() => {
+              let array = shuffledArray.slice();
+              for (let i = array.length - 1; i > 0; i--) {
+                  let j = Math.floor(Math.random() * (i + 1));
+                  [array[i], array[j]] = [array[j], array[i]];
+              }
+              return array
+          }
+  
+          shuffleArray().then((res) => {
+              playlist = [...playlist.slice(0, index+1), ...res]
+          })
+          setMixed(true)
+        } else {
+          playlist = [...playlist.slice(0, index+1), ...prevPlaylist.slice(index+1, prevPlaylist.length)]
+          setMixed(false)
         }
-
-        shuffleArray().then((res) => {
-            playlist = [...playlist.slice(0, index+1), ...res]
-        })
+        
 
     }
 
@@ -203,6 +219,10 @@ const Player = () => {
             setPlayerActive(false)
             localStorage.setItem("playerCondition", "false")
         }
+    }
+
+    const findSong = (song)=>{
+      return playlist.find((song) => song.url === song)
     }
 
     return (
