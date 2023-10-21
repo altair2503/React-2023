@@ -1,0 +1,116 @@
+.playlist_img
+{
+    width: 200px;
+    height: 200px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #3B3B3B;
+    border-radius: 15px;
+
+    cursor: pointer;
+}
+.playlist_img ion-icon
+{
+    font-size: 110px;
+    --ionicon-stroke-width: 21px;
+    color: rgb(128, 128, 128);
+}
+.playlist_img img
+{
+    width: 100px;
+}
+
+.playlist_info
+{
+    display: flex;
+    flex: 1;
+
+    margin-bottom: 35px;
+    position: relative;
+}
+.playlist_details
+{
+    align-self: end;
+    margin-left: 30px;
+}
+.playlist_details span
+{
+    color: rgba(255, 255, 255, .7);
+    font-size: 18px;
+}
+.playlist_name
+{
+    font-size: 30px;
+    font-weight: 500;
+
+    margin-top: 12px;
+    color: #FFFFFF;
+}
+.playlist_owner
+{
+    font-size: 15px;
+    color: rgba(255,255, 255, .8);
+
+    display: flex;
+    align-items: center;
+
+    margin-top: 2px;
+    gap: 10px;
+}
+.play_playlist
+{
+    margin: 25px 0 0 0;
+    padding: 0;
+
+    width: 120px;
+    height: 42px;
+
+    border-radius: 21px;
+}
+
+.titles
+{
+    width: 100%;
+    display: flex;
+
+    color: rgba(255, 255, 255, .7);
+    font-size: 14px;
+
+    position: relative;
+    margin-bottom: 25px;
+}
+.titles div:first-child
+{
+    flex: 1;
+}
+.titles div:nth-child(2)
+{
+    width: 300px;
+}
+.titles div:last-child
+{
+    width: 150px;
+}
+.titles::after
+{
+    content: "";
+
+    display: block;
+
+    width: 100%;
+    height: 2px;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    background: rgba(152, 152, 152, 0.3);
+    margin-bottom: -10px;
+}
+.song_list
+{
+    margin-bottom: 150px;
+}

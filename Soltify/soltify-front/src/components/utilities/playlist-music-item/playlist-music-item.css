@@ -1,0 +1,44 @@
+.song_back
+{
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 1px;
+
+    border-radius: 8px;
+    padding: 6px;
+}
+.song_back:hover
+{
+    background: rgba(100, 100, 100, .4);
+}
+.song_left
+{
+    display: flex;
+    align-items: center;
+    flex: 1;
+
+    gap: 18px;
+
+    font-size: 15.5px;
+    color: #FFFFFF;
+}
+.song_left img
+{
+    width: 50px;
+    height: 50px;
+
+    border-radius: 3px;
+}
+.song_artist
+{
+    width: 300px;
+    color: rgba(255, 255, 255, .85);
+    font-size: 15px;
+}
+.song_time
+{
+    width: 150px;
+    color: rgba(255, 255, 255, .85);
+    font-size: 15px;
+}

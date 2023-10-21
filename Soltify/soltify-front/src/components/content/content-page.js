@@ -1,8 +1,11 @@
 import React from "react";
+import './content-page.css';
 
 const ContentPage = () => {
   return (
-      <div style={{color: "#fff"}}>lkmfa,sfasjfjkasnfkjasnkjnHello</div>
+      <div>
+
+      </div>
   )
 }
 
