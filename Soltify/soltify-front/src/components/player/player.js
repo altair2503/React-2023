@@ -246,6 +246,7 @@ const Player = () => {
 
     return (
         <div className={!playerActive ? "player_background mini" : "player_background"}>
+            <img src={playlist[index].img} alt={playlist[index].img} className={"player_background_img"} />
             <div className="player_background_layer">
                 <audio src={currentSong} ref={audioPlayer} muted={mute} onTimeUpdate={getCurrentDuration}/>
                 <div className="close" onClick={() => playerActiveCondition(false)}>
