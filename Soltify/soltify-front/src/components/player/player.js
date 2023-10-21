@@ -17,45 +17,7 @@ import brendImg from '../../assets/music/5.jpeg';
 import {useNavigate} from "react-router-dom";
 
 let playlist = [
-    // {
-    //     id: 1,
-    //     name: "Животные",
-    //     artist: "Скриптонит",
-    //     url: animals,
-    //     img: animalsImg
-    // },
-    // {
-    //     id: 2,
-    //     name: "Ты не верь слезам",
-    //     artist: "Скриптонит",
-    //     url: river,
-    //     img: riverImg
-    // },
-    // {
-    //     id: 3,
-    //     name: "До конца",
-    //     artist: "Скриптонит",
-    //     url: end,
-    //     img: endImg
-    // },
-    // {
-    //     id: 4,
-    //     name: "Бэби мама",
-    //     artist: "Скриптонит",
-    //     url: babymama,
-    //     img: babymamImg
-    // },
-    // {
-    //     id: 5,
-    //     name: "Мультибрендовый",
-    //     artist: "Скриптонит",
-    //     url: brend,
-    //     img: brendImg
-    // },
 ];
-
-
-
 
 const dbInstance = collection(db, 'songs');
 await getDocs(dbInstance).then( (response) => {
@@ -65,7 +27,6 @@ await getDocs(dbInstance).then( (response) => {
   ]).slice()
   }).catch( (err) => { alert(err.message) }
 ).finally( () => {
-  
 })
 
 let prevPlaylist = playlist.slice();
