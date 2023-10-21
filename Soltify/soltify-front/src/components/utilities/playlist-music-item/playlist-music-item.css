@@ -42,3 +42,26 @@
     color: rgba(255, 255, 255, .85);
     font-size: 15px;
 }
+
+
+.song_back_min
+{
+    width: 360px;
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 1px;
+
+    border-radius: 8px;
+    padding: 6px;
+}
+.song_back_min:hover
+{
+    background: rgba(100, 100, 100, .4);
+}
+.song_time_min
+{
+    width: fit-content;
+    color: rgba(255, 255, 255, .8);
+    font-size: 14.5px;
+}

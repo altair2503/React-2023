@@ -22,7 +22,7 @@ const HomePage = () => {
                         </a>
                         <ul>
                             <li><a href="/"><ion-icon name="home-outline"></ion-icon> Home</a></li>
-                            <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : navigate('/create-playlist')}><a href=""><ion-icon name="add-outline" id="add_playlist"></ion-icon> Create playlist</a></li>
+                            <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : navigate('/create-playlist')}><a><ion-icon name="add-outline" id="add_playlist"></ion-icon> Create playlist</a></li>
                             <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}><a href=""><ion-icon name="heart" id="heart"></ion-icon> Like</a></li>
                             <li className={"playlists"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
                                 <a className={"playlists_title"} href="">Your playlists</a>

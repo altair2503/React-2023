@@ -84,15 +84,15 @@ const PlaylistPage = () => {
                     <div>Artist</div>
                     <div>Time</div>
                 </div>
-                <div className={"song_list"}>
+                <div className={"playlist_song_list"}>
                     {
                         playlist.map((song, index) => {
-                            return <PlaylistMusicItem props={song} />
+                            return <PlaylistMusicItem props={song} type={true}/>
                         })
                     }
                     {
                         playlist.map((song, index) => {
-                            return <PlaylistMusicItem props={song} />
+                            return <PlaylistMusicItem props={song} type={true}/>
                         })
                     }
                 </div>

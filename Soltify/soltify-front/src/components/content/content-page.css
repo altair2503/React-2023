@@ -1,0 +1,14 @@
+.contentTitle
+{
+    font-size: 25px;
+    color: #FFFFFF;
+}
+.song_list
+{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 0fr);
+    grid-template-rows: repeat(3, 0fr);
+    column-gap: 40px;
+    row-gap: 5px;
+}

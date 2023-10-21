@@ -25,14 +25,9 @@ await getDocs(dbInstance).then( (response) => {
 const ContentPage = () => {
   return (
       <div>
-          <div className={"contentItemCard"}>
-              <span>Recently Played</span>
+          <div className={"contentTopCharts"}>
+              <span className={"contentTitle"}>Top Charts</span>
               <div className={"song_list"}>
-                  {
-                      playlist.map((song, index) => {
-                          return <PlaylistMusicItem props={song} />
-                      })
-                  }
                   {
                       playlist.map((song, index) => {
                           return <PlaylistMusicItem props={song} />

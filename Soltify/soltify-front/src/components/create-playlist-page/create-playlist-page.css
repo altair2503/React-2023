@@ -1,0 +1,41 @@
+.create_area
+{
+    margin-top: 30px;
+    display: flex;
+
+    gap: 70px;
+}
+.playlist_ft_imf
+{
+    width: 250px;
+    height: 250px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #3B3B3B;
+    border-radius: 15px;
+
+    cursor: pointer;
+}
+.playlist_ft_imf ion-icon
+{
+    font-size: 110px;
+    --ionicon-stroke-width: 21px;
+    color: rgb(128, 128, 128);
+}
+.playlist_data
+{
+    color: #FFFFFF;
+    padding-top: 10px;
+}
+.playlist_data div
+{
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+.playlist_data button
+{
+    margin-top: -5px;
+}
