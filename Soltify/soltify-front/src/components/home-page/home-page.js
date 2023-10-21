@@ -5,6 +5,8 @@ import user from '../../assets/music.jpg';
 import logo from '../../assets/logo.png';
 
 import Player from "../player/player";
+import {Route, Router, Routes} from "react-router-dom";
+import ContentPage from "../content/content-page";
 
 const HomePage = () => {
     return (
@@ -46,7 +48,9 @@ const HomePage = () => {
                             </a>
                         </div>
                         <div className={"content"}>
-
+                            {/*<Routes>*/}
+                            {/*    <Route path="/content" element={<ContentPage/>}/>*/}
+                            {/*</Routes>*/}
                         </div>
                     </div>
                 </div>

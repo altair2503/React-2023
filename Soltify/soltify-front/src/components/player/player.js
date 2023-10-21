@@ -50,7 +50,6 @@ let playlist = [
         img: brendImg
     },
 ];
-
 let prevPlaylist = playlist.slice();
 
 const Player = () => {
@@ -207,6 +206,10 @@ const Player = () => {
               playlist = [...playlist.slice(0, index+1), ...res]
           })
           setMixed(true)
+            shuffleArray().then((res) => {
+                playlist = [...playlist.slice(0, index+1), ...res]
+            })
+            setMixed(true)
         } else {
           playlist = [...playlist.slice(0, index+1), ...prevPlaylist.slice(index+1, prevPlaylist.length)]
           setMixed(false)
@@ -237,7 +240,7 @@ const Player = () => {
         }
     }
 
-    const findSong = (song)=>{
+    const findSong = (song)=> {
       return playlist.find((song) => song.url === song)
     }
 
@@ -265,7 +268,7 @@ const Player = () => {
                             </div>
                         </div>
                         <div className="player_navigation">
-                            <ion-icon name="shuffle-outline" class="random" onClick={toggleMix}></ion-icon>
+                            <ion-icon name="shuffle-outline" class="random" onClick={toggleMix} style={mixed ? { color: "#25dc60" } : { color: "#efefef" }}></ion-icon>
                             <div className="center">
                                 <ion-icon name="play-skip-back-outline" onClick={toggleSkipBackward}></ion-icon>
                                 <div className="play_pause" onClick={togglePlay}>
