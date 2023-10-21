@@ -14,6 +14,7 @@ import welcomePage from "./components/welcome-page/welcome-page";
 import HomePage from "./components/home-page/home-page";
 import PersonalAcc from "./components/PersonalAcc";
 import Protected from "./components/Protected";
+import ContentPage from "./components/content/content-page";
 
 
 const router = createBrowserRouter([
@@ -33,21 +34,15 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: "",
+    path: "/",
     element: <HomePage />,
     errorElement: <ErrorPage />
   },
-  // {
-  //   path: "/personal",
-  //   element: <PersonalAcc/>,
-  //   errorElement: <ErrorPage/>
-  // },
   {
     path: "/personal",
     element: <Protected/>,
     errorElement: <ErrorPage/>,
   },
-
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
