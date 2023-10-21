@@ -19,7 +19,7 @@ const PersonalAcc = () => {
     }
     return (
         <div>
-            <h1>Welcome to React Firebase Auth using email and password</h1>
+            <h1>Welcome to "Zheke Kabinet"</h1>
             <h2>{user && user.email}</h2>
             <button onClick={Logout}>Logout</button>
         </div>

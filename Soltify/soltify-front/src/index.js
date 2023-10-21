@@ -15,6 +15,7 @@ import PersonalAcc from "./components/PersonalAcc";
 import Protected from "./components/Protected";
 import ContentPage from "./components/content/content-page";
 import ReactDOM from "react-dom"
+import PlaylistPage from "./components/playlist/playlist-page";
 
 
 const router = createBrowserRouter([
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <ContentPage/>,
+        errorElement: <ErrorPage/>
+      },
+      {
+        path: "/playlists/oryssha-olender",
+        element: <PlaylistPage/>,
         errorElement: <ErrorPage/>
       }
     ]

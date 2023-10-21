@@ -317,9 +317,9 @@ const Player = () => {
                         </div>
                     </div>
                     <div className="player_options">
+                        <ion-icon name="heart" id="heart"></ion-icon>
                         <div>
                             <ion-icon name="ellipsis-horizontal"></ion-icon>
-
                         </div>
                         <ion-icon name="scan-outline" onClick={() => playerActiveCondition(true)}></ion-icon>
                     </div>

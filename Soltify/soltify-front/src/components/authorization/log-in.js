@@ -6,6 +6,8 @@ import { auth } from "../../firebase";
 
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import {db} from "../../firebase";
+import {collection, getDocs, where, query} from "firebase/firestore";
 
 const LogIn = key=> {
 
@@ -20,13 +22,52 @@ const LogIn = key=> {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             console.log(user)
-            localStorage.setItem('token', user.accessToken);
-            localStorage.setItem('user', JSON.stringify(user));
+            if (user && user.uid) {
+                const userData = await getUserData(user);
+                localStorage.setItem
+                ('token', user.accessToken);
+                localStorage.setItem('user', JSON.stringify(user));
+            } else {
+                console.error("User object is undefined")
+            }
             navigate("/personal");
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
+    const getUserData = async (user) => {
+        if (!user) {
+            return
+        }
+        const usersCollection = collection(db, "users");
+        const userQuery = query(usersCollection, where("uid", "==", user.uid));
+
+
+        try {
+            const querySnapshot = await getDocs(userQuery);
+            if (querySnapshot.size > 0) {
+                const doc = querySnapshot.docs[0]
+                return doc.data();
+            } else {
+                return {}
+            }
+        } catch (error) {
+            console.log("Error get data from Firestore", error);
+            throw error;
+        }
+    }
+
+        // const signIn = (e) => {
+        // e.preventDefault();
+        //
+        // signInWithEmailAndPassword(auth, email, password)
+        // .then((userCredential) => {
+        //     console.log(userCredential)
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        // });
+        // };
 
     return (
         <div className={styles.container}>

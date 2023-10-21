@@ -18,7 +18,7 @@ const HomePage = () => {
                             <img src={logo} alt={logo} />
                         </div>
                         <ul>
-                            <li><a href=""><ion-icon name="home-outline"></ion-icon> Home</a></li>
+                            <li><a href="/"><ion-icon name="home-outline"></ion-icon> Home</a></li>
                             <li className={"diff_li"}><a href=""><ion-icon name="add-outline" id="add_playlist"></ion-icon> Create playlist</a></li>
                             <li className={"diff_li"}><a href=""><ion-icon name="heart" id="heart"></ion-icon> Like</a></li>
                             <li className={"playlists"}>
@@ -26,7 +26,7 @@ const HomePage = () => {
                                 <ul>
                                     <li><a href="">qazaqsha olender</a></li>
                                     <li><a href="">aǵylshynsha olender</a></li>
-                                    <li><a href="">oryssha olender</a></li>
+                                    <li><a href="/playlists/oryssha-olender">oryssha olender</a></li>
                                     <li><a href="">uiqy ushin</a></li>
                                     <li><a href="">sport ushin</a></li>
                                     <li><a href="">music in car</a></li>
@@ -52,7 +52,7 @@ const HomePage = () => {
                         </div>
                     </div>
                 </div>
-                <Player />
+                <Player/>
             </div>
         </div>
     )
