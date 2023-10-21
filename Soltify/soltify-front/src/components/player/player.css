@@ -180,6 +180,11 @@ ion-icon
     font-size: 23px;
     color: #efefef;
 }
+#random:hover,
+#repeat:hover
+{
+    color: #FFFFFF;
+}
 
 .song_volume
 {
