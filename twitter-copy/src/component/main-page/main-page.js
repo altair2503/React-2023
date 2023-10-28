@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Outlet} from "react-router-dom";
 
-import './main-page.css'
+import './main-page.css';
 
 const MainPage = () => {
     return <div className={"main_back"}>
@@ -16,10 +16,6 @@ const MainPage = () => {
                 </ul>
             </div>
             <div className={"content"}>
-                <div className={"search"}>
-                    <input placeholder={"Search..."}/>
-                    <button type="submit">Search</button>
-                </div>
                 <Outlet />
             </div>
         </div>

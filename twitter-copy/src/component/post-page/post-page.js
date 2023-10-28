@@ -1,8 +1,8 @@
 import React from "react";
 
-const PostPage = () => {
+const PostPage = ({post}) => {
     return <div>
-
+        {/*{post.id}*/}
     </div>
 }
 

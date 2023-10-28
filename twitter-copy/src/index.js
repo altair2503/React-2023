@@ -14,19 +14,25 @@ import MainPage from "./component/main-page/main-page";
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <MainPage />
-    },
-    {
-        path: '/home',
-        element: <HomePage />
-    },
-    {
-        path: '/post',
-        element: <PostPage />
-    },
-    {
-        path: '/profile',
-        element: <ProfilePage />
+        element: <MainPage />,
+        children: [
+            {
+                path: '/',
+                element: <HomePage />
+            },
+            {
+                path: '/home',
+                element: <HomePage />
+            },
+            {
+                path: '/profile',
+                element: <ProfilePage />
+            },
+            {
+                path: '/posts/{id}',
+                element: <PostPage />
+            },
+        ]
     },
 ])
 
