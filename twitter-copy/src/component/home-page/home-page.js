@@ -23,7 +23,7 @@ const HomePage = () => {
 
     const [searchQuery, setSearchQuery] = useState('')
     const searchInPosts = (query) => {
-        setPosts(posts.filter(p => p.title === query))
+        setPosts(posts.filter(p => p.title.includes(query)))
     }
 
     return (
