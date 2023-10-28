@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './home-page.css';
 
 import user from '../../assets/music.jpg';

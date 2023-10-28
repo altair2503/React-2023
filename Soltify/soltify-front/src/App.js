@@ -1,27 +1,21 @@
+import React from "react";
 import './App.css';
+
+import {BrowserRouter, Outlet, Route, Router, Routes} from "react-router-dom";
+
 import WelcomePage from "./components/welcome-page/welcome-page";
 import LogIn from './components/authorization/log-in';
 import SignUp from './components/authorization/sign-up';
-import React from "react";
-import Player from "./components/player/player";
-import {BrowserRouter, Outlet, Route, Router, Routes} from "react-router-dom";
-import Navbar from "./oldmethod/Navbar";
 import HomePage from "./components/home-page/home-page";
+import Player from "./components/player/player";
 import ContentPage from "./components/content/content-page";
 
 
 
 function App() {
-  return (
-      <div>
-      </div>
-      // <WelcomePage />
-      // <SignUp/>
-      // <LogIn />
-      // <BrowserRouter>
-      //   <Navbar/>
-      // </BrowserRouter>
-  );
+    return (
+        <div></div>
+    );
 }
 
 export default App;

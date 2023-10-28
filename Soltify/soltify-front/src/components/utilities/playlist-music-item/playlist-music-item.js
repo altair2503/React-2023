@@ -16,9 +16,12 @@ const PlaylistMusicItem = ({props, type}) => {
     } else {
         return (
             <div className={"song_back_min"}>
-                <div className={"song_left"}>
+                <div className={"song_left_min"}>
                     <img src={props.img} alt={props.img} />
-                    {props.name}
+                    <div>
+                        {props.name}
+                        <span>{props.artist}</span>
+                    </div>
                 </div>
                 {/*<div className={"song_artist_min"}>{props.artist}</div>*/}
                 <div className={"song_time_min"}>3:57</div>
