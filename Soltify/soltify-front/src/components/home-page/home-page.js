@@ -17,19 +17,19 @@ const HomePage = () => {
             <div className={"background_layer"}>
                 <div className={"home_top"}>
                     <div className={"menu"}>
-                        <a href="/" className={"menu_top"}>
+                        <a href="/home" className={"menu_top"}>
                             <img src={logo} alt={logo} />
                         </a>
                         <ul>
-                            <li><a href="/"><ion-icon name="home-outline"></ion-icon> Home</a></li>
-                            <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : navigate('/create-playlist')}><a><ion-icon name="add-outline" id="add_playlist"></ion-icon> Create playlist</a></li>
+                            <li><a href="/home"><ion-icon name="home-outline"></ion-icon> Home</a></li>
+                            <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : navigate('/home/create-playlist')}><a><ion-icon name="add-outline" id="add_playlist"></ion-icon> Create playlist</a></li>
                             <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}><a href=""><ion-icon name="heart" id="heart"></ion-icon> Like</a></li>
                             <li className={"playlists"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
                                 <a className={"playlists_title"} href="">Your playlists</a>
                                 <ul>
                                     <li><a href="">qazaqsha olender</a></li>
                                     <li><a href="">aǵylshynsha olender</a></li>
-                                    <li><a href="/playlists/oryssha-olender">oryssha olender</a></li>
+                                    <li><a href="/home/playlists/oryssha-olender">oryssha olender</a></li>
                                     <li><a href="">uiqy ushin</a></li>
                                     <li><a href="">sport ushin</a></li>
                                     <li><a href="">music in car</a></li>
@@ -48,7 +48,7 @@ const HomePage = () => {
                             </div>
                             {
                                 localStorage.getItem("user") != null ?
-                                <a href="/account" className={"user_link"}>
+                                <a href="/home/account" className={"user_link"}>
                                     <img src={user} alt={user} />
                                 </a> : <a href="/log-in" className={"user_link"}>
                                         <img src={user} alt={user} />
