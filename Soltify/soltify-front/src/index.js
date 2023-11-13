@@ -18,6 +18,8 @@ import ReactDOM from "react-dom"
 import PlaylistPage from "./components/playlist/playlist-page";
 import AccountPage from "./components/account-page/account-page";
 import CreatePlaylistPage from "./components/create-playlist-page/create-playlist-page";
+import PlaylistsPage from "./components/playlists-page/playlists-page";
+import ArtistPage from "./components/artist-page/artist-page";
 
 
 const router = createBrowserRouter([
@@ -60,7 +62,17 @@ const router = createBrowserRouter([
         path: "/home/create-playlist",
         element: <CreatePlaylistPage/>,
         errorElement: <ErrorPage/>
-      }
+      },
+      {
+        path: "/home/playlists",
+        element: <PlaylistsPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/home/artist",
+        element: <ArtistPage />,
+        errorElement: <ErrorPage />,
+      },
     ]
   },
   {

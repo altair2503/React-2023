@@ -403,18 +403,23 @@ ion-icon
 .player_background.mini .player_options ion-icon
 {
     cursor: pointer;
-    font-size: 25px;
+    font-size: 30px;
     color: #FFFFFF;
 }
-.player_background.mini .player_options ion-icon:first-child
+.player_background.mini .player_options .add_to_playlist_btn
 {
     margin-right: 15px;
 }
 .player_background.mini .player_options #heart
 {
     font-size: 35px;
-    margin-top: -5px;
+    margin-top: -3px;
     margin-right: 40px;
+}
+.player_background.mini .player_options #scan
+{
+    font-size: 25px !important;
+    margin-top: 3px;
 }
 
 .player_background.mini .song_volume
@@ -451,4 +456,89 @@ ion-icon
     --ionicon-stroke-width: 25px;
 
     color: #FFFFFF;
+}
+
+.add_to_playlist_btn
+{
+    position: relative;
+}
+.add_to_playlist_btn .list_to_add
+{
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-40%);
+
+    background: #3B3B3B;
+    border-radius: 15px;
+
+    padding: 20px 15px 20px 20px;
+
+    color: #FFFFFF;
+}
+.list_to_add ul
+{
+    height: 135px;
+    overflow-y: auto;
+
+    margin: 12px 0 0 0;
+    padding: 0;
+}
+.list_to_add ul::-webkit-scrollbar
+{
+    width: 4px;
+}
+.list_to_add ul::-webkit-scrollbar-track
+{
+    background: #1E1E1E;
+}
+.list_to_add ul::-webkit-scrollbar-thumb
+{
+    background: #25DC60;
+    border-radius: 4px;
+}
+.list_to_add ul li
+{
+    height: fit-content;
+
+    display: block;
+    cursor: pointer;
+
+    margin-bottom: 9px;
+    padding-right: 18px;
+
+    white-space: nowrap;
+    font-size: 13px;
+
+    opacity: .85;
+}
+.list_to_add ul li span
+{
+    position: relative;
+}
+.list_to_add ul li span ion-icon
+{
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10;
+
+    margin: -10px -15px 0 0;
+
+    font-size: 23px !important;
+    color: #25DC60 !important;
+
+    display: none;
+}
+.list_to_add ul li:last-child
+{
+    margin-bottom: 0;
+}
+.list_to_add ul li:hover
+{
+    opacity: 1;
+}
+.list_to_add ul li:hover span ion-icon
+{
+    display: block;
 }

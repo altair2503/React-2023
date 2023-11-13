@@ -30,7 +30,7 @@ import ice1img from "../../assets/music/ice cube.jpeg"
 import ice2img from "../../assets/music/ice cube 2.jpeg"
 import snoopimg from "../../assets/music/snoop dog.jpeg"
 
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 let playlist = [
   {
@@ -135,6 +135,8 @@ const Player = () => {
     const [repeat, setRepeat] = useState(false);
     const [mixed, setMixed] = useState(false);
 
+    const [playlistAddState, setPlaylistAddState] = useState(false);
+
     const [elapsed, setElapsed] = useState(0);
     const [duration, setDuration] = useState(0);
 
@@ -159,9 +161,13 @@ const Player = () => {
             setElapsed(_elapsed);
         }, 100);
 
-    }, [
-        volume, isPlaying
-    ]);
+        document.addEventListener("click", e => {
+            if(e.target.id !== "add_to_playlist_btn") {
+                setPlaylistAddState(false)
+            }
+        })
+
+    }, [volume, isPlaying]);
 
     const getCurrentDuration = () => {
         const currentProgress = (audioPlayer.current?.currentTime / audioPlayer.current?.duration) * 100;
@@ -171,10 +177,6 @@ const Player = () => {
     }
 
     function progressMoving(e) {
-        // const progressWidth = progressRef.current.getBoundingClientRect().width;
-        // const percent = (progressWidth / 100) * progress
-        //
-        // document.querySelector(".progress_bar").style.width = `${percent}%`;
     }
 
     function changeCurrent(e) {
@@ -329,9 +331,6 @@ const Player = () => {
     //   });
     // }
 
-
-  
-
     return (
         <div className={!playerActive ? "player_background mini" : "player_background"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
             <img src={playlist[index].img} alt={playlist[index].img} className={"player_background_img"} />
@@ -370,10 +369,24 @@ const Player = () => {
                     </div>
                     <div className="player_options">
                         <ion-icon name="heart" id="heart"></ion-icon>
-                        <div>
-                            <ion-icon name="ellipsis-horizontal"></ion-icon>
+                        <div className={"add_to_playlist_btn"}>
+                            <ion-icon name="add-outline" id={"add_to_playlist_btn"} onClick={() => setPlaylistAddState(playlistAddState => !playlistAddState)}></ion-icon>
+                            {
+                                playlistAddState ? <div className="list_to_add">
+                                    <span>Add to playlist:</span>
+                                    <ul>
+                                        <li><span>qazaqsha olender <ion-icon name="add-outline"></ion-icon></span></li>
+                                        <li><span>aǵylshynsha olender <ion-icon name="add-outline"></ion-icon></span></li>
+                                        <li><span>oryssha olender <ion-icon name="add-outline"></ion-icon></span></li>
+                                        <li><span>uiqy ushin <ion-icon name="add-outline"></ion-icon></span></li>
+                                        <li><span>sport ushin <ion-icon name="add-outline"></ion-icon></span></li>
+                                        <li><span>music in car <ion-icon name="add-outline"></ion-icon></span></li>
+                                        <li><span>for cooking <ion-icon name="add-outline"></ion-icon></span></li>
+                                    </ul>
+                                </div> : ''
+                            }
                         </div>
-                        <ion-icon name="scan-outline" onClick={() => playerActiveCondition(true)}></ion-icon>
+                        <ion-icon name="scan-outline" id="scan" onClick={() => playerActiveCondition(true)}></ion-icon>
                     </div>
                     <div className="song_volume">
                         <ion-icon name="volume-off-outline"></ion-icon>
