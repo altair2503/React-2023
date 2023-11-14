@@ -18,11 +18,13 @@ import ReactDOM from "react-dom"
 import PlaylistPage from "./components/playlist/playlist-page";
 import AccountPage from "./components/account-page/account-page";
 import CreatePlaylistPage from "./components/create-playlist-page/create-playlist-page";
+import PlaylistsPage from "./components/playlists-page/playlists-page";
+import ArtistPage from "./components/artist-page/artist-page";
 
 
 const router = createBrowserRouter([
   {
-    path: "/welcome",
+    path: "/",
     element: <WelcomePage />,
     errorElement: <ErrorPage />
   },
@@ -37,30 +39,40 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: "/",
+    path: "/home",
     element: <HomePage />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: "/home/",
         element: <ContentPage/>,
         errorElement: <ErrorPage/>
       },
       {
-        path: "/playlists/oryssha-olender",
+        path: "/home/playlists/oryssha-olender",
         element: <PlaylistPage/>,
         errorElement: <ErrorPage/>
       },
       {
-        path: "/account",
+        path: "/home/account",
         element: <AccountPage/>,
         errorElement: <ErrorPage/>
       },
       {
-        path: "/create-playlist",
+        path: "/home/create-playlist",
         element: <CreatePlaylistPage/>,
         errorElement: <ErrorPage/>
-      }
+      },
+      {
+        path: "/home/playlists",
+        element: <PlaylistsPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/home/artist",
+        element: <ArtistPage />,
+        errorElement: <ErrorPage />,
+      },
     ]
   },
   {

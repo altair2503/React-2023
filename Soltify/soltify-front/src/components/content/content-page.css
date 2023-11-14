@@ -1,7 +1,37 @@
-.contentTitle
+.content_page_back
+{
+    margin-bottom: 150px;
+}
+
+.content_item_back
+{
+    margin-bottom: 60px;
+}
+.content_title
 {
     font-size: 25px;
     color: #FFFFFF;
+}
+.content_description
+{
+    color: rgba(255, 255, 255, .7);
+    margin-top: 5px;
+
+    font-size: 15px;
+}
+.recently_list
+{
+    margin-top: 20px;
+
+    width: 1230px;
+    overflow-x: auto;
+
+    display: flex;
+    gap: 20px;
+}
+.recently_list::-webkit-scrollbar
+{
+    height: 0;
 }
 .song_list
 {

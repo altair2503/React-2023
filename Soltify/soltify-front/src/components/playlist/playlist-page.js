@@ -90,11 +90,6 @@ const PlaylistPage = () => {
                             return <PlaylistMusicItem props={song} type={true}/>
                         })
                     }
-                    {
-                        playlist.map((song, index) => {
-                            return <PlaylistMusicItem props={song} type={true}/>
-                        })
-                    }
                 </div>
             </div>
         </div>

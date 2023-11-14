@@ -53,20 +53,30 @@
     display: flex;
     flex-direction: column;
 }
-.song_left_min div span
+.song_left_min div a
 {
     font-size: 14px;
     color: rgba(255, 255, 255, .8);
+    text-decoration: none;
+}
+.song_left_min div a:hover
+{
+    color: #FFFFFF;
 }
 .song_artist
 {
     width: 300px;
     color: rgba(255, 255, 255, .85);
     font-size: 15px;
+    text-decoration: none;
+}
+.song_artist:hover
+{
+    color: #FFFFFF;
 }
 .song_time
 {
-    width: 150px;
+    width: 120px;
     color: rgba(255, 255, 255, .85);
     font-size: 15px;
 }
@@ -83,13 +93,105 @@
     border-radius: 8px;
     padding: 6px;
 }
+.song_back_min .song_options
+{
+    display: none;
+}
 .song_back_min:hover
 {
     background: rgba(100, 100, 100, .4);
+}
+.song_back_min:hover .song_options
+{
+    display: block;
+    color: #FFFFFF;
+
+    margin-bottom: -5px;
+    margin-left: 8px;
 }
 .song_time_min
 {
     width: fit-content;
     color: rgba(255, 255, 255, .8);
     font-size: 14.5px;
+}
+.song_back_min .song_options .options_list
+{
+    top: 0;
+    height: fit-content;
+}
+
+
+.song_options
+{
+    position: relative;
+    color: #25DC60;
+    font-size: 18px;
+}
+.options_list
+{
+    position: absolute;
+    bottom: 15px;
+    right: 0;
+    z-index: 1;
+
+    background: #3B3B3B;
+    border-radius: 12px;
+
+    padding: 20px 15px;
+    list-style: none;
+
+    color: #FFFFFF;
+}
+.options_list li
+{
+    font-size: 14px;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    margin-bottom: 15px;
+
+    opacity: .85;
+}
+.options_list li:last-child
+{
+    margin-bottom: 0;
+}
+.options_list li:hover
+{
+    opacity: 1;
+}
+.options_list li ion-icon
+{
+    font-size: 16px;
+    pointer-events: none;
+}
+.add_to_playlist_btn.for_options
+{
+    position: relative;
+    z-index: 2;
+    opacity: 1;
+}
+.add_to_playlist_btn.for_options .list_to_add
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 0 0 -56px 21px;
+}
+.add_to_playlist_btn.for_options .list_to_add span
+{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.add_to_playlist_btn.for_options .list_to_add span ion-icon
+{
+    font-size: 18px;
+    pointer-events: none;
 }

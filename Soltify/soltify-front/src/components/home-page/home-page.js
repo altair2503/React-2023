@@ -2,10 +2,12 @@ import React, {useEffect} from "react";
 import './home-page.css';
 
 import user from '../../assets/music.jpg';
+import avatar from '../../assets/avatar.png';
 import logo from '../../assets/logo.png';
 
 import Player from "../player/player";
-import {Outlet, Route, Router, Routes, useNavigate} from "react-router-dom";
+import { Outlet, Route, Router, Routes, useNavigate, Link } from "react-router-dom";
+
 import ContentPage from "../content/content-page";
 
 import { Link } from "react-router-dom";
@@ -20,16 +22,17 @@ const HomePage = () => {
             <div className={"background_layer"}>
                 <div className={"home_top"}>
                     <div className={"menu"}>
-                        <a href="/" className={"menu_top"}>
+                        <Link to="/home" className={"menu_top"}>
                             <img src={logo} alt={logo} />
-                        </a>
+                        </Link>
                         <ul>
-                            <li><a href="/"><ion-icon name="home-outline"></ion-icon> Home</a></li>
-                            <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : navigate('/create-playlist')}><a><ion-icon name="add-outline" id="add_playlist"></ion-icon> Create playlist</a></li>
-                            <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}><a href=""><ion-icon name="heart" id="heart"></ion-icon> Like</a></li>
+                            <li><Link to="/home"><ion-icon name="home-outline"></ion-icon> Home</Link></li>
+                            <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : navigate('/home/create-playlist')}><Link><ion-icon name="add-outline" id="add_playlist"></ion-icon> Create playlist</Link></li>
+                            <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}><Link><ion-icon name="heart" id="heart"></ion-icon> Like</Link></li>
                             <li className={"playlists"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
-                                <a className={"playlists_title"} href="">Your playlists</a>
+                                <Link className={"playlists_title"} to="/home/playlists">Your playlists</Link>
                                 <ul>
+<<<<<<< HEAD
                                     <li><a href="">qazaqsha olender</a></li>
                                     <li><a href="">aǵylshynsha olender</a></li>
                                     <li><a><Link to="/playlists/oryssha-olender">oryssha olender</Link></a></li>
@@ -37,6 +40,15 @@ const HomePage = () => {
                                     <li><a href="">sport ushin</a></li>
                                     <li><a href="">music in car</a></li>
                                     <li><a href="">for cooking</a></li>
+=======
+                                    <li><Link to="">qazaqsha olender</Link></li>
+                                    <li><Link to="">aǵylshynsha olender</Link></li>
+                                    <li><Link to="/home/playlists/oryssha-olender">oryssha olender</Link></li>
+                                    <li><Link to="">uiqy ushin</Link></li>
+                                    <li><Link to="">sport ushin</Link></li>
+                                    <li><Link to="">music in car</Link></li>
+                                    <li><Link to="">for cooking</Link></li>
+>>>>>>> refs/remotes/origin/main
                                 </ul>
                             </li>
                         </ul>
@@ -49,14 +61,9 @@ const HomePage = () => {
                                     <ion-icon name="search-outline"></ion-icon>
                                 </button>
                             </div>
-                            {
-                                localStorage.getItem("user") != null ?
-                                <a href="/account" className={"user_link"}>
-                                    <img src={user} alt={user} />
-                                </a> : <a href="/log-in" className={"user_link"}>
-                                        <img src={user} alt={user} />
-                                    </a>
-                            }
+                            <Link to={localStorage.getItem("user") != null ? "/home/account" : "/log-in"} className={"user_link"}>
+                                { localStorage.getItem("user") != null ? <div className="default_avatar"><img src={avatar} alt={avatar} /></div> : <img src={user} alt={user} /> }
+                            </Link>
                         </div>
                         <div className={"content"}>
                             <Outlet />

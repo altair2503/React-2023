@@ -1,0 +1,70 @@
+.artist_back
+{
+    margin-bottom: 150px;
+}
+
+.artist_top
+{
+    display: flex;
+    margin-bottom: 35px;
+}
+.artist_top img
+{
+    width: 250px;
+    height: 250px;
+
+    border-radius: 50%;
+}
+.default_img
+{
+    width: 250px;
+    height: 250px;
+
+    background: #4b4b4b;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.default_img img
+{
+    width: 190px;
+    height: 190px;
+}
+
+.artist_info
+{
+    align-self: end;
+    margin-left: 40px;
+}
+.artist_info span
+{
+    color: rgba(255, 255, 255, .7);
+    font-size: 18px;
+}
+.artist_name
+{
+    font-size: 30px;
+    font-weight: 500;
+
+    margin-top: 12px;
+    color: #FFFFFF;
+}
+.artist_songs
+{
+    font-size: 15px;
+    color: rgba(255,255, 255, .8);
+
+    margin-top: 4px;
+}
+.play_artist
+{
+    margin: 35px 0 0 0;
+    padding: 0;
+
+    width: 120px;
+    height: 42px;
+
+    border-radius: 21px;
+}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import './content-page.css';
 
 import ContentItem from "../utilities/content-item/content-item";
@@ -34,7 +34,11 @@ import ice1img from "../../assets/music/ice cube.jpeg"
 import ice2img from "../../assets/music/ice cube 2.jpeg"
 import snoopimg from "../../assets/music/snoop dog.jpeg"
 
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import playlistLogo2 from "../../assets/music/5.jpeg";
+import playlistLogo from "../../assets/music.jpg";
+import playlistLogo3 from "../../assets/music/3.jpeg";
+import playlistLogo4 from "../../assets/music/50 cent 2.jpeg";
 
 let playlist = [
   {
@@ -162,20 +166,82 @@ let playlist = [
 
 const ContentPage = () => {
 
-  return (
-      <div>
-          <div className={"contentTopCharts"}>
-              <span className={"contentTitle"}>Top Charts</span>
-          </div>
-            <div className={"song_list"}>
-                {
-                    playlist.map((song, index) => {
-                        return <PlaylistMusicItem props={song} />
-                    })
-                }
-            </div>
+  const [state, setState] = useState(false);
+
+  return <div className={"content_page_back"}>
+    <div className={"content_item_back"}>
+      <span className={"content_title"}>Recently Played</span>
+      <div className={"recently_list"}>
+        <Link to={""} className={"playlist_item"}>
+          {
+            state ? <div className={"playlist_img"}>
+              <ion-icon name="musical-notes-outline"></ion-icon>
+            </div> : <img src={playlistLogo} alt={playlistLogo} />
+          }
+          <span>aǵylshynsha olender</span>
+        </Link>
+        <Link to={"/home/playlists/oryssha-olender"} className={"playlist_item"}>
+          {
+            state ? <div className={"playlist_img"}>
+              <ion-icon name="musical-notes-outline"></ion-icon>
+            </div> : <img src={playlistLogo2} alt={playlistLogo} />
+          }
+          <span>oryssha olender</span>
+        </Link>
+        <Link to={""} className={"playlist_item"}>
+          {
+            !state ? <div className={"playlist_img"}>
+              <ion-icon name="musical-notes-outline"></ion-icon>
+            </div> : <img src={playlistLogo} alt={playlistLogo} />
+          }
+          <span>uiqy ushin</span>
+        </Link>
+        <Link to={""} className={"playlist_item"}>
+          {
+            state ? <div className={"playlist_img"}>
+              <ion-icon name="musical-notes-outline"></ion-icon>
+            </div> : <img src={playlistLogo3} alt={playlistLogo} />
+          }
+          <span>sport ushin</span>
+        </Link>
+        <Link to={""} className={"playlist_item"}>
+          {
+            state ? <div className={"playlist_img"}>
+              <ion-icon name="musical-notes-outline"></ion-icon>
+            </div> : <img src={playlistLogo4} alt={playlistLogo} />
+          }
+          <span>music in car</span>
+        </Link>
+        <Link to={""} className={"playlist_item"}>
+          {
+            state ? <div className={"playlist_img"}>
+              <ion-icon name="musical-notes-outline"></ion-icon>
+            </div> : <img src={playlistLogo3} alt={playlistLogo} />
+          }
+          <span>sport ushin</span>
+        </Link>
+        <Link to={""} className={"playlist_item"}>
+          {
+            state ? <div className={"playlist_img"}>
+              <ion-icon name="musical-notes-outline"></ion-icon>
+            </div> : <img src={playlistLogo4} alt={playlistLogo} />
+          }
+          <span>music in car</span>
+        </Link>
       </div>
-  )
+    </div>
+    <div className={"content_item_back"}>
+      <span className={"content_title"}>Top Charts</span>
+      <div className={"content_description"}>Tracks that are the most popular on the Soltify platform at the moment</div>
+      <div className={"song_list"}>
+        {
+          playlist.map((song, index) => {
+            return <PlaylistMusicItem props={song} />
+          })
+        }
+      </div>
+    </div>
+  </div>
 }
 
 export default ContentPage;

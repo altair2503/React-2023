@@ -81,6 +81,8 @@
 
     position: relative;
     margin-bottom: 25px;
+
+    padding: 0 5px;
 }
 .titles div:first-child
 {

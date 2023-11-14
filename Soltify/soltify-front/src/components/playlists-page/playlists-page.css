@@ -1,0 +1,57 @@
+.playlists_back
+{
+    margin-bottom: 150px;
+}
+
+.playlists_list
+{
+    margin-top: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(5, 0fr);
+    justify-content: space-between;
+    row-gap: 30px;
+}
+.playlist_item
+{
+    width: 215px;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    text-align: center;
+    text-decoration: none;
+}
+.playlist_img
+{
+    width: 215px;
+    height: 215px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #3B3B3B;
+    border-radius: 15px;
+}
+.playlist_img ion-icon
+{
+    font-size: 110px;
+    --ionicon-stroke-width: 21px;
+    color: rgb(128, 128, 128);
+}
+.playlist_item img
+{
+    width: 215px;
+    height: 215px;
+
+    border-radius: 15px;
+}
+.playlist_item span
+{
+    font-size: 14px;
+    color: #FFFFFF;
+
+    margin-top: 10px;
+}
