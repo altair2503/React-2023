@@ -8,6 +8,9 @@ import Player from "../player/player";
 import {Outlet, Route, Router, Routes, useNavigate} from "react-router-dom";
 import ContentPage from "../content/content-page";
 
+import { Link } from "react-router-dom";
+
+
 const HomePage = () => {
 
     const navigate = useNavigate();
@@ -29,7 +32,7 @@ const HomePage = () => {
                                 <ul>
                                     <li><a href="">qazaqsha olender</a></li>
                                     <li><a href="">aǵylshynsha olender</a></li>
-                                    <li><a href="/playlists/oryssha-olender">oryssha olender</a></li>
+                                    <li><a><Link to="/playlists/oryssha-olender">oryssha olender</Link></a></li>
                                     <li><a href="">uiqy ushin</a></li>
                                     <li><a href="">sport ushin</a></li>
                                     <li><a href="">music in car</a></li>
