@@ -1,9 +1,16 @@
 import React, {useEffect, useState} from "react";
 import './playlist-music-item.css';
 import {Link} from "react-router-dom";
+import { addUserExactPlaylist, getUserPlaylist } from "../../services/playlist-service";
+import { userUID } from "../../services/user-service";
+
+var userPlaylist = []
+await getUserPlaylist(userUID)
+    .then((succes) => {
+        userPlaylist = succes;
+    })
 
 const PlaylistMusicItem = ({props, type, playlist}) => {
-
     const [playlistAddState, setPlaylistAddState] = useState(false);
     const [songOptionListState, setSongOptionListState] = useState(false);
 
@@ -19,6 +26,7 @@ const PlaylistMusicItem = ({props, type, playlist}) => {
         })
     }, [])
 
+
     if(type) {
         return (
             <div className={"song_back"}>
@@ -26,8 +34,8 @@ const PlaylistMusicItem = ({props, type, playlist}) => {
                     <img src={props.img} alt={props.img} />
                     {props.name}
                 </div>
-                <Link to={"/home/artist"} className={"song_artist"}>{props.artist}</Link>
-                <div className={"song_time"}>{props.time}</div>
+                <Link to={"/home/artist"} className={"song_artist"}>{props.artist.username}</Link>
+                <div className={"song_time"}>{props.duration}</div>
                 <div className={"song_options"}>
                     <ion-icon name="ellipsis-horizontal" id={"open_song_options_btn"} onClick={() => setSongOptionListState(songOptionListState => !songOptionListState)}></ion-icon>
                     {
@@ -39,13 +47,13 @@ const PlaylistMusicItem = ({props, type, playlist}) => {
                                     playlistAddState ? <div className="list_to_add">
                                         <span className={"back_to_options"} onClick={() => setPlaylistAddState(false)}><ion-icon name="arrow-back-outline"></ion-icon> Add to playlist: </span>
                                         <ul>
-                                            <li><span>qazaqsha olender <ion-icon name="add-outline"></ion-icon></span></li>
-                                            <li><span>aǵylshynsha olender <ion-icon name="add-outline"></ion-icon></span></li>
-                                            <li><span>oryssha olender <ion-icon name="add-outline"></ion-icon></span></li>
-                                            <li><span>uiqy ushin <ion-icon name="add-outline"></ion-icon></span></li>
-                                            <li><span>sport ushin <ion-icon name="add-outline"></ion-icon></span></li>
-                                            <li><span>music in car <ion-icon name="add-outline"></ion-icon></span></li>
-                                            <li><span>for cooking <ion-icon name="add-outline"></ion-icon></span></li>
+                                            {
+                                                userPlaylist.map((pl, ind) => {
+                                                    return (
+                                                        <li><span> {pl.name} <ion-icon name="add-outline"></ion-icon></span></li>
+                                                    )
+                                                })
+                                            }
                                         </ul>
                                     </div> : ''
                                 }
@@ -65,10 +73,10 @@ const PlaylistMusicItem = ({props, type, playlist}) => {
                     <img src={props.img} alt={props.img} />
                     <div>
                         {props.name}
-                        <Link to={"/home/artist"}>{props.artist}</Link>
+                        <Link to={"/home/artist"}>{props.artist.username}</Link>
                     </div>
                 </div>
-                <div className={"song_time_min"}>3:57</div>
+                <div className={"song_time_min"}>{props.duration}</div>
                 <div className={"song_options"}>
                     <ion-icon name="ellipsis-horizontal" id={"open_song_options_btn"} onClick={() => setSongOptionListState(songOptionListState => !songOptionListState)}></ion-icon>
                     {
@@ -80,13 +88,24 @@ const PlaylistMusicItem = ({props, type, playlist}) => {
                                     playlistAddState ? <div className="list_to_add">
                                         <span className={"back_to_options"} onClick={() => setPlaylistAddState(false)}><ion-icon name="arrow-back-outline"></ion-icon> Add to playlist: </span>
                                         <ul>
-                                            <li><span>qazaqsha olender <ion-icon name="add-outline"></ion-icon></span></li>
-                                            <li><span>aǵylshynsha olender <ion-icon name="add-outline"></ion-icon></span></li>
-                                            <li><span>oryssha olender <ion-icon name="add-outline"></ion-icon></span></li>
-                                            <li><span>uiqy ushin <ion-icon name="add-outline"></ion-icon></span></li>
-                                            <li><span>sport ushin <ion-icon name="add-outline"></ion-icon></span></li>
-                                            <li><span>music in car <ion-icon name="add-outline"></ion-icon></span></li>
-                                            <li><span>for cooking <ion-icon name="add-outline"></ion-icon></span></li>
+                                            {
+                                                userPlaylist.map((pl, ind) => {
+                                                    if(!pl.songs.includes(props.id)){
+                                                        return (
+                                                            <li onClick={() => addUserExactPlaylist(userUID, ind, props.id)}>
+                                                                <span> {pl.name} <ion-icon name="add-outline"></ion-icon></span>
+                                                            </li>
+                                                        )
+                                                    } else{
+                                                        return (
+                                                            <li>
+                                                                <span> {pl.name} <ion-icon name="add-outline"></ion-icon></span> ✔
+                                                            </li>
+                                                        )
+                                                    }
+  
+                                                })
+                                            }
                                         </ul>
                                     </div> : ''
                                 }

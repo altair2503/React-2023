@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage/>
       },
       {
-        path: "/home/playlists/oryssha-olender",
+        path: "/home/playlists/:playlistName",
         element: <PlaylistPage/>,
         errorElement: <ErrorPage/>
       },

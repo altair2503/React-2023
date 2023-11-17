@@ -1,76 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import './playlist-page.css';
-
-import img from '../../assets/logo.png';
-
-import animals from "../../assets/music/1.mp3"
-import river from "../../assets/music/2.mp3"
-import end from "../../assets/music/3.mp3"
-import babymama from "../../assets/music/4.mp3"
-import brend from "../../assets/music/5.mp3"
-
-import animalsImg from '../../assets/music/1.png';
-import riverImg from '../../assets/music/2.webp';
-import endImg from '../../assets/music/3.jpeg';
-import babymamImg from '../../assets/music/4.jpeg';
-import brendImg from '../../assets/music/5.jpeg';
 import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
+import { getUserExactPlaylist } from "../services/playlist-service";
+import { getUserData } from "../services/user-service";
 
-let playlist = [
-    {
-        id: 1,
-        name: "Животные",
-        artist: "Скриптонит",
-        url: animals,
-        img: animalsImg,
-        time: '3:02'
-    },
-    {
-        id: 2,
-        name: "Ты не верь слезам",
-        artist: "Скриптонит",
-        url: river,
-        img: riverImg,
-        time: '4:17'
-    },
-    {
-        id: 3,
-        name: "До конца",
-        artist: "Скриптонит",
-        url: end,
-        img: endImg,
-        time: '2:54'
-    },
-    {
-        id: 4,
-        name: "Бэби мама",
-        artist: "Скриптонит",
-        url: babymama,
-        img: babymamImg,
-        time: '3:51'
-    },
-    {
-        id: 5,
-        name: "Мультибрендовый",
-        artist: "Скриптонит",
-        url: brend,
-        img: brendImg,
-        time: '4:32'
-    },
-];
 
 const PlaylistPage = () => {
+    const location = useLocation();
+    const {playlistName} = useParams();
+    const [playlist, setPlaylist] = useState([]);
+    const [owner, setOwner] = useState("");
+
+    getUserExactPlaylist(location.state.userID, location.state.playlistIndex)
+        .then((result) => setPlaylist(result)); 
+    
+    getUserData(location.state.userID)
+        .then((result) => setOwner(result));
+
+    useEffect(() => {
+        console.log(playlist)
+    }, [playlist, owner]);
+
     return (
         <div className={"playlist_background"}>
             <div className={"playlist_info"}>
                 <div className={"playlist_img"}>
-                    <ion-icon name="musical-notes-outline"></ion-icon>
-                    {/*<img src={img} alt={img} />*/}
+                    {
+                        !playlist.img ? <div className={"playlist_img"}>
+                            <ion-icon name="musical-notes-outline"></ion-icon>
+                        </div> : <img src={playlist.img} alt={playlist.name} />
+                    }
                 </div>
                 <div className={"playlist_details"}>
                     <span>Playlist</span>
-                    <div className={"playlist_name"}>oryssha olender</div>
-                    <div className={"playlist_owner"}>azikkw <span>•</span> 8 songs</div>
+                    <div className={"playlist_name"}>{playlistName}</div>
+                    <div className={"playlist_owner"}> {owner ? `${owner.name} ${owner.lastname}` : ""} <span>•</span> {playlist.length} songs</div>
                     <button className={"play_playlist"}>Play</button>
                 </div>
                 {/*<div className={"playlist_options"}>*/}
@@ -85,11 +50,11 @@ const PlaylistPage = () => {
                     <div>Time</div>
                 </div>
                 <div className={"playlist_song_list"}>
-                    {
+                    {/* {
                         playlist.map((song, index) => {
                             return <PlaylistMusicItem props={song} type={true}/>
                         })
-                    }
+                    } */}
                 </div>
             </div>
         </div>

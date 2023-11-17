@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import './playlists-page.css';
+import { getUserPlaylist } from "../services/playlist-service";
 
 import { Link } from "react-router-dom";
 
@@ -8,14 +9,41 @@ import playlistLogo2 from '../../assets/music/5.jpeg';
 import playlistLogo3 from '../../assets/music/3.jpeg';
 import playlistLogo4 from '../../assets/music/50 cent 2.jpeg';
 
+
+let playlistList = [];
+
+if(localStorage.getItem('user')){
+    await getUserPlaylist((JSON)
+        .parse(localStorage.getItem('user')).uid)
+            .then((result) => {
+                playlistList = result;
+            });
+}
+
 const PlaylistsPage = () => {
-
-    const [state, setState] = useState(false);
-
     return <div className={"playlists_back"}>
         <span className={"acc_title"}>Your Playlists</span>
         <div className={"playlists_list"}>
-            <Link to={""} className={"playlist_item"}>
+            {playlistList
+                .map((playlist, index) => {
+                    return (<Link 
+                                to={`/home/playlists/${playlist.name}`} 
+                                className={"playlist_item"}
+                                state={
+                                    {   
+                                        userID: (JSON).parse(localStorage.getItem('user')).uid,
+                                        playlistIndex: index
+                                    }
+                                }> 
+                                {!playlist.img ? <div className={"playlist_img"}> <ion-icon name="musical-notes-outline"></ion-icon> </div> : <img src={playlist.img} alt={playlist.name} />}
+                                <span>{playlist.name}</span>
+                            </Link>
+                            )
+                    
+                })
+            
+            }
+            {/* <Link to={""} className={"playlist_item"}>
                 {
                     !state ? <div className={"playlist_img"}>
                         <ion-icon name="musical-notes-outline"></ion-icon>
@@ -62,10 +90,11 @@ const PlaylistsPage = () => {
                     </div> : <img src={playlistLogo4} alt={playlistLogo} />
                 }
                 <span>music in car</span>
-            </Link>
+            </Link> */}
         </div>
     </div>
 
 }
+
 
 export default PlaylistsPage;

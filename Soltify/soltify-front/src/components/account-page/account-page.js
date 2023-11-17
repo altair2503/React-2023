@@ -11,11 +11,12 @@ import avatar from "../../assets/avatar.png";
 import user from "../../assets/music.jpg";
 
 
-const AccountPage = () => {
 
+
+
+const AccountPage = () => {
     const [user, setUser] = useState({})
     const navigate = useNavigate();
-
     const Logout = async () => {
         try {
             await signOut(auth);
@@ -32,12 +33,31 @@ const AccountPage = () => {
         const docSnap = await getDoc(docRef);
 
         if(docSnap.exists){
-            setUser(docSnap.data());
+            setUser({...docSnap.data(),
+                formattedDate: convertSecondsToDate(docSnap.data().date.seconds)});
+            console.log(docSnap.data());
         } else {
             console.log("No such document");
         }
     }
+    
     getUserData().then();
+
+    const convertSecondsToDate = (seconds) => {
+        const milliseconds = seconds * 1000;
+        const dateObject = new Date(milliseconds);
+        
+        // Getting the date components
+        const day = dateObject.getDate();
+        const month = dateObject.getMonth() + 1; // Months are zero-based
+        const year = dateObject.getFullYear();
+    
+        // Formatting the date as dd.mm.yyyy
+        console.log(`${day}.${month}.${year}`);
+        return `${day}.${month}.${year}`;
+      };
+
+
 
     return <div className={"acc_back"}>
         <span className={"acc_title"}>Your Account</span>
@@ -49,7 +69,7 @@ const AccountPage = () => {
             <div className={"user_info_right"}>
                 <div className={"user_name"}>{user.name} {user.lastname}</div>
                 <div className={"user_email"}>{user.email}</div>
-                <div className={"user_reg_date"}>part of Soltify since 18.10.2023</div>
+                <div className={"user_reg_date"}>part of Soltify since {user.formattedDate} </div>
             </div>
         </div>
     </div>

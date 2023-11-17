@@ -1,21 +1,43 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import './home-page.css';
 
 import user from '../../assets/music.jpg';
 import avatar from '../../assets/avatar.png';
 import logo from '../../assets/logo.png';
+import { getUserPlaylist } from "../services/playlist-service";
 
 import Player from "../player/player";
 import { Outlet, Route, Router, Routes, useNavigate, Link } from "react-router-dom";
 
 import ContentPage from "../content/content-page";
+import { getSongs } from "../services/song-service";
+import { userUID } from "../services/user-service";
 
-import { Link } from "react-router-dom";
+let playList = [];
+let songs = [];
 
+if(userUID){
+    await getUserPlaylist(userUID)
+            .then((result) => {
+                playList = result;
+            });
+    }
+
+await getSongs()
+    .then((result) => {
+        songs = result;
+    })
 
 const HomePage = () => {
-
+    const [playlist, setPlaylist] = useState(songs);
+    const [index, setIndex] = useState(0);
     const navigate = useNavigate();
+
+    useEffect(() => {
+       
+    }, [playlist, index]);
+
+    console.log(playList);
 
     return (
         <div className={"background"}>
@@ -32,23 +54,22 @@ const HomePage = () => {
                             <li className={"playlists"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
                                 <Link className={"playlists_title"} to="/home/playlists">Your playlists</Link>
                                 <ul>
-<<<<<<< HEAD
-                                    <li><a href="">qazaqsha olender</a></li>
-                                    <li><a href="">aǵylshynsha olender</a></li>
-                                    <li><a><Link to="/playlists/oryssha-olender">oryssha olender</Link></a></li>
-                                    <li><a href="">uiqy ushin</a></li>
-                                    <li><a href="">sport ushin</a></li>
-                                    <li><a href="">music in car</a></li>
-                                    <li><a href="">for cooking</a></li>
-=======
-                                    <li><Link to="">qazaqsha olender</Link></li>
-                                    <li><Link to="">aǵylshynsha olender</Link></li>
-                                    <li><Link to="/home/playlists/oryssha-olender">oryssha olender</Link></li>
-                                    <li><Link to="">uiqy ushin</Link></li>
-                                    <li><Link to="">sport ushin</Link></li>
-                                    <li><Link to="">music in car</Link></li>
-                                    <li><Link to="">for cooking</Link></li>
->>>>>>> refs/remotes/origin/main
+                                    {playList.map((playlist, index) => {
+                                        return  <li>
+                                                    <Link 
+                                                        to={`/home/playlists/${playlist.name}`} 
+                                                        className={"playlist_item"}
+                                                        state={
+                                                            {   
+                                                                userID: (JSON).parse(localStorage.getItem('user')).uid,
+                                                                playlistIndex: index
+                                                            }
+                                                        }
+                                                    > 
+                                                        {playlist.name}
+                                                    </Link>
+                                                </li>
+                                    })}
                                 </ul>
                             </li>
                         </ul>
@@ -66,14 +87,20 @@ const HomePage = () => {
                             </Link>
                         </div>
                         <div className={"content"}>
-                            <Outlet />
+                            <Outlet context={{playlist, setPlaylist, index, setIndex}}/>
                         </div>
                     </div>
                 </div>
-                <Player/>
+                <Player 
+                    props={{
+                        "playlist": playlist,
+                        "index": index
+                    }}
+                />
             </div>
         </div>
     )
 }
+
 
 export default HomePage;

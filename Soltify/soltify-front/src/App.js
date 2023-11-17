@@ -1,6 +1,6 @@
 import React from "react";
 import './App.css';
-import { getSongs, getMusic } from "./components/services/song";
+import { getSongs, getMusic } from "./components/services/song-service";
 import { useState, useEffect } from "react";
 
 var playlist = [];
