@@ -43,7 +43,6 @@ const CreatePlaylistPage = () => {
         );
     }
 
-    
 
     const createPlaylist = async() => {
         if(playlistSource){

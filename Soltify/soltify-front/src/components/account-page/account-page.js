@@ -8,15 +8,41 @@ import {signOut} from "firebase/auth";
 import {auth, db} from "../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import avatar from "../../assets/avatar.png";
-import user from "../../assets/music.jpg";
 
+var user = "";
 
+const convertSecondsToDate = (seconds) => {
+    const milliseconds = seconds * 1000;
+    const dateObject = new Date(milliseconds);
+    
+    // Getting the date components
+    const day = dateObject.getDate();
+    const month = dateObject.getMonth() + 1; // Months are zero-based
+    const year = dateObject.getFullYear();
 
+    // Formatting the date as dd.mm.yyyy
+    console.log(`${day}.${month}.${year}`);
+    return `${day}.${month}.${year}`;
+  };
+
+const getUserData = async()=>{
+    const docRef = doc(db, "users", (JSON).parse(localStorage.getItem('user')).uid);
+    const docSnap = await getDoc(docRef);
+
+    if(docSnap.exists){
+        user = ({...docSnap.data(),
+            formattedDate: convertSecondsToDate(docSnap.data().date.seconds)});
+    } else {
+        console.log("No such document");
+    }
+}
+
+await getUserData();
 
 
 const AccountPage = () => {
-    const [user, setUser] = useState({})
     const navigate = useNavigate();
+
     const Logout = async () => {
         try {
             await signOut(auth);
@@ -27,36 +53,6 @@ const AccountPage = () => {
             console.log(error)
         }
     }
-
-    const getUserData = async()=>{
-        const docRef = doc(db, "users", (JSON).parse(localStorage.getItem('user')).uid);
-        const docSnap = await getDoc(docRef);
-
-        if(docSnap.exists){
-            setUser({...docSnap.data(),
-                formattedDate: convertSecondsToDate(docSnap.data().date.seconds)});
-            console.log(docSnap.data());
-        } else {
-            console.log("No such document");
-        }
-    }
-    
-    getUserData().then();
-
-    const convertSecondsToDate = (seconds) => {
-        const milliseconds = seconds * 1000;
-        const dateObject = new Date(milliseconds);
-        
-        // Getting the date components
-        const day = dateObject.getDate();
-        const month = dateObject.getMonth() + 1; // Months are zero-based
-        const year = dateObject.getFullYear();
-    
-        // Formatting the date as dd.mm.yyyy
-        console.log(`${day}.${month}.${year}`);
-        return `${day}.${month}.${year}`;
-      };
-
 
 
     return <div className={"acc_back"}>

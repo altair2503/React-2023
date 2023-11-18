@@ -37,8 +37,6 @@ const HomePage = () => {
        
     }, [playlist, index]);
 
-    console.log(playList);
-
     return (
         <div className={"background"}>
             <div className={"background_layer"}>

@@ -7,4 +7,6 @@ export async function getUserData(userID){
     return docSnap.data();
 }
 
-export const userUID = (JSON).parse(localStorage.getItem('user')).uid;
+
+
+export const userUID = (JSON).parse(localStorage.getItem('user')) ? (JSON).parse(localStorage.getItem('user')).uid : false;

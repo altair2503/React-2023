@@ -5,10 +5,12 @@ import { addUserExactPlaylist, getUserPlaylist } from "../../services/playlist-s
 import { userUID } from "../../services/user-service";
 
 var userPlaylist = []
-await getUserPlaylist(userUID)
+if(userUID){
+    await getUserPlaylist(userUID)
     .then((succes) => {
         userPlaylist = succes;
     })
+}
 
 const PlaylistMusicItem = ({props, type, playlist}) => {
     const [playlistAddState, setPlaylistAddState] = useState(false);

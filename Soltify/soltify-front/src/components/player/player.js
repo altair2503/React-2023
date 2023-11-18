@@ -32,6 +32,8 @@ const Player = ({props}) => {
     const progressRef = useRef();
     const navigate = useNavigate();
 
+    console.log("From player props", props);
+
     useEffect(() => {
         if(localStorage.getItem("playerCondition") === "true") {
             setPlayerActive(true)

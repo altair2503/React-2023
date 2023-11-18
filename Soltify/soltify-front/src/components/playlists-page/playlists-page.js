@@ -8,11 +8,12 @@ import playlistLogo from '../../assets/music.jpg';
 import playlistLogo2 from '../../assets/music/5.jpeg';
 import playlistLogo3 from '../../assets/music/3.jpeg';
 import playlistLogo4 from '../../assets/music/50 cent 2.jpeg';
+import { userUID } from "../services/user-service";
 
 
 let playlistList = [];
 
-if(localStorage.getItem('user')){
+if(userUID){
     await getUserPlaylist((JSON)
         .parse(localStorage.getItem('user')).uid)
             .then((result) => {

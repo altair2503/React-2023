@@ -32,7 +32,3 @@ export async function addUserExactPlaylist(userID, index, songID) {
     }
     );
 }
-
-export async function getPlaylistSongs(playlist){
-    
-}

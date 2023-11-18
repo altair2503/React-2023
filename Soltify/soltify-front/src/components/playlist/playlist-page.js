@@ -1,26 +1,62 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useOutletContext } from "react-router-dom";
 import './playlist-page.css';
 import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
 import { getUserExactPlaylist } from "../services/playlist-service";
 import { getUserData } from "../services/user-service";
+import { getPlaylistSongs } from "../services/song-service";
+
 
 
 const PlaylistPage = () => {
     const location = useLocation();
     const {playlistName} = useParams();
-    const [playlist, setPlaylist] = useState([]);
+    const [playlist, setPlaylist1] = useState({songs: []});
+    const [songs, setSongs] = useState([]);
     const [owner, setOwner] = useState("");
-
-    getUserExactPlaylist(location.state.userID, location.state.playlistIndex)
-        .then((result) => setPlaylist(result)); 
-    
-    getUserData(location.state.userID)
-        .then((result) => setOwner(result));
+    const {setPlaylist} = useOutletContext();
+    const {setIndex} = useOutletContext();
 
     useEffect(() => {
-        console.log(playlist)
-    }, [playlist, owner]);
+        const fetchData = async () => {
+            try {
+                const playlistResult = await getUserExactPlaylist(location.state.userID, location.state.playlistIndex);
+                console.log("getUserExactPlaylist");
+                setPlaylist1(playlistResult);
+
+                const songsResult = await getPlaylistSongs(playlistResult.songs);
+                setSongs(songsResult);
+                console.log(songs);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, [location.state.userID, location.state.playlistIndex]);
+
+    useEffect(() => {
+        const fetchOwnerData = async () => {
+            try {
+                const ownerResult = await getUserData(location.state.userID);
+                setOwner(ownerResult);
+            } catch (error) {
+                console.error("Error fetching owner data:", error);
+            }
+        };
+
+        fetchOwnerData();
+    }, [location.state.userID]);
+    
+    
+    const selectSong = (songs, index)=> {
+        setPlaylist(songs);
+        setIndex(index);
+        }
+
+    useEffect(() => {
+        console.log("helolo from useEffect")
+    }, [playlist, owner, songs])
 
     return (
         <div className={"playlist_background"}>
@@ -35,7 +71,7 @@ const PlaylistPage = () => {
                 <div className={"playlist_details"}>
                     <span>Playlist</span>
                     <div className={"playlist_name"}>{playlistName}</div>
-                    <div className={"playlist_owner"}> {owner ? `${owner.name} ${owner.lastname}` : ""} <span>•</span> {playlist.length} songs</div>
+                    <div className={"playlist_owner"}> {owner ? `${owner.name} ${owner.lastname}` : ""} <span>•</span> {playlist.songs.length} songs</div>
                     <button className={"play_playlist"}>Play</button>
                 </div>
                 {/*<div className={"playlist_options"}>*/}
@@ -50,11 +86,16 @@ const PlaylistPage = () => {
                     <div>Time</div>
                 </div>
                 <div className={"playlist_song_list"}>
-                    {/* {
-                        playlist.map((song, index) => {
-                            return <PlaylistMusicItem props={song} type={true}/>
+                    {
+                        songs.map((song, index) => {
+                            return (
+                            <div>
+                                <button onClick={() => selectSong(songs, index)}>Select Song</button>
+                                <PlaylistMusicItem props={song} type={true}/>
+                            </div> 
+                            )
                         })
-                    } */}
+                    }
                 </div>
             </div>
         </div>
