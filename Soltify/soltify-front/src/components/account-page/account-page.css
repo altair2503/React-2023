@@ -61,3 +61,143 @@
     color: rgba(255, 255, 255, .8);
     margin-bottom: 40px;
 }
+
+.update_account
+{
+    height: 50px;
+    padding: 0 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 25px;
+    background: rgba(200, 200, 200, .4);
+
+    color: #FFFFFF;
+    cursor: pointer;
+
+    margin-top: 25px;
+    gap: 10px;
+}
+.update_account ion-icon
+{
+    color: #FFFFFF;
+    font-size: 23px;
+
+    pointer-events: none;
+}
+.account_img_update
+{
+    width: 200px;
+    height: 200px;
+
+    position: relative;
+    margin: 20px auto 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #3B3B3B;
+    border-radius: 50%;
+
+    cursor: pointer;
+}
+.account_img_update input
+{
+    display: none;
+}
+.account_img_update label
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    cursor: pointer;
+
+    width: 100%;
+    height: 100%;
+}
+.account_img_update img
+{
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+}
+.delete_popup.update .input_block
+{
+    margin-bottom: 15px;
+}
+.delete_popup.update .decision_btns
+{
+    margin-top: 35px;
+}
+
+
+@media (max-width: 450px) {
+
+    .acc_title
+    {
+        display: none;
+    }
+
+    .user_info
+    {
+        flex-direction: column;
+        align-items: center;
+
+        margin-top: 15px;
+        gap: 35px;
+    }
+    .user_info_left img
+    {
+        width: 140px;
+        height: 140px;
+    }
+    .default_img
+    {
+        width: 150px !important;
+        height: 150px !important;
+    }
+    .default_img img
+    {
+        width: 100px !important;
+        height: 100px !important;
+    }
+    .log_out_btn
+    {
+        display: none;
+    }
+
+    .user_info_right
+    {
+        color: #FFFFFF;
+        padding-top: 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .user_name
+    {
+        font-size: 30px;
+        margin-bottom: 5px;
+    }
+    .user_email
+    {
+        margin-bottom: 0;
+        font-size: 15px;
+    }
+    .user_reg_date
+    {
+        display: none;
+    }
+
+    .update_account
+    {
+        margin-top: 0;
+    }
+
+}

@@ -9,8 +9,6 @@ import {Navigate, Route, useNavigate} from 'react-router-dom';
 import { doc, setDoc } from "firebase/firestore"; 
 
 
-
-
 const SignUp = ()=>{
 
     const [firstname, setFirstName] = useState();

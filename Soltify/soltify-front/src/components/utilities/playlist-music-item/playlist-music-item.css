@@ -23,6 +23,48 @@
     font-size: 15.5px;
     color: #FFFFFF;
 }
+.song_left div
+{
+    display: flex;
+    flex-direction: column;
+}
+.song_left div a
+{
+    display: none;
+    font-size: 13px;
+    color: rgba(255, 255, 255, .8);
+    text-decoration: none;
+}
+
+.song_place
+{
+    width: 15px;
+    color: #FFFFFF;
+
+    margin-right: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.song_place .place_index
+{
+    font-size: 14px;
+}
+.song_place span
+{
+    font-size: 18px;
+    margin: -4px 0;
+}
+.song_place img
+{
+    display: none;
+}
+.song_back_min:first-child .song_place img
+{
+    display: block;
+    width: 12px;
+}
 .song_left_min
 {
     display: flex;
@@ -80,6 +122,12 @@
     color: rgba(255, 255, 255, .85);
     font-size: 15px;
 }
+.song_time_artist
+{
+    width: 370px;
+    color: rgba(255, 255, 255, .85);
+    font-size: 15px;
+}
 
 
 .song_back_min
@@ -125,6 +173,7 @@
 .song_options
 {
     position: relative;
+
     color: #25DC60;
     font-size: 18px;
 }
@@ -133,7 +182,7 @@
     position: absolute;
     bottom: 15px;
     right: 0;
-    z-index: 1;
+    z-index: 2;
 
     background: #3B3B3B;
     border-radius: 12px;
@@ -171,27 +220,69 @@
     font-size: 16px;
     pointer-events: none;
 }
-.add_to_playlist_btn.for_options
-{
-    position: relative;
-    z-index: 2;
-    opacity: 1;
-}
-.add_to_playlist_btn.for_options .list_to_add
-{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin: 0 0 -56px 21px;
-}
-.add_to_playlist_btn.for_options .list_to_add span
-{
-    display: flex;
-    align-items: center;
-    gap: 7px;
-}
-.add_to_playlist_btn.for_options .list_to_add span ion-icon
-{
-    font-size: 18px;
-    pointer-events: none;
+
+
+@media (max-width: 450px) {
+
+    .song_back
+    {
+        width: 100%;
+        box-sizing: border-box;
+
+        padding: 8px 0;
+    }
+    .song_back:hover
+    {
+        background: rgba(100, 100, 100, 0);
+    }
+    .song_left,
+    .song_left_min
+    {
+        font-size: 15px;
+        gap: 15px;
+    }
+    .song_left_min div a
+    {
+        font-size: 13px;
+    }
+    .song_left div a
+    {
+        display: block;
+    }
+    .song_artist
+    {
+        display: none;
+    }
+    .song_time,
+    .song_time_artist
+    {
+        display: none;
+    }
+
+    .song_back_min
+    {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 6px 0;
+    }
+    .song_back_min .song_options
+    {
+        display: block;
+        margin-bottom: -5px;
+
+        color: #FFFFFF;
+    }
+    .song_back_min:hover
+    {
+        background: rgba(100, 100, 100, 0);
+    }
+    .song_back_min:hover .song_options
+    {
+        margin: 0;
+    }
+    .song_time_min
+    {
+        display: none;
+    }
+
 }

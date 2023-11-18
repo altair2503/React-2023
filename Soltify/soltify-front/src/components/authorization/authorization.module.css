@@ -114,3 +114,52 @@ button:hover
     color: #fff;
     font-size: 14px;
 }
+
+
+@media (max-width: 450px) {
+
+    .container
+    {
+        padding: 15px;
+    }
+
+    .background
+    {
+        border-radius: 15px;
+    }
+
+    .inputs
+    {
+        padding: 0 25px;
+    }
+    .inputs Input
+    {
+        width: 100%;
+    }
+    button
+    {
+        font-size: 17px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        color: white;
+        background-color: #25DC60;
+        width: 100%;
+        padding: 13px 15px;
+        box-sizing: border-box;
+        border-radius: 10px;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        margin-bottom: 8px;
+    }
+    button:hover
+    {
+        background: #25DC60;
+    }
+
+    .return_back
+    {
+        margin: 20px;
+    }
+
+}

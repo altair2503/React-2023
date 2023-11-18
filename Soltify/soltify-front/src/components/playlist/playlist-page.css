@@ -12,17 +12,22 @@
 
     cursor: pointer;
 }
-.playlist_img ion-icon
-{
-    font-size: 110px;
-    --ionicon-stroke-width: 21px;
-    color: rgb(128, 128, 128);
-}
 .playlist_img img
 {
-    width: 100px;
+    width: 100%;
+    height: 100%;
+
+    border-radius: 15px;
 }
 
+.playlist_info_back
+{
+    position: relative;
+}
+.playlist_info_back_img
+{
+    display: none;
+}
 .playlist_info
 {
     display: flex;
@@ -30,6 +35,8 @@
 
     margin-bottom: 35px;
     position: relative;
+
+    z-index: 2;
 }
 .playlist_details
 {
@@ -60,15 +67,47 @@
     margin-top: 2px;
     gap: 10px;
 }
+.playlist_options
+{
+    margin-top: 25px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+}
 .play_playlist
 {
-    margin: 25px 0 0 0;
+    margin: 0;
     padding: 0;
 
     width: 120px;
     height: 42px;
 
     border-radius: 21px;
+}
+.update_option,
+.delete_option
+{
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+    background: rgba(200, 200, 200, .4);
+
+    cursor: pointer;
+}
+.update_option ion-icon,
+.delete_option ion-icon
+{
+    color: #FFFFFF;
+    font-size: 23px;
+
+    pointer-events: none;
 }
 
 .titles
@@ -79,6 +118,8 @@
     color: rgba(255, 255, 255, .7);
     font-size: 14px;
 
+    box-sizing: border-box;
+
     position: relative;
     margin-bottom: 25px;
 
@@ -86,15 +127,19 @@
 }
 .titles div:first-child
 {
-    flex: 1;
+    width: 30px;
 }
 .titles div:nth-child(2)
+{
+    flex: 1;
+}
+.titles div:nth-child(3)
 {
     width: 300px;
 }
 .titles div:last-child
 {
-    width: 150px;
+    width: 140px;
 }
 .titles::after
 {
@@ -112,7 +157,286 @@
     background: rgba(152, 152, 152, 0.3);
     margin-bottom: -10px;
 }
+
 .playlist_song_list
 {
     margin-bottom: 150px;
+    position: relative;
+    z-index: 3;
+}
+
+.delete_popup_back
+{
+    width: 100%;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, .2);
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 20;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.delete_popup
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    pointer-events: visiblePainted;
+    position: relative;
+
+    background: rgba(42, 42, 42, .9);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+    backdrop-filter: blur(8px);
+    border-radius: 18px;
+
+    padding: 50px 25px 30px;
+
+    color: #FFFFFF;
+}
+.delete_popup ion-icon
+{
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 15px;
+
+    font-size: 21px;
+
+    cursor: pointer;
+    opacity: .6;
+}
+.decision_btns
+{
+    display: flex;
+
+    pointer-events: visiblePainted;
+
+    margin-top: 15px;
+    gap: 12px;
+}
+.delete_popup button
+{
+    width: 120px;
+    height: 48px;
+
+    pointer-events: visiblePainted;
+    border-radius: 30px;
+}
+.delete_popup button:last-child
+{
+    background: rgba(170, 170, 170, .25);
+    /*-webkit-backdrop-filter: blur(5px);*/
+    /*backdrop-filter: blur(5px);*/
+}
+
+.delete_popup.update span
+{
+    font-size: 19px;
+}
+.delete_popup .playlist_ft_imf
+{
+    width: 200px;
+    height: 200px;
+
+    margin: 20px auto 30px;
+}
+.delete_popup Input
+{
+    width: 300px;
+    pointer-events: visiblePainted;
+}
+.delete_popup.update button:last-child
+{
+    margin-top: -30px;
+
+    background: #25DC60;
+    border-radius: 12px;
+
+    width: 300px;
+    height: 52px;
+}
+
+
+@media (max-width: 450px) {
+
+    .playlist_background
+    {
+        background: #131313;
+        box-sizing: border-box;
+
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        width: 100%;
+    }
+
+    .playlist_info_back
+    {
+        width: 100%;
+    }
+    .playlist_info_back_img
+    {
+        display: block;
+
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        object-fit: cover;
+
+        width: 100%;
+        height: 100%;
+    }
+    .playlist_info
+    {
+        flex-direction: column;
+        align-items: center;
+
+        width: 100%;
+
+        backdrop-filter: blur(35px);
+        -webkit-backdrop-filter: blur(35px);
+        background: rgba(0, 0, 0, .25);
+        box-sizing: border-box;
+
+        padding: 100px 15px 45px;
+        margin: 0;
+    }
+    .playlist_img
+    {
+        width: 200px;
+        height: 200px;
+
+        box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+    }
+    .playlist_details
+    {
+        align-self: center;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        margin: 0;
+    }
+    .playlist_details span
+    {
+        display: none;
+    }
+    .playlist_name
+    {
+        font-size: 25px;
+        margin-top: 15px;
+    }
+    .playlist_owner
+    {
+        font-size: 15px;
+        color: rgba(255,255, 255, .75);
+    }
+    .playlist_owner span
+    {
+        display: block;
+    }
+    .playlist_options
+    {
+        justify-content: center;
+        margin-top: 18px;
+    }
+    .play_playlist
+    {
+        width: 92px;
+        height: 50px;
+
+        border-radius: 25px;
+        order: 2;
+    }
+    .update_option,
+    .delete_option
+    {
+        width: 50px;
+        height: 50px;
+
+        background: rgba(200, 200, 200, .4);
+        order: 1;
+    }
+    .delete_option
+    {
+        order: 3;
+    }
+    .update_option ion-icon,
+    .delete_option ion-icon
+    {
+        color: #FFFFFF;
+        font-size: 23px;
+    }
+
+    .playlist_song_list
+    {
+        background: #131313;
+        border-radius: 20px 20px 0 0;
+
+        margin: -20px auto 170px;
+        padding: 30px 15px 0;
+    }
+
+    .titles
+    {
+        display: none;
+    }
+
+    .delete_popup
+    {
+        width: 75%;
+        padding: 50px 20px 25px;
+    }
+    .decision_btns
+    {
+        margin-top: 20px;
+        width: 100%;
+    }
+    .delete_popup button
+    {
+        width: 120px;
+        height: 48px;
+
+        border-radius: 30px;
+    }
+
+    .delete_popup .playlist_ft_imf
+    {
+        width: 65%;
+        height: auto;
+
+        margin: 20px auto 30px;
+    }
+    .delete_popup Input
+    {
+        width: 100%;
+    }
+    .delete_popup .input_block
+    {
+        width: 100%;
+    }
+    .delete_popup.update button:last-child
+    {
+        margin-top: -30px;
+
+        background: #25DC60;
+        border-radius: 12px;
+
+        width: 100%;
+        height: 52px;
+    }
+
+
 }

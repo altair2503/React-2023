@@ -14,6 +14,8 @@ import babymama from "../../assets/music/4.mp3";
 import babymamImg from "../../assets/music/4.jpeg";
 import brend from "../../assets/music/5.mp3";
 import brendImg from "../../assets/music/5.jpeg";
+import likedPlaylist from "../../assets/likedplaylist.jpg";
+import playlistDefault from "../../assets/playlistdefault.jpg";
 
 
 let playlist = [
@@ -61,25 +63,28 @@ let playlist = [
 
 const ArtistPage = () => {
     return <div className={"artist_back"}>
-        <div className={"artist_top"}>
-            { localStorage.getItem("user") != null ? <div className="default_img"><img src={avatar} alt={avatar} /></div> : <img src={userImg} alt={userImg} /> }
-            <div className={"artist_info"}>
-                <span>Artist</span>
-                <div className={"artist_name"}>Scriptonite</div>
-                <div className={"artist_songs"}>35 songs</div>
-                <button className={"play_artist"}>Play</button>
+        <div className={"artist_info_back"}>
+            <img src={playlistDefault} className={"artist_info_back_img"} alt={playlistDefault} />
+            <div className={"artist_top"}>
+                { localStorage.getItem("user") != null ? <div className="default_img"><img src={avatar} alt={avatar} /></div> : <img src={userImg} alt={userImg} /> }
+                <div className={"artist_info"}>
+                    <span>Artist</span>
+                    <div className={"artist_name"}>Scriptonite</div>
+                    <div className={"artist_songs"}>35 songs</div>
+                    <button className={"play_artist"}>Play</button>
+                </div>
             </div>
         </div>
         <div className={"artist_music"}>
             <div className={"titles"}>
+                <div>#</div>
                 <div>Song</div>
-                <div>Artist</div>
-                <div>Time</div>
+                <div className={"artist_titles_time"}>Time</div>
             </div>
             <div className={"artist_song_list"}>
                 {
                     playlist.map((song, index) => {
-                        return <PlaylistMusicItem props={song} type={true} playlist={true} />
+                        return <PlaylistMusicItem props={song} index={index + 1} type={true} artist={true} playlist={true} />
                     })
                 }
             </div>

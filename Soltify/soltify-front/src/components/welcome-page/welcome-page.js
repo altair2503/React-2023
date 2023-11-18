@@ -1,10 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 
 import styles from './welcome-page.module.css';
 import model from '../../assets/model1.png';
 import logo from '../../assets/logo.png';
 
 const WelcomePage = () => {
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        localStorage.getItem("user") ? navigate("/home") : navigate("/");
+    }, [])
+
     return (
         <div className={styles.background}>
             <header>
@@ -36,10 +44,10 @@ const WelcomePage = () => {
             <div className={styles.sign_buttons}>
                 <a href="/log-in" className={styles.link_sign_in}>Log in</a>
                 <a href="/sign-up" className={styles.link_sign_up}>Sign up</a>
-
             </div>
         </div>
     )
+
 };
 
 export default WelcomePage;

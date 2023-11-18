@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import {db} from "../../firebase";
 import {collection, getDocs, where, query} from "firebase/firestore";
 
-const LogIn = key=> {
+const LogIn = key => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -35,6 +35,7 @@ const LogIn = key=> {
             console.error(error);
         }
     }
+
     const getUserData = async (user) => {
         if (!user) {
             return
@@ -55,18 +56,6 @@ const LogIn = key=> {
             throw error;
         }
     }
-
-        // const signIn = (e) => {
-        // e.preventDefault();
-        //
-        // signInWithEmailAndPassword(auth, email, password)
-        // .then((userCredential) => {
-        //     console.log(userCredential)
-        // })
-        // .catch((error) => {
-        //     console.log(error)
-        // });
-        // };
 
     return (
         <div className={styles.container}>

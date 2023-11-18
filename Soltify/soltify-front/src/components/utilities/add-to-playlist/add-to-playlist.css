@@ -1,0 +1,287 @@
+.add_to_playlist_btn
+{
+    position: relative;
+}
+.add_to_playlist_btn .list_to_add
+{
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-40%);
+
+    background: #3B3B3B;
+    border-radius: 15px;
+
+    padding: 20px 15px 20px 20px;
+
+    color: #FFFFFF;
+}
+#close_add_to_playlist
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    display: none;
+    text-align: end;
+    width: 100%;
+
+    padding: 15px 15px 40px;
+    box-sizing: border-box;
+
+    opacity: .6;
+}
+#close_add_to_playlist ion-icon
+{
+    color: #FFFFFF;
+    font-size: 25px;
+}
+.list_to_add ul
+{
+    height: 135px;
+    overflow-y: auto;
+
+    margin: 12px 0 0 0;
+    padding: 0;
+}
+.list_to_add ul::-webkit-scrollbar
+{
+    width: 4px;
+}
+.list_to_add ul::-webkit-scrollbar-track
+{
+    background: #1E1E1E;
+}
+.list_to_add ul::-webkit-scrollbar-thumb
+{
+    background: #25DC60;
+    border-radius: 4px;
+}
+.list_to_add ul li
+{
+    height: fit-content;
+
+    display: block;
+    cursor: pointer;
+
+    position: relative;
+
+    margin-bottom: 9px;
+    padding-right: 18px;
+
+    white-space: nowrap;
+    font-size: 13px;
+
+    opacity: .85;
+}
+.list_to_add ul li img
+{
+    width: 50px;
+    height: 50px;
+
+    pointer-events: none;
+
+    border-radius: 6px;
+    display: none;
+}
+.list_to_add ul li #in_playlist
+{
+    position: absolute;
+    right: 2px;
+
+    background: #25DC60;
+    box-sizing: border-box;
+    border-radius: 50%;
+
+    padding: 4px;
+
+    font-size: 18px;
+    --ionicon-stroke-width: 42px;
+    color: #131313;
+
+    display: none;
+}
+.list_to_add ul li span
+{
+    pointer-events: none;
+    position: relative;
+}
+.list_to_add ul li span ion-icon
+{
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10;
+
+    margin: -10px -15px 0 0;
+
+    font-size: 23px !important;
+    color: #25DC60 !important;
+
+    display: none;
+}
+.list_to_add ul li:last-child
+{
+    margin-bottom: 0;
+}
+.list_to_add ul li:hover
+{
+    opacity: 1;
+}
+.list_to_add ul li:hover span ion-icon
+{
+    display: block;
+}
+
+.add_to_playlist_btn.for_options
+{
+    position: relative;
+    z-index: 2;
+    opacity: 1;
+}
+.add_to_playlist_btn.for_options .list_to_add
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 0 0 -56px 21px;
+}
+.add_to_playlist_btn.for_options .list_to_add span
+{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.add_to_playlist_btn.for_options .list_to_add span ion-icon
+{
+    font-size: 18px;
+    pointer-events: none;
+}
+
+
+@media (max-width: 450px) {
+
+    .add_to_playlist_btn .list_to_add
+    {
+        width: 100%;
+        height: 91vh;
+
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        transform: translateX(0);
+        z-index: 10 !important;
+
+        background: #131313;
+        border-radius: 20px 20px 0 0;
+        box-sizing: border-box;
+
+        padding: 38px 20px 20px;
+
+        color: #FFFFFF;
+    }
+    .list_to_add
+    {
+        z-index: 15 !important;
+    }
+    .list_to_add_title
+    {
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+
+        font-size: 18px;
+    }
+    .list_to_add ul
+    {
+        height: 100vh;
+        overflow-y: auto;
+
+        margin: 20px 0 0 0;
+        border-radius: 10px 10px 0 0;
+    }
+    .list_to_add ul li
+    {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        margin-bottom: 0;
+        padding: 8px 0 8px 0;
+
+        white-space: nowrap;
+        font-size: 15px;
+
+        border-bottom: 1px solid rgba(255, 255, 255, .1);
+
+        opacity: 1;
+        gap: 15px;
+    }
+    .list_to_add ul li img,
+    .list_to_add ul li #in_playlist,
+    #close_add_to_playlist
+    {
+        display: block;
+    }
+    .list_to_add ul li:last-child
+    {
+        border: none;
+    }
+    .list_to_add ul li span
+    {
+        position: relative;
+    }
+    .list_to_add ul li:last-child
+    {
+        margin-bottom: 0;
+    }
+    .list_to_add ul li:hover span ion-icon
+    {
+        display: none;
+    }
+
+    .add_to_playlist_btn.for_options
+    {
+        position: relative;
+        opacity: 1;
+    }
+    .add_to_playlist_btn.for_options .list_to_add
+    {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+
+        height: 90vh;
+
+        z-index: 10;
+        margin: 0;
+    }
+    .add_to_playlist_btn.for_options .list_to_add ul
+    {
+        margin-top: 40px;
+    }
+    .back_to_options
+    {
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        width: 100%;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        font-size: 18px;
+
+        padding: 38px 20px 15px;
+        box-sizing: border-box;
+
+    }
+    .back_to_options ion-icon
+    {
+        font-size: 23px !important;
+    }
+
+}

@@ -39,6 +39,9 @@ import playlistLogo2 from "../../assets/music/5.jpeg";
 import playlistLogo from "../../assets/music.jpg";
 import playlistLogo3 from "../../assets/music/3.jpeg";
 import playlistLogo4 from "../../assets/music/50 cent 2.jpeg";
+import Swiper from "swiper";
+import {Navigation} from "swiper/modules";
+import playlistDefault from "../../assets/playlistdefault.jpg";
 
 let playlist = [
   {
@@ -172,75 +175,55 @@ const ContentPage = () => {
     <div className={"content_item_back"}>
       <span className={"content_title"}>Recently Played</span>
       <div className={"recently_list"}>
-        <Link to={""} className={"playlist_item"}>
+        <Link to={""} className={"recently_item"}>
           {
-            state ? <div className={"playlist_img"}>
-              <ion-icon name="musical-notes-outline"></ion-icon>
-            </div> : <img src={playlistLogo} alt={playlistLogo} />
+            !state ? <img src={playlistDefault} alt={playlistDefault} /> : <img src={playlistLogo3} alt={playlistLogo} />
+          }
+          <span>qazaqsha olender</span>
+        </Link>
+        <Link to={""} className={"recently_item"}>
+          {
+            state ? <img src={playlistDefault} alt={playlistDefault} /> : <img src={playlistLogo} alt={playlistLogo} />
           }
           <span>aǵylshynsha olender</span>
         </Link>
-        <Link to={"/home/playlists/oryssha-olender"} className={"playlist_item"}>
+        <Link to={"/home/playlists/oryssha-olender"} className={"recently_item"}>
           {
-            state ? <div className={"playlist_img"}>
-              <ion-icon name="musical-notes-outline"></ion-icon>
-            </div> : <img src={playlistLogo2} alt={playlistLogo} />
+            state ? <img src={playlistDefault} alt={playlistDefault} /> : <img src={playlistLogo2} alt={playlistLogo} />
           }
           <span>oryssha olender</span>
         </Link>
-        <Link to={""} className={"playlist_item"}>
+        <Link to={""} className={"recently_item"}>
           {
-            !state ? <div className={"playlist_img"}>
-              <ion-icon name="musical-notes-outline"></ion-icon>
-            </div> : <img src={playlistLogo} alt={playlistLogo} />
+            !state ? <img src={playlistDefault} alt={playlistDefault} /> : <img src={playlistLogo} alt={playlistLogo} />
           }
           <span>uiqy ushin</span>
         </Link>
-        <Link to={""} className={"playlist_item"}>
+        <Link to={""} className={"recently_item"}>
           {
-            state ? <div className={"playlist_img"}>
-              <ion-icon name="musical-notes-outline"></ion-icon>
-            </div> : <img src={playlistLogo3} alt={playlistLogo} />
+            state ? <img src={playlistDefault} alt={playlistDefault} /> : <img src={playlistLogo3} alt={playlistLogo} />
           }
           <span>sport ushin</span>
         </Link>
-        <Link to={""} className={"playlist_item"}>
+        <Link to={""} className={"recently_item"}>
           {
-            state ? <div className={"playlist_img"}>
-              <ion-icon name="musical-notes-outline"></ion-icon>
-            </div> : <img src={playlistLogo4} alt={playlistLogo} />
-          }
-          <span>music in car</span>
-        </Link>
-        <Link to={""} className={"playlist_item"}>
-          {
-            state ? <div className={"playlist_img"}>
-              <ion-icon name="musical-notes-outline"></ion-icon>
-            </div> : <img src={playlistLogo3} alt={playlistLogo} />
-          }
-          <span>sport ushin</span>
-        </Link>
-        <Link to={""} className={"playlist_item"}>
-          {
-            state ? <div className={"playlist_img"}>
-              <ion-icon name="musical-notes-outline"></ion-icon>
-            </div> : <img src={playlistLogo4} alt={playlistLogo} />
+            state ? <img src={playlistDefault} alt={playlistDefault} /> : <img src={playlistLogo4} alt={playlistLogo} />
           }
           <span>music in car</span>
         </Link>
       </div>
     </div>
     <div className={"content_item_back"}>
-      <span className={"content_title"}>Top Charts</span>
-      <div className={"content_description"}>Tracks that are the most popular on the Soltify platform at the moment</div>
-      <div className={"song_list"}>
-        {
-          playlist.map((song, index) => {
-            return <PlaylistMusicItem props={song} />
-          })
-        }
+        <span className={"content_title"}>Top Charts</span>
+        <div className={"content_description"}>Tracks that are the most popular on the Soltify platform at the moment</div>
+        <div className={"song_list"}>
+            {
+                playlist.map((song, index) => {
+                    return <PlaylistMusicItem props={song} index={index + 1} playlist={true} />
+                })
+            }
+        </div>
       </div>
-    </div>
   </div>
 }
 

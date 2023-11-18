@@ -24,7 +24,7 @@
     margin-top: 20px;
 
     width: 1230px;
-    overflow-x: auto;
+    overflow-x: scroll;
 
     display: flex;
     gap: 20px;
@@ -33,12 +33,147 @@
 {
     height: 0;
 }
+.recently_item
+{
+    width: 215px;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    text-align: center;
+    text-decoration: none;
+}
+.recently_img
+{
+    width: 215px;
+    height: 215px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #3B3B3B;
+    border-radius: 15px;
+}
+.recently_img ion-icon
+{
+    font-size: 110px;
+    --ionicon-stroke-width: 21px;
+    color: rgb(128, 128, 128);
+}
+.recently_item img
+{
+    width: 215px;
+    height: 215px;
+
+    border-radius: 15px;
+}
+.recently_item span
+{
+    font-size: 14px;
+    color: #FFFFFF;
+
+    margin-top: 10px;
+}
 .song_list
 {
-    margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(3, 0fr);
     grid-template-rows: repeat(3, 0fr);
-    column-gap: 40px;
+    justify-content: space-between;
     row-gap: 5px;
+
+    margin-top: 20px;
+}
+.song_list .song_back_min:first-child
+{
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+.song_list .song_back_min:nth-child(2)
+{
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+.song_list .song_back_min:nth-child(3)
+{
+    grid-column-start: 1;
+    grid-row-start: 3;
+}
+.song_list .song_back_min:nth-child(4)
+{
+    grid-column-start: 1;
+    grid-row-start: 4;
+}
+.song_list .song_back_min:nth-child(6)
+{
+    grid-column-start: 2;
+    grid-row-start: 2;
+}
+.song_list .song_back_min:nth-child(7)
+{
+    grid-column-start: 2;
+    grid-row-start: 3;
+}
+.song_list .song_back_min:nth-child(8)
+{
+    grid-column-start: 2;
+    grid-row-start: 4;
+}
+
+@media (max-width: 450px) {
+
+    .content_page_back
+    {
+        margin-bottom: 170px;
+    }
+    .content_item_back
+    {
+        margin-bottom: 50px;
+    }
+
+    .content_title
+    {
+        display: flex;
+        justify-content: center;
+
+        font-size: 18px;
+        opacity: .9;
+    }
+    .content_description
+    {
+        font-size: 13px;
+        font-weight: 300;
+
+        text-align: center;
+
+        margin-top: 10px;
+        padding: 0 5px;
+    }
+
+    .recently_list
+    {
+        width: 363px;
+        gap: 15px;
+    }
+    .recently_item
+    {
+        width: 160px;
+    }
+    .recently_item img
+    {
+        width: 160px;
+        height: 160px;
+    }
+    .recently_item span
+    {
+        font-size: 12px;
+    }
+
+    .song_list
+    {
+        display: block;
+    }
+
 }

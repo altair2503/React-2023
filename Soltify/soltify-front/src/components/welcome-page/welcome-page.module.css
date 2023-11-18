@@ -246,5 +246,115 @@ header ul
 .link_sign_up
 {
     background: rgba(82, 82, 82, 0.3);
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
+}
+
+
+@media (max-width: 450px) {
+
+    header
+    {
+        padding: 30px 20px;
+    }
+    .logo
+    {
+        width: 48px;
+    }
+    header ul
+    {
+        gap: 25px;
+    }
+    .git_link
+    {
+        font-size: 19px;
+    }
+
+    .title
+    {
+        font-size: 98px;
+        margin-top: -120px;
+    }
+
+    .adv_l,
+    .adv_r
+    {
+        display: none;
+    }
+    .adv_c
+    {
+        width: 353px;
+        text-align: center;
+        white-space: normal;
+
+        opacity: .85;
+
+        font-size: 32px;
+
+        padding: 0 20px;
+        margin-top: -150px;
+
+        z-index: 0;
+    }
+
+    .shapes
+    {
+        display: flex;
+        align-items: end;
+
+        position: relative;
+        z-index: 1;
+    }
+    .shape_f
+    {
+        width: 560px;
+        height: 560px;
+    }
+    .shape_s
+    {
+        width: 420px;
+        height: 420px;
+    }
+    .shapes:nth-child(2)
+    {
+        margin-top: 530px;
+    }
+
+    .model img
+    {
+        width: 550px;
+        margin-bottom: 140px;
+    }
+
+    .sign_buttons
+    {
+        width: 100%;
+
+        display: block;
+        margin-bottom: 40px;
+    }
+    .link_sign_in,
+    .link_sign_up
+    {
+        height: 60px;
+        width: 78%;
+
+        background: #25DC60;
+        border-radius: 30px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-size: 23px;
+        font-weight: 500;
+
+        color: #fff;
+        text-decoration: none;
+
+        box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+
+        margin: 0 auto 15px;
+    }
+
 }
