@@ -1,18 +1,26 @@
 import React, {useState} from "react";
 import './playlists-page.css';
 
+import { getUserPlaylist } from "../services/playlist-service";
+
+import { userUID } from "../services/user-service";
 import { Link } from "react-router-dom";
 
-import playlistLogo from '../../assets/music.jpg';
-import playlistLogo2 from '../../assets/music/5.jpeg';
-import playlistLogo3 from '../../assets/music/3.jpeg';
-import playlistLogo4 from '../../assets/music/50 cent 2.jpeg';
 import playlistDefault from "../../assets/playlistdefault.jpg";
 
+let playlistList = [];
+
+if(userUID) {
+    await getUserPlaylist((JSON)
+    .parse(localStorage.getItem('user')).uid)
+        .then((result) => {
+            playlistList = result;
+        }
+    );
+}
+
+
 const PlaylistsPage = () => {
-
-    const [state, setState] = useState(false);
-
     return <div className={"playlists_back"}>
         <span className={"playlists_title"}>Your Playlists</span>
         <div className={"playlists_description"}>Now you have • 4 Playlist</div>
@@ -25,49 +33,22 @@ const PlaylistsPage = () => {
                     <span style={{opacity: 1}}>New Playlist...</span>
                 </div>
             </Link>
-            <Link to={""} className={"playlist_item"}>
-                {
-                    state ? <img src={playlistDefault} alt={playlistDefault} /> : <img src={playlistLogo} alt={playlistLogo} />
-                }
-                <div className={"playlist_item_info"}>
-                    <span>qazaqsha olender</span>
-                    <span>23 songs</span>
-                </div>
-                <ion-icon name="chevron-forward-outline" id={"playlist_item_open_btn"}></ion-icon>
-            </Link>
-            <Link to={"/home/playlists/oryssha-olender"} className={"playlist_item"}>
-                {
-                    state ? <img src={playlistDefault} alt={playlistDefault} /> : <img src={playlistLogo2} alt={playlistLogo} />
-                }
-                <div className={"playlist_item_info"}>
-                    <span>oryssha olender</span>
-                    <span>23 songs</span>
-                </div>
-                <ion-icon name="chevron-forward-outline" id={"playlist_item_open_btn"}></ion-icon>
-            </Link>
-            <Link to={""} className={"playlist_item"}>
-                {
-                    !state ? <img src={playlistDefault} alt={playlistDefault} /> : <img src={playlistLogo} alt={playlistLogo} />
-                }
-                <div className={"playlist_item_info"}>
-                    <span>aǵylshynsha olender</span>
-                    <span>23 songs</span>
-                </div>
-                <ion-icon name="chevron-forward-outline" id={"playlist_item_open_btn"}></ion-icon>
-            </Link>
-            <Link to={""} className={"playlist_item"}>
-                {
-                    state ? <img src={playlistDefault} alt={playlistDefault} /> : <img src={playlistLogo3} alt={playlistLogo} />
-                }
-                <div className={"playlist_item_info"}>
-                    <span>uiqy ushin</span>
-                    <span>23 songs</span>
-                </div>
-                <ion-icon name="chevron-forward-outline" id={"playlist_item_open_btn"}></ion-icon>
-            </Link>
+            {
+                playlistList.map((playlist, index) => {
+                    return <Link to={`/home/playlists/${playlist.name}`} className={"playlist_item"}
+                        state={{
+                                userID: (JSON).parse(localStorage.getItem('user')).uid,
+                                playlistIndex: index
+                        }}>
+                        { <img src={!playlist.img ? playlistDefault : playlist.img} alt={playlist.name} />}
+                        <span>{playlist.name}</span>
+                    </Link>
+                })
+            }
         </div>
     </div>
 
 }
+
 
 export default PlaylistsPage;

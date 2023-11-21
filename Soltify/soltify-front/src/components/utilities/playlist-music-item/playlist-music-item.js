@@ -1,14 +1,34 @@
 import React, {useEffect, useState} from "react";
 import './playlist-music-item.css';
-import {Link} from "react-router-dom";
+
+import {Link, useOutletContext} from "react-router-dom";
+import { addUserExactPlaylist, getUserPlaylist } from "../../services/playlist-service";
+import { userUID } from "../../services/user-service";
 
 import crown from '../../../assets/crown.svg';
 import AddToPlaylist from "../add-to-playlist/add-to-playlist";
 
-const PlaylistMusicItem = ({props, index, type, playlist, artist}) => {
+let userPlaylist = [];
+
+if(userUID) {
+    await getUserPlaylist(userUID)
+    .then((succes) => {
+        userPlaylist = succes;
+    })
+}
+
+const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist}) => {
 
     const [playlistAddState, setPlaylistAddState] = useState(false);
     const [songOptionListState, setSongOptionListState] = useState(false);
+
+    const {setPlaylist} = useOutletContext();
+    const {setIndex} = useOutletContext();
+
+    const selectSong = (songs, index)=> {
+        setPlaylist(songs);
+        setIndex(index);
+    }
 
     useEffect(() => {
         document.addEventListener("click", e => {
@@ -27,9 +47,10 @@ const PlaylistMusicItem = ({props, index, type, playlist, artist}) => {
         })
     }, [])
 
+
     if(type) {
         return (
-            <div className={"song_back"}>
+            <div className={"song_back"} onClick={() => selectSong(playlist, index - 1)}>
                 <div className={"song_place"}>
                     <span className={"place_index"}>{index}</span>
                 </div>
@@ -44,6 +65,8 @@ const PlaylistMusicItem = ({props, index, type, playlist, artist}) => {
                     !artist ? <Link to={"/home/artist"} className={"song_artist"}>{props.artist}</Link> : ''
                 }
                 <div className={!artist ? "song_time" : "song_time_artist"}>{props.time}</div>
+                <Link to={"/home/artist"} className={"song_artist"}>{props.artist.username}</Link>
+                <div className={"song_time"}>{props.duration}</div>
                 <div className={"song_options"}>
                     <ion-icon name="ellipsis-horizontal" id={"open_song_options_btn"} onClick={() => setSongOptionListState(songOptionListState => !songOptionListState)}></ion-icon>
                     {
@@ -51,9 +74,9 @@ const PlaylistMusicItem = ({props, index, type, playlist, artist}) => {
                         ?
                             <ul className={"options_list"}>
                                 <li className={"options_list_li"}><ion-icon name="heart"></ion-icon> Add to Like</li>
-                                <AddToPlaylist type={true} />
+                                <AddToPlaylist type={true} userPlaylists={userPlaylist} id={props.id} />
                                 {
-                                    !playlist ? <li className={"options_list_li"}><ion-icon name="trash-outline"></ion-icon> Remove</li> : ''
+                                    !isPlaylist ? <li><ion-icon name="trash-outline"></ion-icon> Remove</li> : ''
                                 }
                             </ul>
                         :
@@ -64,39 +87,37 @@ const PlaylistMusicItem = ({props, index, type, playlist, artist}) => {
         )
     }
 
-    return (
-        <div className={"song_back_min"}>
-            <div className={"song_place"}>
-                <span className={"place_index"}>{index}</span>
-                <span>-</span>
-                <img src={crown} alt={crown} />
-            </div>
-            <div className={"song_left_min"}>
-                <img src={props.img} alt={props.img} />
-                <div>
-                    {props.name}
-                    <Link to={"/home/artist"}>{props.artist}</Link>
-                </div>
-            </div>
-            <div className={"song_time_min"}>3:57</div>
-            <div className={"song_options"}>
-                <ion-icon name="ellipsis-horizontal" id={"open_song_options_btn"} onClick={() => setSongOptionListState(songOptionListState => !songOptionListState)}></ion-icon>
-                {
-                    songOptionListState
-                    ?
-                        <ul className={"options_list"}>
-                            <li><ion-icon name="heart"></ion-icon> Add to Like</li>
-                            <AddToPlaylist type={true} />
-                            {
-                                !playlist ? <li><ion-icon name="trash-outline"></ion-icon> Remove</li> : ''
-                            }
-                        </ul>
-                    :
-                        ''
-                }
+    return <div className={"song_back_min"} onClick={() => selectSong(playlist, index - 1)}>
+        <div className={"song_place"}>
+            <span className={"place_index"}>{index}</span>
+            <span>-</span>
+            <img src={crown} alt={crown} />
+        </div>
+        <div className={"song_left_min"}>
+            <img src={props.img} alt={props.img} />
+            <div>
+                {props.name}
+                <Link to={"/home/artist"}>{props.artist.username}</Link>
             </div>
         </div>
-    )
+        <div className={"song_time_min"}>{props.duration}</div>
+        <div className={"song_options"}>
+            <ion-icon name="ellipsis-horizontal" id={"open_song_options_btn"} onClick={() => setSongOptionListState(songOptionListState => !songOptionListState)}></ion-icon>
+            {
+                songOptionListState
+                ?
+                    <ul className={"options_list"}>
+                        <li><ion-icon name="heart"></ion-icon> Add to Like</li>
+                        <AddToPlaylist type={true} userPlaylists={userPlaylist} id={props.id} />
+                        {
+                            !isPlaylist ? <li><ion-icon name="trash-outline"></ion-icon> Remove </li> : ''
+                        }
+                    </ul>
+                :
+                    ''
+            }
+        </div>
+    </div>
 }
 
 export default PlaylistMusicItem;

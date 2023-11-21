@@ -8,14 +8,41 @@ import {signOut} from "firebase/auth";
 import {auth, db} from "../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import avatar from "../../assets/avatar.png";
-import user from "../../assets/music.jpg";
-import likedPlaylist from "../../assets/likedplaylist.jpg";
-import playlistDefault from "../../assets/playlistdefault.jpg";
 
+let user = "";
+
+const convertSecondsToDate = (seconds) => {
+    const milliseconds = seconds * 1000;
+    const dateObject = new Date(milliseconds);
+    
+    // Getting the date components
+    const day = dateObject.getDate();
+    const month = dateObject.getMonth() + 1; // Months are zero-based
+    const year = dateObject.getFullYear();
+
+    // Formatting the date as dd.mm.yyyy
+    console.log(`${day}.${month}.${year}`);
+    return `${day}.${month}.${year}`;
+};
+
+if(localStorage.getItem('user')){
+    const getUserData = async()=>{
+        const docRef = doc(db, "users", (JSON).parse(localStorage.getItem('user')).uid);
+        const docSnap = await getDoc(docRef);
+
+        if(docSnap.exists){
+            user = ({...docSnap.data(),
+                formattedDate: convertSecondsToDate(docSnap.data().date.seconds)});
+        } else {
+            console.log("No such document");
+        }
+    }
+
+    await getUserData();
+}
 
 const AccountPage = () => {
 
-    const [user, setUser] = useState({});
     const navigate = useNavigate();
 
     const [updateAccPopupState, setUpdateAccPopupState] = useState(false);
@@ -39,18 +66,6 @@ const AccountPage = () => {
         }
     }
 
-    const getUserData = async()=>{
-        const docRef = doc(db, "users", (JSON).parse(localStorage.getItem('user')).uid);
-        const docSnap = await getDoc(docRef);
-
-        if(docSnap.exists){
-            setUser(docSnap.data());
-        } else {
-            console.log("No such document");
-        }
-    }
-    getUserData().then();
-
     return <div className={"acc_back"}>
         {
             updateAccPopupState
@@ -61,7 +76,7 @@ const AccountPage = () => {
                         <span>Update Account</span>
                         <div className={"account_img_update"}>
                             <input type="file" id={"img_for_account"}/>
-                            <img src={userImg} alt={playlistDefault}/>
+                            <img src={userImg} alt={userImg}/>
                             <label htmlFor="img_for_account"></label>
                         </div>
                         <div className={"input_block"}>
@@ -90,7 +105,7 @@ const AccountPage = () => {
             <div className={"user_info_right"}>
                 <div className={"user_name"}>{user.name} {user.lastname}</div>
                 <div className={"user_email"}>{user.email}</div>
-                <div className={"user_reg_date"}>part of Soltify since 18.10.2023</div>
+                <div className={"user_reg_date"}>part of Soltify since {user.formattedDate} </div>
             </div>
             <div className={"update_account"} onClick={() => setUpdateAccPopupState(true)}>
                 Update <ion-icon name="create-outline"></ion-icon>

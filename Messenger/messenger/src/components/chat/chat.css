@@ -1,0 +1,217 @@
+.chat_window
+{
+    width: 650px;
+    height: 100%;
+
+    background: #EFF4FB;
+    border-radius: 0 30px 30px 0;
+}
+.chat_window.default
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.chat_window img
+{
+    width: 170px;
+    margin-bottom: 30px;
+}
+.chat_window span
+{
+    font-size: 15.5px;
+    line-height: 1.45;
+
+    color: #151515;
+    opacity: .85;
+}
+
+.window_top
+{
+    height: 75px;
+
+    background: #F7FAFF;
+    border-top-right-radius: 30px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 25px;
+}
+.interlocutor
+{
+    display: flex;
+    align-items: center;
+}
+.interlocutor img
+{
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    margin: 0;
+}
+.interlocutor_info
+{
+    display: flex;
+    flex-direction: column;
+
+    margin: 2px 0 0 10px;
+
+    font-size: 15.5px;
+    font-weight: 500;
+}
+.interlocutor_info span
+{
+    color: #797979;
+    font-weight: 400;
+    font-size: 11px;
+}
+
+.window_center
+{
+    height: calc(100% - 160px);
+    overflow-y: auto;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 10px 20px;
+}
+.window_center::-webkit-scrollbar
+{
+    width: 5px;
+}
+.window_center::-webkit-scrollbar-track
+{
+    background: #e9eef5;
+}
+.window_center::-webkit-scrollbar-thumb
+{
+    background: #4B95FF;
+    border-radius: 4px;
+}
+.window_center > :first-child
+{
+    margin-top: auto;
+}
+.message_back
+{
+    display: flex;
+    justify-content: flex-end;
+}
+.message_back.sender
+{
+    justify-content: flex-start;
+}
+.message_text
+{
+    width: fit-content;
+    max-width: 55%;
+
+    background: #4B95FF;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .1);
+    box-sizing: border-box;
+    border-radius: 15px;
+
+    padding: 10px 15px 5px;
+    margin-top: 8px;
+
+    font-size: 13.5px;
+    font-weight: 300;
+    color: #F7FAFF;
+}
+.message_back.sender .message_text
+{
+    background: #F7FAFF;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .05);
+
+    font-weight: 400;
+    color: #151515;
+}
+.message_text .sent_date
+{
+    width: 100%;
+
+    display: flex;
+    justify-content: end;
+
+    color: #F7FAFF;
+
+    font-size: 11px;
+
+    margin-top: 4px;
+    opacity: .65;
+}
+.message_back.sender .message_text .sent_date
+{
+    color: #151515;
+}
+
+.window_bottom
+{
+    width: 100%;
+    height: 85px;
+
+    background: #F7FAFF;
+    border-bottom-right-radius: 30px;
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 20px;
+}
+.window_bottom input
+{
+    width: 90.5%;
+    height: 45px;
+
+    background: #E9F2FF;
+    box-sizing: border-box;
+    border-radius: 11px;
+    outline: none;
+    border: none;
+
+    padding: 0 20px;
+    color: #4389EB;
+
+    font-size: 14.5px;
+    font-family: 'Poppins', sans-serif;
+}
+.window_bottom input::placeholder
+{
+    color: #4389EB;
+}
+.window_bottom button
+{
+    width: 45px;
+    height: 45px;
+
+    background: #4B95FF;
+    box-sizing: border-box;
+    border-radius: 11px;
+    outline: none;
+    border: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-bottom: 5px;
+
+    cursor: pointer;
+    color: #F7FAFF;
+}
+.window_bottom button ion-icon
+{
+    font-size: 19px;
+    --ionicon-stroke-width: 35px;
+
+    transform: rotate(-20deg);
+}

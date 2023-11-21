@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage/>
       },
       {
-        path: "/home/playlists/oryssha-olender",
+        path: "/home/playlists/:playlistName",
         element: <PlaylistPage/>,
         errorElement: <ErrorPage/>
       },
@@ -79,6 +79,11 @@ const router = createBrowserRouter([
     path: "/personal",
     element: <Protected/>,
     errorElement: <ErrorPage/>,
+  },
+  {
+    path: "/app",
+    element: <App />,
+    errorElement: <ErrorPage />
   },
 ])
 

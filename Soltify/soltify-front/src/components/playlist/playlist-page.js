@@ -1,71 +1,63 @@
 import React, {useEffect, useState} from "react";
+import { useParams, useLocation, useOutletContext } from "react-router-dom";
 import './playlist-page.css';
+import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
+import { getUserExactPlaylist } from "../services/playlist-service";
+import { getUserData } from "../services/user-service";
+import { getPlaylistSongs } from "../services/song-service";
 
 import playlistDefault from '../../assets/playlistdefault.jpg';
 import likedPlaylist from '../../assets/likedplaylist.jpg';
-
-import animals from "../../assets/music/1.mp3"
-import river from "../../assets/music/2.mp3"
-import end from "../../assets/music/3.mp3"
-import babymama from "../../assets/music/4.mp3"
-import brend from "../../assets/music/5.mp3"
-
 import animalsImg from '../../assets/music/1.png';
 import riverImg from '../../assets/music/2.webp';
 import endImg from '../../assets/music/3.jpeg';
 import babymamImg from '../../assets/music/4.jpeg';
 import brendImg from '../../assets/music/5.jpeg';
 
-import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
 import Input from "../utilities/input/input";
 
-let playlist = [
-    {
-        id: 1,
-        name: "Животные",
-        artist: "Скриптонит",
-        url: animals,
-        img: animalsImg,
-        time: '3:02'
-    },
-    {
-        id: 2,
-        name: "Ты не верь слезам",
-        artist: "Скриптонит",
-        url: river,
-        img: riverImg,
-        time: '4:17'
-    },
-    {
-        id: 3,
-        name: "До конца",
-        artist: "Скриптонит",
-        url: end,
-        img: endImg,
-        time: '2:54'
-    },
-    {
-        id: 4,
-        name: "Бэби мама",
-        artist: "Скриптонит",
-        url: babymama,
-        img: babymamImg,
-        time: '3:51'
-    },
-    {
-        id: 5,
-        name: "Мультибрендовый",
-        artist: "Скриптонит",
-        url: brend,
-        img: brendImg,
-        time: '4:32'
-    },
-];
 
 const PlaylistPage = () => {
 
+    const location = useLocation();
+    const {playlistName} = useParams();
+    const [playlist, setPlaylist1] = useState({songs: []});
+    const [songs, setSongs] = useState([]);
+    const [owner, setOwner] = useState("");
+
     const [deletePopupState, setDeletePopupState] = useState(false);
     const [updatePopupState, setUpdatePopupState] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const playlistResult = await getUserExactPlaylist(location.state.userID, location.state.playlistIndex);
+                console.log("getUserExactPlaylist");
+                setPlaylist1(playlistResult);
+
+                const songsResult = await getPlaylistSongs(playlistResult.songs);
+                setSongs(songsResult);
+                console.log(songs);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, [location.state.userID, location.state.playlistIndex]);
+
+    useEffect(() => {
+        const fetchOwnerData = async () => {
+            try {
+                const ownerResult = await getUserData(location.state.userID);
+                setOwner(ownerResult);
+            } catch (error) {
+                console.error("Error fetching owner data:", error);
+            }
+        };
+
+        fetchOwnerData();
+    }, [location.state.userID]);
 
     useEffect(() => {
         document.addEventListener("click", e => {
@@ -73,8 +65,8 @@ const PlaylistPage = () => {
                 setDeletePopupState(false); setUpdatePopupState(false);
             }
         })
-    }, [])
-
+    }, )
+    
     return <div className={"playlist_background"}>
         {
             deletePopupState
@@ -101,7 +93,7 @@ const PlaylistPage = () => {
                         <span>Update Playlist</span>
                         <div className={"playlist_ft_imf update"}>
                             <input type="file" id={"img_for_playlist"}/>
-                            <img src={likedPlaylist} alt={playlistDefault}/>
+                            <img src={!playlist.img ? playlistDefault : playlist.img} alt={playlist.name} />
                             <label htmlFor="img_for_playlist"></label>
                         </div>
                         <div className={"input_block"}>
@@ -116,15 +108,15 @@ const PlaylistPage = () => {
                 ''
         }
         <div className={"playlist_info_back"}>
-            <img src={likedPlaylist} className={"playlist_info_back_img"} alt={playlistDefault} />
+            <img src={!playlist.img ? playlistDefault : playlist.img} className={"playlist_info_back_img"} alt={playlistDefault} />
             <div className={"playlist_info"}>
                 <div className={"playlist_img"}>
-                    <img src={likedPlaylist} alt={playlistDefault} />
+                    <img src={!playlist.img ? playlistDefault : playlist.img} alt={playlist.name} />
                 </div>
                 <div className={"playlist_details"}>
                     <span>Playlist</span>
-                    <div className={"playlist_name"}>oryssha olender</div>
-                    <div className={"playlist_owner"}>azikkw <span>•</span> 23 songs</div>
+                    <div className={"playlist_name"}>{playlistName}</div>
+                    <div className={"playlist_owner"}> {owner ? `${owner.name} ${owner.lastname}` : ""} <span>•</span> {playlist.songs.length} songs</div>
                     <div className={"playlist_options"}>
                         <button className={"play_playlist"}>Play</button>
                         <div className={"update_option"} onClick={() => setUpdatePopupState(true)}>
@@ -136,25 +128,20 @@ const PlaylistPage = () => {
                     </div>
                 </div>
             </div>
-        </div>
-        <div className={"playlist_music"}>
-            <div className={"titles"}>
-                <div>#</div>
-                <div>Song</div>
-                <div>Artist</div>
-                <div>Time</div>
-            </div>
-            <div className={"playlist_song_list"}>
-                {
-                    playlist.map((song, index) => {
-                        return <PlaylistMusicItem props={song} index={index + 1} type={true}/>
-                    })
-                }
-                {
-                    playlist.map((song, index) => {
-                        return <PlaylistMusicItem props={song} index={index + 6} type={true}/>
-                    })
-                }
+            <div className={"playlist_music"}>
+                <div className={"titles"}>
+                    <div>#</div>
+                    <div>Song</div>
+                    <div>Artist</div>
+                    <div>Time</div>
+                </div>
+                <div className={"playlist_song_list"}>
+                    {
+                        songs.map((song, index) => {
+                            return <PlaylistMusicItem props={song} index={index + 1} type={true} playlist={songs} />
+                        })
+                    }
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,114 @@
+.background
+{
+    width: 100%;
+    height: 100vh;
+
+    background: #D3DFF1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+.app_background
+{
+    height: 610px;
+
+    background: #C0D3EC;
+    box-sizing: border-box;
+    border-radius: 37px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 9px;
+}
+.app
+{
+    width: 100%;
+    height: 100%;
+
+    background: #F7FAFF;
+    border-radius: 30px;
+
+    display: flex;
+}
+
+.nav_bar
+{
+    width: 80px;
+    height: 100%;
+
+    background: #EFF4FB;
+    border-right: 1px solid #DFE3E8;
+    border-radius: 30px 0 0 30px;
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 25px 0 50px;
+}
+.nav_bar img
+{
+    width: 38px;
+    height: 38px;
+}
+.app_links
+{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    margin-top: -225px;
+}
+.link
+{
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 12px;
+}
+.link.active
+{
+    background: #4B95FF;
+}
+.link ion-icon
+{
+    font-size: 20px;
+    color: #3a3a3a;
+}
+.link.active ion-icon
+{
+    color: #F7FAFF;
+}
+.user_side
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.user_side img
+{
+    width: 38px;
+    height: 38px;
+
+    margin-bottom: 16px;
+    border-radius: 50%;
+}
+#log_out_btn
+{
+    font-size: 23px;
+    color: #3a3a3a;
+
+    cursor: pointer;
+}

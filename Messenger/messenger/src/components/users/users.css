@@ -1,0 +1,139 @@
+.users_background
+{
+    position: relative;
+
+    width: 920px;
+    height: 100%;
+
+    background: #F7FAFF;
+    border-radius: 0 37px 37px 0;
+    box-sizing: border-box;
+
+    padding: 20px 15px;
+}
+.users_background .title
+{
+    font-size: 23.5px;
+    font-weight: 700;
+
+    color: #252324;
+}
+
+.users_list
+{
+    width: 100%;
+    height: 490px;
+
+    overflow-y: auto;
+
+    display: grid;
+    grid-template-columns: repeat(5, 0fr);
+
+    margin-top: 20px;
+    gap: 18px;
+}
+.users_list::-webkit-scrollbar
+{
+    width: 5px;
+}
+.users_list::-webkit-scrollbar-track
+{
+    background: #eef1fd;
+}
+.users_list::-webkit-scrollbar-thumb
+{
+    background: #4B95FF;
+    border-radius: 4px;
+}
+.user_card
+{
+    width: 160px;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 15px;
+    box-shadow: 0 20px 25px rgba(0, 0, 0, .07);
+    box-sizing: border-box;
+
+    padding: 20px 0;
+    margin-bottom: 15px;
+}
+.user_card img
+{
+    width: 80px;
+    height: 80px;
+
+    border-radius: 50%;
+    margin-bottom: 8px;
+}
+.card_username
+{
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+.user_card button
+{
+    width: 120px;
+    height: 40px;
+
+    background: #4B95FF;
+    box-sizing: border-box;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+
+    font-size: 14.5px;
+    font-family: 'Poppins', sans-serif;
+
+    cursor: pointer;
+    color: #F7FAFF;
+}
+.user_card button:hover
+{
+    background: #448df5;
+}
+
+.created_popup
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, .05);
+    border-radius: 0 30px 30px 0;
+}
+.popup
+{
+    width: 250px;
+    height: 60px;
+
+    background: #F7FAFF;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    border-radius: 12px;
+
+    font-size: 15px;
+    color: #151515;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 6px;
+}
+.popup ion-icon
+{
+    font-size: 20px;
+    --ionicon-stroke-width: 38px;
+
+    color: #4B95FF;
+}

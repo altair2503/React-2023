@@ -84,7 +84,7 @@ const ArtistPage = () => {
             <div className={"artist_song_list"}>
                 {
                     playlist.map((song, index) => {
-                        return <PlaylistMusicItem props={song} index={index + 1} type={true} artist={true} playlist={true} />
+                        return <PlaylistMusicItem props={song} index={index + 1} type={true} artist={true} isPlaylist={true} />
                     })
                 }
             </div>

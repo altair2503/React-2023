@@ -5,18 +5,36 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 
 import Player from "../player/player";
-
 import './home-page.css';
 
-import user from '../../assets/music.jpg';
+import userImg from '../../assets/music.jpg';
 import avatar from '../../assets/avatar.png';
 import logo from '../../assets/logo.png';
+
+import { getUserPlaylist } from "../services/playlist-service";
+
+import { getSongs } from "../services/song-service";
+import { userUID } from "../services/user-service";
+
+let playList = [];
+let songs = [];
+
+if(userUID) {
+    await getUserPlaylist(userUID)
+    .then((result) => {
+        playList = result;
+    });
+    await getSongs().then((result) => { songs = result })
+}
 
 
 const HomePage = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
+
+    const [playlist, setPlaylist] = useState(songs);
+    const [index, setIndex] = useState(0);
 
     const [topBarTitle, setTopBarTitle] = useState("Soltify");
     const [hideAccount, setHideAccount] = useState(true);
@@ -81,13 +99,24 @@ const HomePage = () => {
                         <li className={"playlists"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
                             <Link className={"playlists_title"} to="/home/playlists">Your playlists</Link>
                             <ul>
-                                <li><Link to="">qazaqsha olender</Link></li>
-                                <li><Link to="">aǵylshynsha olender</Link></li>
-                                <li><Link to="/home/playlists/oryssha-olender">oryssha olender</Link></li>
-                                <li><Link to="">uiqy ushin</Link></li>
-                                <li><Link to="">sport ushin</Link></li>
-                                <li><Link to="">music in car</Link></li>
-                                <li><Link to="">for cooking</Link></li>
+                                {
+                                    playList.map((playlist, index) => {
+                                        return <li>
+                                            <Link
+                                                to={`/home/playlists/${playlist.name}`}
+                                                className={"playlist_item"}
+                                                state={
+                                                    {
+                                                        userID: (JSON).parse(localStorage.getItem('user')).uid,
+                                                        playlistIndex: index
+                                                    }
+                                                }
+                                            >
+                                                {playlist.name}
+                                            </Link>
+                                        </li>
+                                    }
+                                )}
                             </ul>
                         </li>
                         <li><Link to={"/home/"}><ion-icon name="heart-outline" id={"menu_heart"}></ion-icon></Link></li>
@@ -113,21 +142,27 @@ const HomePage = () => {
                             !hideAccount
                             ?
                                 <Link to={localStorage.getItem("user") ? "/home/account" : "/log-in"} className={"user_link"}>
-                                    { localStorage.getItem("user") == null ? <div className="default_avatar"><img src={avatar} alt={avatar} /></div> : <img src={user} alt={user} /> }
+                                    { localStorage.getItem("user") == null ? <div className="default_avatar"><img src={avatar} alt={avatar} /></div> : <img src={userImg} alt={userImg} /> }
                                 </Link>
                             :
                                 <ion-icon name="chevron-back-outline" onClick={() => navigate(-1)} id={"go_back_button"}></ion-icon>
                         }
                     </div>
                     <div className={"content"}>
-                        <Outlet/>
+                        <Outlet context={{playlist, setPlaylist, index, setIndex}} />
                     </div>
                 </div>
             </div>
-            <Player/>
+            <Player
+                props={{
+                    "playlist": playlist,
+                    "index": index
+                }}
+            />
         </div>
     </div>
 
 }
+
 
 export default HomePage;

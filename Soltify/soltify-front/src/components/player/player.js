@@ -1,151 +1,28 @@
 import React, {useEffect, useRef, useState} from "react";
 import './player.css';
-// import { db } from "../../firebase";
-// import {doc, getDoc, getDocs, collection, onSnapshot } from "firebase/firestore";
 
-import animals from "../../assets/music/1.mp3"
-import river from "../../assets/music/2.mp3"
-import end from "../../assets/music/3.mp3"
-import babymama from "../../assets/music/4.mp3"
-import brend from "../../assets/music/5.mp3"
-import raim1 from "../../assets/music/RaiM1.mp3"
-
-import dar1 from "../../assets/music/dar1.mp3"
-import dar2 from "../../assets/music/dar2.mp3"
-import dar3 from "../../assets/music/dar3.mp3"
-import ice1 from "../../assets/music/ice1.mp3"
-import ice2 from "../../assets/music/ice2.mp3"
-import snoop from "../../assets/music/snoop.mp3"
-
-import animalsImg from '../../assets/music/1.png';
-import riverImg from '../../assets/music/2.webp';
-import endImg from '../../assets/music/3.jpeg';
-import babymamImg from '../../assets/music/4.jpeg';
-import brendImg from '../../assets/music/5.jpeg';
-import raim1img from '../../assets/music/Dosym Raim.jpeg';
-import dar1img from '../../assets/music/uide.jpeg';
-import dar2img from '../../assets/music/kun men ayim.jpeg';
-import dar3img from '../../assets/music/shyrailym.jpeg';
-import ice1img from "../../assets/music/ice cube.jpeg"
-import ice2img from "../../assets/music/ice cube 2.jpeg"
-import snoopimg from "../../assets/music/snoop dog.jpeg"
+import AddToPlaylist from "../utilities/add-to-playlist/add-to-playlist";
+import { getSongs, getMusic } from "../services/song-service";
 
 import {Link, useNavigate} from "react-router-dom";
-import AddToPlaylist from "../utilities/add-to-playlist/add-to-playlist";
 
-let playlist = [
-  {
-    name: "Животные",
-    artist: "Скриптонит",
-    url: animals,
-    img: animalsImg
-  }, 
-  {
-    name: "Не верь слезам",
-    artist: "Скриптонит",
-    url: river,
-    img: riverImg
-  }, 
-  {
-    name: "До конца",
-    artist: "Скриптонит",
-    url: end,
-    img: endImg
-  }, 
-  {
-    name: "Мультибрендовый",
-    artist: "Скриптонит",
-    url: brend,
-    img: brendImg
-  }, 
-  {
-    name: "Baby mama",
-    artist: "Скриптонит",
-    url: babymama,
-    img: babymamImg
-  }, 
-  {
-    name: "Досым",
-    artist: "Раим",
-    url: raim1,
-    img: raim1img
-  }, 
-  {
-    name: "Yuide",
-    artist: "Darkhan Juzz",
-    url: dar1,
-    img: dar1img
-  },
-  {
-    name:  "Күн мен Айым",
-    artist: "Darkhan Juzz",
-    url: dar2,
-    img: dar2img
-  },
-  {
-    name: "Shyrailym",
-    artist: "Darkhan Juzz",
-    url: dar3,
-    img: dar3img
-  },
-  {
-    name: "You know how to do it",
-    artist: "Ice Cube",
-    url: ice1,
-    img: ice1img
-  },
-  {
-    name: "It was a good day",
-    artist: "Ice Cube",
-    url: ice2,
-    img: ice2img
-  },
-  {
-    name: "Riders in the storm",
-    artist: "Snoop doog",
-    url: snoop,
-    img: snoopimg
-  },
-];
+const Player = ({props}) => {
 
-// const dbInstance = collection(db, 'songs');
-// await getDocs(dbInstance).then( (response) => {
-//   playlist = ([...response.docs.map( (item) => {
-//     return { ...item.data(), id:item.id
-//     }})
-//   ]).slice()
-//   }).catch( (err) => { alert(err.message) }
-// ).finally( () => {
-// })
-
-let prevPlaylist = playlist.slice();
-
-
-const Player = () => {
-
+    let playlist = props.playlist;
+    let prevPlaylist = playlist.slice();
     const [playerActive, setPlayerActive] = useState(false);
-    const [artist, setArtist] = useState("")
-
     const audioPlayer = useRef()
-
     const [index, setIndex] = useState(0);
-    const [currentSong] = useState(playlist[index].url);
-
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(50);
     const [mute, setMute] = useState(false);
     const [repeat, setRepeat] = useState(false);
     const [mixed, setMixed] = useState(false);
-
     const [playlistAddState, setPlaylistAddState] = useState(false);
-
     const [elapsed, setElapsed] = useState(0);
     const [duration, setDuration] = useState(0);
-
     const [progress, setProgress] = useState(0);
-
     const progressRef = useRef();
-
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -161,9 +38,20 @@ const Player = () => {
 
             setDuration(_duration);
             setElapsed(_elapsed);
-        }, 100);
+        }, 10);
 
     }, [volume, isPlaying]);
+
+    useEffect(() => {
+        setAudioMusic();
+        props.index = index;
+    }, [index])
+
+    useEffect(() => {
+        playlist = props.playlist;
+        setIndex(props.index);
+        setIsPlaying(true);
+    }, [props])
 
     const getCurrentDuration = () => {
         const currentProgress = (audioPlayer.current?.currentTime / audioPlayer.current?.duration) * 100;
@@ -211,44 +99,46 @@ const Player = () => {
         return '0:00';
     }
 
+    const setAudioMusic = async() => {
+        await getMusic(playlist[index].musicID)
+        .then((result) => {
+            console.log(result);
+            audioPlayer.current.src = result.url;
+        });
+        if(isPlaying){
+            audioPlayer.current.play();
+        }
+    }
+
     const togglePlay = () => {
-        if(!isPlaying) audioPlayer.current.play()
-        else audioPlayer.current.pause()
+        if(!audioPlayer.current.src){
+            setAudioMusic();
+        }
+
+        if(!isPlaying){
+            audioPlayer.current.play();
+        } else {
+            audioPlayer.current.pause();
+        }
+        
 
         setIsPlaying(prev => !prev)
-        // getArtist(playlist[index].artistID)
     }
 
-    const toggleSkipForward = () => {
-        if(index >= playlist.length - 1) {
-            setIndex(0);
-            audioPlayer.current.src = playlist[0].url;
-            audioPlayer.current.play();
-        } else {
-            setIndex(prev => prev + 1);
-            audioPlayer.current.src = playlist[index + 1].url;
-            audioPlayer.current.play();
+    const toggleSkip = (forward) => {
+        if(forward){
+            if(index >= playlist.length - 1) {
+                setIndex(0);
+            } else {
+                setIndex(prev => prev + 1);
+            }
+        } else{
+            if(index > 0) {
+                setIndex(prev => prev - 1);
+            } else {
+                setIndex(prev => playlist.length - 1);
+            }
         }
-        if(!isPlaying){
-            setIsPlaying(true)
-        }
-        // getArtist(playlist[index].artistID)
-    }
-
-    const toggleSkipBackward = () => {
-        if(index > 0) {
-            setIndex(prev => prev - 1);
-            audioPlayer.current.src = playlist[index - 1].url;
-            audioPlayer.current.play();
-        } else {
-            setIndex(prev => playlist.length - 1);
-            audioPlayer.current.src = playlist[playlist.length-1].url;
-            audioPlayer.current.play();
-        }
-        if(!isPlaying){
-            setIsPlaying(true)
-        }
-        // getArtist(playlist[index].artistID)
     }
 
     const toggleReply = () => {
@@ -262,7 +152,6 @@ const Player = () => {
     }
 
     const toggleMix = () => {
-      console.log(mixed, ...playlist)
         if(mixed === false){
           let shuffledArray = playlist.slice(index + 1);
           let shuffleArray =  async() => {
@@ -290,11 +179,10 @@ const Player = () => {
     useEffect(()=> {
         if(elapsed && elapsed === duration){
             if(repeat){
-                setElapsed(0)
-                audioPlayer.current.play()
-            } else toggleSkipForward()
+                setElapsed(0);
+                audioPlayer.current.play();
+            } else toggleSkip(true);
         }
-        // getArtist(playlist[index].artistID)
     }, [elapsed]);
 
     function changeImageCursor(event) {
@@ -316,22 +204,11 @@ const Player = () => {
       return playlist.find((song) => song.url === song)
     }
 
-
-    // const getArtist = (uid) => {
-    //   const colUsers = collection(db, "users");
-    //   const docRef = doc(colUsers, uid);
-    //   onSnapshot(docRef, (doc) => { // @ts-ignore
-    //     console.log(doc.data())
-    //     console.log(doc.data()['username'])
-    //     setArtist(doc.data()['username'])
-    //   });
-    // }
-
     return (
         <div className={!playerActive ? "player_background mini" : "player_background"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
             <img src={playlist[index].img} alt={playlist[index].img} className={"player_background_img"} />
             <div className="player_background_layer">
-                <audio src={currentSong} ref={audioPlayer} muted={mute} onTimeUpdate={getCurrentDuration}/>
+                <audio ref={audioPlayer} muted={mute} onTimeUpdate={getCurrentDuration}/>
                 <div className="close" onClick={() => playerActiveCondition(false)}>
                     <ion-icon name="close-outline"></ion-icon>
                 </div>
@@ -339,13 +216,13 @@ const Player = () => {
                     <img src={playlist[index].img} alt={playlist[index].img} onClick={() => playerActiveCondition(true)} onMouseMove={(event) => changeImageCursor(event)} />
                     <div className="song_details for_mini_player">
                         <div className="name">{playlist[index].name}</div>
-                        <Link to={"/home/artist"} className="artist"> {playlist[index].artist}</Link>
+                        <Link to={"/home/artist"} className="artist"> {playlist[index].artist.username}</Link>
                     </div>
                 </div>
                 <div className="player_controllers">
                     <div className="song_details">
                         <div className="name">{playlist[index].name}</div>
-                        <div className="artist"> {playlist[index].artist}</div>
+                        <div className="artist"> {playlist[index].artist.username}</div>
                     </div>
                     <div className="song_center">
                         <div className="song_progress" ref={progressRef} onMouseMove={(e) => progressMoving(e)} onMouseDown={(e) => changeCurrent(e)}>
@@ -358,11 +235,11 @@ const Player = () => {
                         <div className="player_navigation">
                             <ion-icon name="shuffle-outline" class="random" onClick={toggleMix} style={mixed ? { color: "#25dc60" } : { color: "#efefef" }}></ion-icon>
                             <div className="center">
-                                <ion-icon name="play-skip-back-outline" onClick={toggleSkipBackward}></ion-icon>
+                                <ion-icon name="play-skip-back-outline" onClick={()=>toggleSkip(false)}></ion-icon>
                                 <div className="play_pause" onClick={togglePlay}>
                                     { !isPlaying ? <ion-icon name="play" id="play"></ion-icon> : <ion-icon name="pause-outline" id="pause"></ion-icon> }
                                 </div>
-                                <ion-icon name="play-skip-forward-outline" onClick={toggleSkipForward}></ion-icon>
+                                <ion-icon name="play-skip-forward-outline" onClick={()=>toggleSkip(true)}></ion-icon>
                             </div>
                             <ion-icon name="repeat-outline" class="repeat" onClick={toggleReply}></ion-icon>
                         </div>

@@ -32,7 +32,9 @@ const SignUp = ()=>{
                 setDoc(doc(db, "users", cred.user.uid), {
                     name: firstname,
                     lastname: lastname,
-                    email: email
+                    email: email,
+                    date: new Date(),
+                    liked: []
                 });
                 const user =  cred.user;
                 localStorage.setItem('token', user.accessToken);
@@ -40,7 +42,6 @@ const SignUp = ()=>{
             }).finally(()=>{
                 navigate("/log-in");
             });
-
         } catch (error) {
             console.log(error)
         }

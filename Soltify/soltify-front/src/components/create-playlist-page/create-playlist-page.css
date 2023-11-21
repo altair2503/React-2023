@@ -23,7 +23,7 @@
 }
 .playlist_ft_imf input
 {
-    display: none;
+    display: none !important;
 }
 .playlist_ft_imf label
 {

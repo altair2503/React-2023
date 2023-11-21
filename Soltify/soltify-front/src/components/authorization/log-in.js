@@ -24,8 +24,7 @@ const LogIn = key => {
             console.log(user)
             if (user && user.uid) {
                 const userData = await getUserData(user);
-                localStorage.setItem
-                ('token', user.accessToken);
+                localStorage.setItem('token', user.accessToken);
                 localStorage.setItem('user', JSON.stringify(user));
             } else {
                 console.error("User object is undefined")
