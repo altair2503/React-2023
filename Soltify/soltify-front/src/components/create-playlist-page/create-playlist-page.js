@@ -13,7 +13,6 @@ import playlistDefault from '../../assets/playlistdefault.jpg'
 
 
 const CreatePlaylistPage = () => {
-
     const [playlistIMG, setPlaylistIMG] = useState("");
     const [playlistSource, setPlaylistSource] = useState("");
     const [playlistTitle, setPlaylistTitle] = useState("");
@@ -69,11 +68,7 @@ const CreatePlaylistPage = () => {
                 "img": imgURL,
                 "songs": []
             })
-        }).then(() => {
-            navigate("/home/playlists")
-        }).finally(() => {
-            window.location.reload()
-        });
+        }).then(() => setPlaylistTitle(""));
     };
 
     return <div>

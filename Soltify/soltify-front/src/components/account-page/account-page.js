@@ -3,58 +3,24 @@ import './account-page.css';
 
 import userImg from '../../assets/music.jpg';
 
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useOutletContext} from "react-router-dom";
 import {signOut} from "firebase/auth";
-import {auth, db} from "../../firebase";
-import { doc, getDoc } from "firebase/firestore";
 
 import defaultAvatar from "../../assets/defaultAvatar.jpg";
 import avatar from "../../assets/music.jpg";
-
-let user = "";
-
-const convertSecondsToDate = (seconds) => {
-    const milliseconds = seconds * 1000;
-    const dateObject = new Date(milliseconds);
-    
-    // Getting the date components
-    const day = dateObject.getDate();
-    const month = dateObject.getMonth() + 1; // Months are zero-based
-    const year = dateObject.getFullYear();
-
-    // Formatting the date as dd.mm.yyyy
-    console.log(`${day}.${month}.${year}`);
-    return `${day}.${month}.${year}`;
-};
-
-if(localStorage.getItem('user')){
-    const getUserData = async() => {
-        const docRef = doc(db, "users", (JSON).parse(localStorage.getItem('user')).uid);
-        const docSnap = await getDoc(docRef);
-
-        if(docSnap.exists) {
-            user = ({...docSnap.data(),
-                formattedDate: convertSecondsToDate(docSnap.data().date.seconds)});
-        } else {
-            console.log("No such document");
-        }
-    }
-    await getUserData();
-}
+import {getUserRealTimeData, userUID} from "../services/user-service";
+import {auth, db} from "../../firebase";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {arrayUnion, doc, updateDoc} from "firebase/firestore";
 
 const AccountPage = () => {
-
     const navigate = useNavigate();
-
     const [updateAccPopupState, setUpdateAccPopupState] = useState(false);
-
-    useEffect(() => {
-        document.addEventListener("click", e => {
-            if(e.target.className === "delete_popup_back") {
-                setUpdateAccPopupState(false);
-            }
-        })
-    }, [])
+    const {user} = useOutletContext();
+    const [updatedUser, setUpdatedUser] = useState({...user});
+    const [userIMG, setUserIMG] = useState("");
+    const [imgSource, setImgSource] = useState(user.img);
+    const storage = getStorage()
 
     const Logout = async () => {
         try {
@@ -67,6 +33,69 @@ const AccountPage = () => {
         }
     }
 
+    const selectIMG = (event)=> {
+        setImgSource(event.target.files[0]);
+
+        const reader = new FileReader();
+        reader.readAsDataURL(event.target.files[0]);
+
+        reader.onload = (event) => {
+            setUserIMG(event.target.result);
+            setUpdatedUser({...updatedUser, img: event.target.result})
+        }
+
+    }
+
+    const uploadIMG = async() => {
+        const storageRef = ref(storage, 'images/' + imgSource.name);
+        const uploadTask = uploadBytesResumable(storageRef, imgSource);
+
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+            },
+            (error) => {
+                console.log(error);
+            },
+            async () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    console.log('File available at', downloadURL);
+                    changeUserFirestore(downloadURL);
+                });
+            });
+    }
+
+    const changeUser = async() => {
+        if(imgSource !== user.img){
+            await uploadIMG();
+            return;
+        }
+        await changeUserFirestore(user.img);
+    }
+
+    const changeUserFirestore = async(imgURL) => {
+        console.log(updatedUser);
+        const userRef = doc(db, "users", (JSON).parse(localStorage.getItem('user')).uid);
+
+        await updateDoc(userRef, {
+            "name": updatedUser.name,
+            "lastname": updatedUser.lastname,
+            "img": imgURL
+        }).then(() => {
+            setUpdateAccPopupState(false);
+            setUpdatedUser({...updatedUser});
+        });
+    };
+
+    useEffect(() => {
+        document.addEventListener("click", e => {
+            if(e.target.className === "delete_popup_back") {
+                setUpdateAccPopupState(false);
+            }
+        })
+    }, [])
+
     return <div className={"acc_back"}>
         {
             updateAccPopupState
@@ -76,21 +105,18 @@ const AccountPage = () => {
                         <ion-icon name="close-outline" onClick={() => setUpdateAccPopupState(false)}></ion-icon>
                         <span>Update Account</span>
                         <div className={"account_img_update"}>
-                            <input type="file" id={"img_for_account"}/>
-                            <img src={userImg} alt={userImg}/>
+                            <input type="file" id={"img_for_account"} onChange={selectIMG}/>
+                            <img src={updatedUser?.img === "" ? defaultAvatar : updatedUser.img} alt={userImg}/>
                             <label htmlFor="img_for_account"></label>
                         </div>
                         <div className={"input_block"}>
-                            <input name="lastname" type="text" placeholder={"Enter first name"} />
+                            <input name="lastname" type="text" placeholder={"Enter first name"} value={updatedUser.name} onChange={e => setUpdatedUser({...updatedUser, "name": e.target.value})}/>
                         </div>
                         <div className={"input_block"}>
-                            <input name="lastname" type="text" placeholder={"Enter last name"} />
-                        </div>
-                        <div className={"input_block"}>
-                            <input name="lastname" type="email" placeholder={"Enter email"} />
+                            <input name="lastname" type="text" placeholder={"Enter last name"} value={updatedUser.lastname} onChange={e => setUpdatedUser({...updatedUser, "lastname": e.target.value})}/>
                         </div>
                         <div className={"decision_btns"}>
-                            <button>Change</button>
+                            <button onClick={changeUser}>Change</button>
                         </div>
                     </div>
                 </div>
@@ -100,7 +126,7 @@ const AccountPage = () => {
         <span className={"acc_title"}>Your Account</span>
         <div className={"user_info"}>
             <div className={"user_info_left"}>
-                <img src={localStorage.getItem("user") !== null ? defaultAvatar : avatar} alt={userImg} />
+                <img src={user?.img !== "" ? user.img : defaultAvatar} alt={userImg} />
                 <button onClick={Logout} className={"log_out_btn"}>Log out</button>
             </div>
             <div className={"user_info_right"}>

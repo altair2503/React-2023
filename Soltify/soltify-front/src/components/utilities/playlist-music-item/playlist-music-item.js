@@ -1,26 +1,18 @@
 import React, {useEffect, useState} from "react";
 import './playlist-music-item.css';
 
-import {Link, useOutletContext} from "react-router-dom";
-import { addUserExactPlaylist, getUserPlaylist } from "../../services/playlist-service";
-import { userUID } from "../../services/user-service";
+import {Link, useNavigate, useOutletContext} from "react-router-dom";
 
 import crown from '../../../assets/crown.svg';
 import AddToPlaylist from "../add-to-playlist/add-to-playlist";
+import {doc, updateDoc} from "firebase/firestore";
+import {db} from "../../../firebase";
 
-let userPlaylist = [];
-
-if(userUID) {
-    await getUserPlaylist(userUID)
-    .then((succes) => {
-        userPlaylist = succes;
-    })
-}
-
-const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, isSearch}) => {
+const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, isSearch, user, plIndex}) => {
 
     const [playlistAddState, setPlaylistAddState] = useState(false);
     const [songOptionListState, setSongOptionListState] = useState(false);
+    const navigate = useNavigate();
 
     const {setPlaylist} = useOutletContext();
     const {setIndex} = useOutletContext();
@@ -28,6 +20,16 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
     const selectSong = (songs, index)=> {
         setPlaylist(songs);
         setIndex(index);
+    }
+
+    const removeFromPlaylist = async () => {
+        const userRef = doc(db, "users", (JSON).parse(localStorage.getItem('user')).uid);
+        let upl = user.playlist;
+        upl[plIndex]?.songs.splice(index - 1, 1)
+
+        await updateDoc(userRef, {
+            "playlist": upl
+        });
     }
 
     useEffect(() => {
@@ -61,14 +63,14 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
                         ''
                 }
                 <div className={"song_left"}>
-                    <img src={props?.img} alt={props?.img} />
+                    <img src={props.img} alt={props?.img} />
                     <div>
                         {props?.name}
-                        <Link to={"/home/artist"}>{props?.artist}</Link>
+                        <Link to={`/home/artist/${props.artist.username}`}>{props.artist.username}</Link>
                     </div>
                 </div>
                 {
-                    !artist ? <Link to={"/home/artist"} className={"song_artist"}>{props?.artist}</Link> : ''
+                    !artist ? <Link to={`/home/artist/${props.artist.username}`} className={"song_artist"}>{props?.artist.username}</Link> : ''
                 }
                 <div className={!artist ? "song_time" : "song_time_artist"}>{props?.time}</div>
                 <div className={"song_time"}>{props?.duration}</div>
@@ -79,9 +81,9 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
                         ?
                             <ul className={"options_list"}>
                                 <li className={"options_list_li"}><ion-icon name="heart"></ion-icon> Add to Like</li>
-                                <AddToPlaylist type={true} userPlaylists={userPlaylist} id={props?.id} />
+                                <AddToPlaylist type={true} user={user} id={props?.id} />
                                 {
-                                    !isPlaylist ? <li><ion-icon name="trash-outline"></ion-icon> Remove</li> : ''
+                                    !isPlaylist ? <li onClick={removeFromPlaylist}><ion-icon name="trash-outline"></ion-icon> Remove</li> : ''
                                 }
                             </ul>
                         :
@@ -108,7 +110,7 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
             <img src={props?.img} alt={props?.img} />
             <div>
                 {props?.name}
-                <Link to={"/home/artist"}>{props?.artist?.username}</Link>
+                <Link to={`/home/artist/${props?.artist?.username}`}>{props?.artist?.username}</Link>
             </div>
         </div>
         <div className={"song_time_min"}>{props?.duration}</div>
@@ -119,9 +121,9 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
                 ?
                     <ul className={"options_list"}>
                         <li><ion-icon name="heart"></ion-icon> Add to Like</li>
-                        <AddToPlaylist type={true} userPlaylists={userPlaylist} id={props?.id} />
+                        <AddToPlaylist type={true} user={user} id={props?.id} />
                         {
-                            !isPlaylist ? <li><ion-icon name="trash-outline"></ion-icon> Remove </li> : ''
+                            !isPlaylist ? <li onClick={removeFromPlaylist}><ion-icon name="trash-outline"></ion-icon> Remove </li> : ''
                         }
                     </ul>
                 :

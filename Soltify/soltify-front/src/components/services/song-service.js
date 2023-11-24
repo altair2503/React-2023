@@ -1,5 +1,5 @@
 import { db } from "../../firebase";
-import { doc, getDoc, getDocs, collection, onSnapshot } from "firebase/firestore";
+import {doc, getDoc, getDocs, collection, onSnapshot, query, where} from "firebase/firestore";
 
 const getArtist = async (id) => {
   const docRef = doc(db, "users", id);
@@ -22,13 +22,22 @@ export async function getSongs() {
   }));
 }
 
+export async function getArtistSongs(artistID) {
+  const dbInstance = collection(db, 'songs');
+  // const songsData = await getDocs(dbInstance);
+  const artistSongsSnapshot = await getDocs(query(collection(db, "songs"), where("artistID", "==", artistID)))
+
+
+  return Promise.all(artistSongsSnapshot.docs.map(async (item) => {
+    const artistData = await getArtist(item.data()['artistID']);
+    return { ...item.data(), id: item.id, artist: artistData };
+  }));
+}
+
 export async function getPlaylistSongs(playlist) {
   const dbInstance = collection(db, 'songs');
   const songsData = await getDocs(dbInstance);
   const filteredSongs = songsData.docs.filter(item => playlist.includes(item.id));
-  console.log("songsData", songsData)
-  console.log("filteredSongs", filteredSongs)
-
   
   return Promise.all(filteredSongs.map(async (item) => {                
     const artistData = await getArtist(item.data()['artistID']);

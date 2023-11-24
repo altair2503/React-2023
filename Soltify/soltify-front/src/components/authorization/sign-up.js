@@ -34,7 +34,8 @@ const SignUp = ()=>{
                     lastname: lastname,
                     email: email,
                     date: new Date(),
-                    liked: []
+                    liked: [],
+                    img: "",
                 });
                 const user =  cred.user;
                 localStorage.setItem('token', user.accessToken);

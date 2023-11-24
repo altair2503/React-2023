@@ -23,8 +23,11 @@
 {
     margin-top: 20px;
 
-    width: 1230px;
+    width: 1200px;
     overflow-x: scroll;
+
+
+    box-sizing: border-box;
 
     display: flex;
     gap: 20px;

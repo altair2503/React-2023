@@ -1,43 +1,54 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import './content-page.css';
 
-import { Link } from "react-router-dom";
-import { userUID } from "../services/user-service";
+import {Link, useOutletContext} from "react-router-dom";
 
-import { getUserPlaylist } from "../services/playlist-service";
 import { getSongs } from "../services/song-service";
 
 import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
 import playlistDefault from "../../assets/playlistdefault.jpg";
 
 
-let playlistList = [];
-if(userUID) await getUserPlaylist((JSON).parse(localStorage.getItem('user')).uid).then((result) => { playlistList = result });
-
-let playlist = [];
-await getSongs().then((result) => { playlist = result })
-
-
 const ContentPage = () => {
+    const [topSongs, setTopSongs] = useState([]);
+    const {user} = useOutletContext();
+
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                await getSongs()
+                    .then((result) => {
+                            setTopSongs(result);
+                        }
+                    )
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
     return <div className={"content_page_back"}>
         {
-            playlistList.length > 0
+            user.playlist?.length > 0
             ?
                 <div className={"content_item_back"}>
                     <span className={"content_title"}>Recently Played</span>
                     {
                         <div className={"recently_list"}>
                             {
-                                playlistList.map((playlist, index) => {
+                                user.playlist?.map((userPL, index) => {
                                     return <Link
-                                        to={`/home/playlists/${playlist.name}`}
+                                        to={`/home/playlists/${index}`}
                                         className={"recently_item"}
                                         state={{
                                             userID: (JSON).parse(localStorage.getItem('user')).uid,
                                             playlistIndex: index
                                     }}>
-                                        { <img src={!playlist.img ? playlistDefault : playlist.img} alt={playlist.name} />}
-                                        <span>{playlist.name}</span>
+                                        { <img src={!userPL.img ? playlistDefault : userPL.img} alt={userPL.name} />}
+                                        <span>{userPL.name}</span>
                                     </Link>
                                 })
                             }
@@ -52,8 +63,8 @@ const ContentPage = () => {
             <div className={"content_description"}>Tracks that are the most popular on the Soltify platform at the moment</div>
             <div className={"song_list"}>
                 {
-                    playlist.map((song, index) => {
-                        return <PlaylistMusicItem props={song} index={index + 1} isPlaylist={true} playlist={playlist} />
+                    topSongs?.map((song, index) => {
+                        return <PlaylistMusicItem props={song} index={index + 1} isPlaylist={true} playlist={topSongs} user={user} />
                     })
                 }
             </div>

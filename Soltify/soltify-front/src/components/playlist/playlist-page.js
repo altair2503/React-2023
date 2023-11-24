@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useParams, useLocation, useOutletContext, Link} from "react-router-dom";
+import {useParams, useLocation, useOutletContext, Link, useNavigate} from "react-router-dom";
 import './playlist-page.css';
 import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
 import { getUserExactPlaylist } from "../services/playlist-service";
@@ -7,57 +7,125 @@ import { getUserData } from "../services/user-service";
 import { getPlaylistSongs } from "../services/song-service";
 
 import playlistDefault from '../../assets/playlistdefault.jpg';
-import likedPlaylist from '../../assets/likedplaylist.jpg';
-import animalsImg from '../../assets/music/1.png';
-import riverImg from '../../assets/music/2.webp';
-import endImg from '../../assets/music/3.jpeg';
-import babymamImg from '../../assets/music/4.jpeg';
-import brendImg from '../../assets/music/5.jpeg';
+import {getDownloadURL, getStorage, ref, uploadBytesResumable} from "firebase/storage";
+import {doc, updateDoc} from "firebase/firestore";
+import {db} from "../../firebase";
 
-import Input from "../utilities/input/input";
 
 
 const PlaylistPage = () => {
 
-    const location = useLocation();
-    const {playlistName} = useParams();
-    const [playlist, setPlaylist1] = useState({songs: []});
     const [songs, setSongs] = useState([]);
-    const [owner, setOwner] = useState("");
-
+    const {index} = useParams();
+    const [ind, setInd] = useState("");
+    const {user} = useOutletContext();
+    const [playlistIMG, setPlaylistIMG] = useState("");
+    const [imgSource, setImgSource] = useState(user?.playlist[index]?.img);
+    const storage = getStorage()
+    const [updatePlaylist, setUpdatedPlaylist] = useState({...user?.playlist[index]});
+    const navigate = useNavigate();
     const [deletePopupState, setDeletePopupState] = useState(false);
     const [updatePopupState, setUpdatePopupState] = useState(false);
+
+
+
+    const selectIMG = (event)=> {
+        setImgSource(event.target.files[0]);
+
+        const reader = new FileReader();
+        reader.readAsDataURL(event.target.files[0]);
+
+        reader.onload = (event) => {
+            setPlaylistIMG(event.target.result);
+            setUpdatedPlaylist({...updatePlaylist, img: event.target.result})
+        }
+
+    }
+
+    const uploadIMG = async() => {
+        const storageRef = ref(storage, 'images/' + imgSource.name);
+        const uploadTask = uploadBytesResumable(storageRef, imgSource);
+
+        uploadTask.on('state_changed',
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+            },
+            (error) => {
+                console.log(error);
+            },
+            async () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    console.log('File available at', downloadURL);
+                    changeUserFirestore(downloadURL);
+                });
+            });
+    }
+
+    const changePlaylist = async() => {
+        if(imgSource !== user.playlist[index].img){
+            await uploadIMG();
+            return;
+        }
+        await changeUserFirestore(user.playlist[index].img);
+    }
+
+    const changeUserFirestore = async(url) => {
+        const userRef = doc(db, "users", (JSON).parse(localStorage.getItem('user')).uid);
+        let upl = user.playlist;
+        upl[index] = {...updatePlaylist};
+
+        await updateDoc(userRef, {
+            "playlist": upl
+        }).then(() => {
+            setUpdatePopupState(false);
+            setUpdatedPlaylist({...updatePlaylist});
+        });
+    };
+
+    const deletePlaylist = async() =>{
+        const userRef = doc(db, "users", (JSON).parse(localStorage.getItem('user')).uid);
+        let upl = user.playlist;
+        upl.splice(index, 1)
+
+        await updateDoc(userRef, {
+            "playlist": upl
+        }).then(() => {
+            navigate('/home');
+            setDeletePopupState(false);
+        });
+    }
+
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const playlistResult = await getUserExactPlaylist(location.state.userID, location.state.playlistIndex);
-                console.log("getUserExactPlaylist");
-                setPlaylist1(playlistResult);
-
-                const songsResult = await getPlaylistSongs(playlistResult.songs);
+                const songsResult = await getPlaylistSongs(user?.playlist[index].songs);
                 setSongs(songsResult);
-                console.log(songs);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
 
+
         fetchData();
-    }, [location.state.userID, location.state.playlistIndex]);
+    }, []);
 
     useEffect(() => {
-        const fetchOwnerData = async () => {
+        const fetchData = async () => {
             try {
-                const ownerResult = await getUserData(location.state.userID);
-                setOwner(ownerResult);
+                const songsResult = await getPlaylistSongs(user?.playlist[index].songs);
+                setSongs(songsResult);
             } catch (error) {
-                console.error("Error fetching owner data:", error);
+                console.error("Error fetching data:", error);
             }
         };
 
-        fetchOwnerData();
-    }, [location.state.userID]);
+        setInd(index);
+        fetchData();
+    }, [index, user.playlist]);
+
 
     useEffect(() => {
         document.addEventListener("click", e => {
@@ -76,7 +144,7 @@ const PlaylistPage = () => {
                         <ion-icon name="close-outline" onClick={() => setDeletePopupState(false)}></ion-icon>
                         <span>Are you sure you want to delete this playlist?</span>
                         <div className={"decision_btns"}>
-                            <button>Yes</button>
+                            <button onClick={deletePlaylist}>Yes</button>
                             <button onClick={() => setDeletePopupState(false)}>No</button>
                         </div>
                     </div>
@@ -92,15 +160,15 @@ const PlaylistPage = () => {
                         <ion-icon name="close-outline" onClick={() => setUpdatePopupState(false)}></ion-icon>
                         <span>Update Playlist</span>
                         <div className={"playlist_ft_imf update"}>
-                            <input type="file" id={"img_for_playlist"}/>
-                            <img src={!playlist.img ? playlistDefault : playlist.img} alt={playlist.name} />
+                            <input type="file" id={"img_for_playlist"} onChange={selectIMG}/>
+                            <img src={updatePlaylist?.img === "" ? playlistDefault : updatePlaylist?.img} alt={user.playlist[ind]?.name} />
                             <label htmlFor="img_for_playlist"></label>
                         </div>
                         <div className={"input_block"}>
-                            <input name="lastname" type="text" placeholder={"Enter playlist name"} />
+                            <input name="lastname" type="text" placeholder={"Enter playlist name"} value={updatePlaylist?.name} onChange={e => setUpdatedPlaylist({...updatePlaylist, "name": e.target.value})} />
                         </div>
                         <div className={"decision_btns"}>
-                            <button>Change</button>
+                            <button onClick={changePlaylist}>Change</button>
                         </div>
                     </div>
                 </div>
@@ -108,15 +176,15 @@ const PlaylistPage = () => {
                 ''
         }
         <div className={"playlist_info_back"}>
-            <img src={!playlist.img ? playlistDefault : playlist.img} className={"playlist_info_back_img"} alt={playlistDefault} />
+            <img src={!user?.playlist[ind]?.img ? playlistDefault : user?.playlist[ind]?.img} className={"playlist_info_back_img"} alt={playlistDefault} />
             <div className={"playlist_info"}>
                 <div className={"playlist_img"}>
-                    <img src={!playlist.img ? playlistDefault : playlist.img} alt={playlist.name} />
+                    <img src={!user.playlist[ind]?.img ? playlistDefault : user.playlist[ind]?.img} alt={user.playlist[ind]?.name} />
                 </div>
                 <div className={"playlist_details"}>
                     <span>Playlist</span>
-                    <div className={"playlist_name"}>{playlistName}</div>
-                    <div className={"playlist_owner"}> {owner ? `${owner.name} ${owner.lastname}` : ""} <span>•</span> {playlist.songs.length} songs</div>
+                    <div className={"playlist_name"}>{user.playlist[ind]?.name}</div>
+                    <div className={"playlist_owner"}> {user ? `${user?.name} ${user?.lastname}` : ""} <span>•</span> {user?.playlist[ind]?.songs.length} songs</div>
                     <div className={"playlist_options"}>
                         <button className={"play_playlist"}>Play</button>
                         <div className={"update_option"} onClick={() => setUpdatePopupState(true)}>
@@ -136,12 +204,12 @@ const PlaylistPage = () => {
                     <div>Time</div>
                 </div>
                 {
-                    songs.length > 0
+                    songs?.length > 0
                     ?
                         <div className={"playlist_song_list"}>
                             {
-                                songs.map((song, index) => {
-                                    return <PlaylistMusicItem props={song} index={index + 1} artist={false} type={true} playlist={songs} />
+                                songs?.map((song, index) => {
+                                    return <PlaylistMusicItem props={song} index={index + 1} artist={false} type={true} playlist={songs} user={user} plIndex={index}/>
                                 })
                             }
                         </div>

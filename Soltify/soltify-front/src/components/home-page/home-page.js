@@ -1,46 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate, Link, useLocation } from "react-router-dom";
-
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
-
 import Player from "../player/player";
 import './home-page.css';
-
 import avatar from '../../assets/music.jpg';
 import defaultAvatar from "../../assets/defaultAvatar.jpg";
 import logo from '../../assets/logo.png';
-
-import { getUserPlaylist } from "../services/playlist-service";
-
 import { getSongs } from "../services/song-service";
-import { userUID } from "../services/user-service";
-
-let playList = [];
-let songs = [];
-
-if(userUID) {
-    await getUserPlaylist(userUID)
-    .then((result) => {
-        playList = result;
-    });
-    await getSongs().then((result) => { songs = result })
-}
-
+import {getUserRealTimeData, userUID} from "../services/user-service";
 
 const HomePage = () => {
-
     const navigate = useNavigate();
     const location = useLocation();
-
-    const [playlist, setPlaylist] = useState(songs);
+    const [playlist, setPlaylist] = useState(false);
     const [index, setIndex] = useState(0);
-
     const [topBarTitle, setTopBarTitle] = useState("Soltify");
     const [hideAccount, setHideAccount] = useState(true);
     const [hideSearch, setHideSearch] = useState(true);
-
     const [searchQuery, setSearchQuery] = useState("");
+    const [user, setUser] = useState({});
+
 
     useEffect(() => {
         changeTopBarTitle();
@@ -95,6 +75,19 @@ const HomePage = () => {
         navigate("/home/search");
     }
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                getUserRealTimeData(userUID, setUser);
+                await getSongs().then((result) => {setPlaylist(result)});
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchUserData();
+    }, [])
+
     return <div className={"background"}>
         <div className={"background_layer"}>
             <div className={"home_top"}>
@@ -110,17 +103,17 @@ const HomePage = () => {
                             <Link className={"playlists_title"} to="/home/playlists">Your playlists</Link>
                             <div>
                                 {
-                                    playList.map((playlist, index) => {
+                                    user.playlist?.map((userPL, index) => {
                                         return <Link
-                                            to={`/home/playlists/${playlist.name}`}
+                                            to={`/home/playlists/${index}`}
                                             state={
                                                 {
-                                                    userID: (JSON).parse(localStorage.getItem('user')).uid,
+                                                    userID: userUID,
                                                     playlistIndex: index
                                                 }
                                             }
                                         >
-                                            {playlist.name}
+                                            {userPL.name}
                                         </Link>
 
                                     }
@@ -150,23 +143,26 @@ const HomePage = () => {
                             !hideAccount
                             ?
                                 <Link to={localStorage.getItem("user") ? "/home/account" : "/log-in"} className={"user_link"}>
-                                    { <img src={localStorage.getItem("user") == null ? defaultAvatar : avatar} alt={defaultAvatar} /> }
+                                    { <img src={user.img === "" ? defaultAvatar : user.img} alt={defaultAvatar} /> }
                                 </Link>
                             :
                                 <ion-icon name="chevron-back-outline" onClick={() => navigate(-1)} id={"go_back_button"}></ion-icon>
                         }
                     </div>
                     <div className={"content"}>
-                        <Outlet context={{playlist, setPlaylist, index, setIndex, searchQuery}} />
+                        <Outlet context={{playlist, user, setPlaylist, index, setIndex, searchQuery}} />
                     </div>
                 </div>
             </div>
-            <Player
+            {playlist ?
+                <Player
                 props={{
                     "playlist": playlist,
-                    "index": index
+                    "index": index,
                 }}
-            />
+                user={user}
+            /> : ""}
+
         </div>
     </div>
 

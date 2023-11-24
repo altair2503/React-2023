@@ -1,22 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
 import './player.css';
-
 import { Link, useNavigate } from "react-router-dom";
-import { userUID } from "../services/user-service";
-
 import AddToPlaylist from "../utilities/add-to-playlist/add-to-playlist";
-
-import { getUserPlaylist } from "../services/playlist-service";
 import { getMusic } from "../services/song-service";
 
 
-const Player = ({props}) => {
-
+const Player = ({props, user}) => {
     let playlist = props.playlist;
     let prevPlaylist = playlist.slice();
-
-    const [userPlaylist, setUserPlaylist] = useState([]);
-
     const [mute, setMute] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [playerActive, setPlayerActive] = useState(false);
@@ -32,48 +23,6 @@ const Player = ({props}) => {
     const audioPlayer = useRef()
     const navigate = useNavigate();
     const progressRef = useRef();
-
-    useEffect(() => {
-        if(localStorage.getItem("playerCondition") === "true") {
-            setPlayerActive(true)
-        } else setPlayerActive(false)
-
-        if(audioPlayer) audioPlayer.current.volume = volume / 100;
-
-        setInterval(() => {
-            const _duration = Math.floor(audioPlayer?.current?.duration);
-            const _elapsed = Math.floor(audioPlayer?.current?.currentTime);
-
-            setDuration(_duration);
-            setElapsed(_elapsed);
-        }, 10);
-
-    }, [volume, isPlaying]);
-
-    useEffect(() => {
-        setAudioMusic().then();
-        props.index = index;
-    }, [index])
-
-    useEffect(() => {
-        playlist = props.playlist;
-        setIndex(props.index);
-        setIsPlaying(true);
-    }, [props])
-
-    useEffect(() => {
-        if(elapsed && elapsed === duration) {
-            if(repeat) {
-                setElapsed(0);
-                audioPlayer.current.play();
-            }
-            else toggleSkip(true);
-        }
-    }, [elapsed]);
-
-    useEffect(() => {
-        getUserPlaylist(userUID).then((r) => setUserPlaylist(r));
-    })
 
     const getCurrentDuration = () => {
         const currentProgress = (audioPlayer.current?.currentTime / audioPlayer.current?.duration) * 100;
@@ -203,6 +152,44 @@ const Player = ({props}) => {
         }
     }
 
+    useEffect(() => {
+        if(localStorage.getItem("playerCondition") === "true") {
+            setPlayerActive(true)
+        } else setPlayerActive(false)
+
+        if(audioPlayer) audioPlayer.current.volume = volume / 100;
+
+        setInterval(() => {
+            const _duration = Math.floor(audioPlayer?.current?.duration);
+            const _elapsed = Math.floor(audioPlayer?.current?.currentTime);
+
+            setDuration(_duration);
+            setElapsed(_elapsed);
+        }, 10);
+
+    }, [volume, isPlaying]);
+
+    useEffect(() => {
+        setAudioMusic().then();
+        props.index = index;
+    }, [index])
+
+    useEffect(() => {
+        playlist = props.playlist;
+        setIndex(props.index);
+        setIsPlaying(true);
+    }, [props])
+
+    useEffect(() => {
+        if(elapsed && elapsed === duration) {
+            if(repeat) {
+                setElapsed(0);
+                audioPlayer.current.play();
+            }
+            else toggleSkip(true);
+        }
+    }, [elapsed]);
+
     return (
         <div className={!playerActive ? "player_background mini" : "player_background"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
             <img src={playlist[index]?.img} alt={playlist[index]?.img} className={"player_background_img"} />
@@ -245,7 +232,7 @@ const Player = ({props}) => {
                     </div>
                     <div className="player_options">
                         <ion-icon name="heart" id="heart"></ion-icon>
-                        <AddToPlaylist userPlaylists={userPlaylist} id={props.id} />
+                        <AddToPlaylist id={props?.id} user={user}/>
                         <ion-icon name="scan-outline" id="scan" onClick={() => playerActiveCondition(true)}></ion-icon>
                     </div>
                     <div className="song_volume">

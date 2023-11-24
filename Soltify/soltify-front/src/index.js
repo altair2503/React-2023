@@ -49,7 +49,7 @@ const router = createBrowserRouter([
                 errorElement: <ErrorPage/>
             },
             {
-                path: "/home/playlists/:playlistName",
+                path: "/home/playlists/:index",
                 element: <PlaylistPage/>,
                 errorElement: <ErrorPage/>
             },
@@ -69,7 +69,7 @@ const router = createBrowserRouter([
                 errorElement: <ErrorPage />,
             },
             {
-                path: "/home/artist",
+                path: "/home/artist/:username",
                 element: <ArtistPage />,
                 errorElement: <ErrorPage />,
             },
@@ -90,7 +90,7 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <RouterProvider router={router}/>
     </React.StrictMode>
 );
 
