@@ -14,7 +14,7 @@ import endImg from '../../assets/music/3.jpeg';
 import babymamImg from '../../assets/music/4.jpeg';
 import brendImg from '../../assets/music/5.jpeg';
 
-import Input from "../utilities/input/input";
+import Input from "../utilities/input-item/input";
 
 
 const PlaylistPage = () => {
@@ -97,7 +97,7 @@ const PlaylistPage = () => {
                             <label htmlFor="img_for_playlist"></label>
                         </div>
                         <div className={"input_block"}>
-                            <input name="lastname" type="text" placeholder={"Enter playlist name"} />
+                            <input name="lastname" type="text" placeholder={"Enter playlist-page name"} />
                         </div>
                         <div className={"decision_btns"}>
                             <button>Change</button>
@@ -149,7 +149,7 @@ const PlaylistPage = () => {
                         <div className={"playlist_song_list"}>
                             <div className={"if_zero"}>
                                 <span>There are no songs in this playlist yet. <br/> Do you want to add them?</span>
-                                <Link to={""}>Add songs</Link>
+                                <Link to={"/home/search"}>Add songs</Link>
                             </div>
                         </div>
                 }

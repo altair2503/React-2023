@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-import Input from "../utilities/input/input";
+import Input from "../utilities/input-item/input";
 import styles from "./authorization.module.css";
 
 import { signInWithEmailAndPassword } from "firebase/auth";

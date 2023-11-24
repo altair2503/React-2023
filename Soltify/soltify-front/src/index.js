@@ -13,10 +13,10 @@ import LogIn from './components/authorization/log-in';
 
 import HomePage from "./components/home-page/home-page";
 import SearchPage from "./components/search-page/search-page";
-import ContentPage from "./components/content/content-page";
+import ContentPage from "./components/content-page/content-page";
 import CreatePlaylistPage from "./components/create-playlist-page/create-playlist-page";
 import PlaylistsPage from "./components/playlists-page/playlists-page";
-import PlaylistPage from "./components/playlist/playlist-page";
+import PlaylistPage from "./components/playlist-page/playlist-page";
 import AccountPage from "./components/account-page/account-page";
 import ArtistPage from "./components/artist-page/artist-page";
 import ErrorPage from './components/error-page/error-page';
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
                 errorElement: <ErrorPage/>
             },
             {
-                path: "/home/create-playlist",
+                path: "/home/create-playlist-page",
                 element: <CreatePlaylistPage/>,
                 errorElement: <ErrorPage/>
             },

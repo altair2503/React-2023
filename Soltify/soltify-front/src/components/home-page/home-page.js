@@ -16,6 +16,7 @@ import { getUserPlaylist } from "../services/playlist-service";
 import { getSongs } from "../services/song-service";
 import { userUID } from "../services/user-service";
 
+
 let playList = [];
 let songs = [];
 
@@ -43,6 +44,10 @@ const HomePage = () => {
     const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
+        if(!localStorage.getItem("user")) navigate("/")
+    })
+
+    useEffect(() => {
         changeTopBarTitle();
         changeSearchAndAccountBtn();
     }, [location])
@@ -51,7 +56,7 @@ const HomePage = () => {
         if(location.pathname === "/home/playlists") setTopBarTitle("Playlists")
         else if(location.pathname.includes("/home/artist")) setTopBarTitle("Artist")
         else if(location.pathname.includes("/home/playlists/")) setTopBarTitle("Playlist")
-        else if(location.pathname === "/home/create-playlist") setTopBarTitle("Create PL")
+        else if(location.pathname === "/home/create-playlist-page") setTopBarTitle("Create PL")
         else if(location.pathname === "/home/search") setTopBarTitle("Search")
         else if(location.pathname === "/home/account") setTopBarTitle("Account")
         else if(location.pathname === "/home/") setTopBarTitle("Liked")
@@ -89,10 +94,8 @@ const HomePage = () => {
     }
 
     const openSearchPage = () => {
-        if(searchQuery !== "") {
-            navigate("/home/search"); return
-        }
-        navigate("/home/search");
+        if(window.innerWidth < 451) navigate("/home/search")
+        if(searchQuery !== "") navigate("/home/search")
     }
 
     return <div className={"background"}>
@@ -104,27 +107,32 @@ const HomePage = () => {
                     </Link>
                     <ul>
                         <li><Link to="/home"><ion-icon name="home-outline"></ion-icon> <span>Home</span></Link></li>
-                        <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : navigate('/home/create-playlist')}><Link><ion-icon name="add-outline" id="add_playlist"></ion-icon> <span>Create playlist</span></Link></li>
+                        <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : navigate('/home/create-playlist-page')}><Link><ion-icon name="add-outline" id="add_playlist"></ion-icon> <span>Create playlist</span></Link></li>
                         <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}><Link><ion-icon name="heart" id="heart"></ion-icon> <span>Like</span></Link></li>
                         <li className={"playlists"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
                             <Link className={"playlists_title"} to="/home/playlists">Your playlists</Link>
                             <div>
                                 {
-                                    playList.map((playlist, index) => {
-                                        return <Link
-                                            to={`/home/playlists/${playlist.name}`}
-                                            state={
-                                                {
+                                    playList.length > 0
+                                    ?
+                                        playList.map((playlist, index) => {
+                                            return <Link
+                                                to={`/home/playlists/${playlist.name}`}
+                                                state={{
                                                     userID: (JSON).parse(localStorage.getItem('user')).uid,
                                                     playlistIndex: index
-                                                }
-                                            }
-                                        >
-                                            {playlist.name}
+                                                }}
+                                            >
+                                                {playlist.name}
+                                            </Link>
+                                        })
+                                    :
+                                        <Link to={"/home/create-playlist-page"}>
+                                            <span>
+                                                You don't have playlists yet. <span style={{textDecoration: 'underline'}}>Create a playlist</span>
+                                            </span>
                                         </Link>
-
-                                    }
-                                )}
+                                }
                             </div>
                         </li>
                         <li><Link to={"/home/"}><ion-icon name="heart-outline" id={"menu_heart"}></ion-icon></Link></li>
@@ -139,9 +147,9 @@ const HomePage = () => {
                                 <ion-icon name="log-out-outline" onClick={Logout} id={"button_for_logout"}></ion-icon>
                             :
                                 <div className={"search"}>
-                                    <input type="text" placeholder="Search..." onChange={e => setSearchQuery(e.target.value)} />
+                                    <input type="text" value={searchQuery} placeholder="Song, artist ..." onChange={e => setSearchQuery(e.target.value)} onKeyDown={e => e.key === "Enter" ? openSearchPage() : ''} />
                                     <button className={"search_btn"} onClick={openSearchPage}>
-                                        <ion-icon name="search-outline" onClick={openSearchPage}></ion-icon>
+                                        <ion-icon name="search-outline"></ion-icon>
                                     </button>
                                 </div>
                         }
@@ -161,12 +169,7 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-            <Player
-                props={{
-                    "playlist": playlist,
-                    "index": index
-                }}
-            />
+            <Player props={{"playlist": playlist, "index": index}} />
         </div>
     </div>
 

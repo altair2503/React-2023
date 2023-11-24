@@ -7,7 +7,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../firebase";
 
-import Input from "../utilities/input/input";
+import Input from "../utilities/input-item/input";
 
 import playlistDefault from '../../assets/playlistdefault.jpg'
 

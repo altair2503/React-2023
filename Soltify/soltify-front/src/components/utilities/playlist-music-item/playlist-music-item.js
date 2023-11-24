@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import './playlist-music-item.css';
 
 import {Link, useOutletContext} from "react-router-dom";
-import { addUserExactPlaylist, getUserPlaylist } from "../../services/playlist-service";
+import { getUserPlaylist } from "../../services/playlist-service";
 import { userUID } from "../../services/user-service";
 
 import crown from '../../../assets/crown.svg';
@@ -12,8 +12,8 @@ let userPlaylist = [];
 
 if(userUID) {
     await getUserPlaylist(userUID)
-    .then((succes) => {
-        userPlaylist = succes;
+    .then((success) => {
+        userPlaylist = success;
     })
 }
 

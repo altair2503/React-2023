@@ -11,9 +11,7 @@ const AddToPlaylist = ({type, userPlaylists, id, isSearch}) => {
 
     const [playlistAddState, setPlaylistAddState] = useState(false);
 
-
     useEffect(() => {
-        console.log(userPlaylists)
         document.addEventListener("click", e => {
             if(e.target.className === "list_to_add" || e.target.className === "list_to_add_ul") {
                 setPlaylistAddState(true); return;

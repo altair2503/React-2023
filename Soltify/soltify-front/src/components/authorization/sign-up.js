@@ -1,4 +1,4 @@
-import Input from "../utilities/input/input";
+import Input from "../utilities/input-item/input";
 import styles from "./authorization.module.css";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
