@@ -21,7 +21,7 @@ await getSongs().then((result) => { playlist = result })
 const ContentPage = () => {
     return <div className={"content_page_back"}>
         {
-            playlistList.length > 0
+            playlistList.length > 1
             ?
                 <div className={"content_item_back"}>
                     <span className={"content_title"}>Recently Played</span>

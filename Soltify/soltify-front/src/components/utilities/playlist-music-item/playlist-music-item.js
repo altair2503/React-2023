@@ -26,8 +26,10 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
     const {setIndex} = useOutletContext();
 
     const selectSong = (songs, index)=> {
-        setPlaylist(songs);
-        setIndex(index);
+        if(songOptionListState) {
+            setPlaylist(songs);
+            setIndex(index);
+        }
     }
 
     useEffect(() => {
@@ -38,7 +40,10 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
             if(e.target.className === "add_to_playlist_btn for_options") {
                 setPlaylistAddState(true); return
             }
-            if(e.target.className === "list_to_add_ul" || e.target.className === "options_list_li") {
+            if(e.target.className === "options_list_li") {
+                setSongOptionListState(true); return;
+            }
+            if(e.target.className === "list_to_add_ul") {
                 setPlaylistAddState(true); return;
             }
             if(e.target.id !== "open_song_options_btn" && e.target.className !== "back_to_options") {
@@ -81,7 +86,7 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
                                 <li className={"options_list_li"}><ion-icon name="heart"></ion-icon> Add to Like</li>
                                 <AddToPlaylist type={true} userPlaylists={userPlaylist} id={props?.id} />
                                 {
-                                    !isPlaylist ? <li><ion-icon name="trash-outline"></ion-icon> Remove</li> : ''
+                                    !isPlaylist ? <li className={"options_list_li"}><ion-icon name="trash-outline"></ion-icon> Remove</li> : ''
                                 }
                             </ul>
                         :
@@ -118,10 +123,10 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
                 songOptionListState
                 ?
                     <ul className={"options_list"}>
-                        <li><ion-icon name="heart"></ion-icon> Add to Like</li>
+                        <li className={"options_list_li"}><ion-icon name="heart"></ion-icon> Add to Like</li>
                         <AddToPlaylist type={true} userPlaylists={userPlaylist} id={props?.id} />
                         {
-                            !isPlaylist ? <li><ion-icon name="trash-outline"></ion-icon> Remove </li> : ''
+                            !isPlaylist ? <li className={"options_list_li"}><ion-icon name="trash-outline"></ion-icon> Remove </li> : ''
                         }
                     </ul>
                 :

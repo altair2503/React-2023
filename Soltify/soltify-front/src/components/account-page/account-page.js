@@ -77,7 +77,7 @@ const AccountPage = () => {
                         <span>Update Account</span>
                         <div className={"account_img_update"}>
                             <input type="file" id={"img_for_account"}/>
-                            <img src={userImg} alt={userImg}/>
+                            <img src={userImg} alt={userImg} />
                             <label htmlFor="img_for_account"></label>
                         </div>
                         <div className={"input_block"}>
@@ -85,9 +85,6 @@ const AccountPage = () => {
                         </div>
                         <div className={"input_block"}>
                             <input name="lastname" type="text" placeholder={"Enter last name"} />
-                        </div>
-                        <div className={"input_block"}>
-                            <input name="lastname" type="email" placeholder={"Enter email"} />
                         </div>
                         <div className={"decision_btns"}>
                             <button>Change</button>

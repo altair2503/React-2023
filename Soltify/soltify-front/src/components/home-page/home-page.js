@@ -113,7 +113,7 @@ const HomePage = () => {
                             <Link className={"playlists_title"} to="/home/playlists">Your playlists</Link>
                             <div>
                                 {
-                                    playList.length > 0
+                                    playList.length > 1
                                     ?
                                         playList.map((playlist, index) => {
                                             return index !== 0 ? <Link

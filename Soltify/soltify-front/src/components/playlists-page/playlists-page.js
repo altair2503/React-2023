@@ -17,14 +17,14 @@ const PlaylistsPage = () => {
     return <div className={"playlists_back"}>
         <span className={"playlists_title"}>Your Playlists</span>
         {
-            playlistList.length > 0
+            playlistList.length > 1
             ?
                 <div className={"playlists_description"}>Now you have • {playlistList.length} Playlist</div>
             :
                 ''
         }
         {
-            playlistList.length > 0
+            playlistList.length > 1
             ?
                 <div className={"playlists_list"}>
                     <Link to={"/home/create-playlist-page"} className={"playlist_item create_playlist_item"}>

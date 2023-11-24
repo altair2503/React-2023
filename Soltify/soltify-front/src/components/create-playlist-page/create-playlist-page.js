@@ -18,6 +18,8 @@ const CreatePlaylistPage = () => {
     const [playlistSource, setPlaylistSource] = useState("");
     const [playlistTitle, setPlaylistTitle] = useState("");
 
+    const [playlistCreatingState, setPlaylistCreatingState] = useState(false);
+
     const navigate = useNavigate()
     const storage = getStorage()
 
@@ -39,7 +41,7 @@ const CreatePlaylistPage = () => {
         uploadTask.on('state_changed',
             (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
+            document.querySelector(".creating_progress_bar div").style.width = progress + "%";
         }, 
         (error) => {
             console.log(error);
@@ -53,10 +55,12 @@ const CreatePlaylistPage = () => {
     }
 
     const createPlaylist = async() => {
-        if(playlistSource){
+        if(playlistSource) {
+            setPlaylistCreatingState(true)
             await uploadIMG();
             return;
         }
+        setPlaylistCreatingState(true)
         await uploadPlaylist("");
     }
 
@@ -70,6 +74,7 @@ const CreatePlaylistPage = () => {
                 "songs": []
             })
         }).then(() => {
+            setPlaylistCreatingState(false)
             navigate("/home/playlists")
         }).finally(() => {
             window.location.reload()
@@ -77,6 +82,20 @@ const CreatePlaylistPage = () => {
     };
 
     return <div>
+        {
+            playlistCreatingState
+            ?
+                <div className={"creating_progress"}>
+                    <div className={"progress_popup"}>
+                        <span>Playlist is creating ...</span>
+                        <div className={"creating_progress_bar"}>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            :
+                ''
+        }
         <span className={"acc_title"}>Create Playlist</span>
         <div className={"create_area"}>
             <div className={"playlist_ft_imf"}>
