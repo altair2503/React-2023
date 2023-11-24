@@ -108,7 +108,7 @@ const HomePage = () => {
                     <ul>
                         <li><Link to="/home"><ion-icon name="home-outline"></ion-icon> <span>Home</span></Link></li>
                         <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : navigate('/home/create-playlist-page')}><Link><ion-icon name="add-outline" id="add_playlist"></ion-icon> <span>Create playlist</span></Link></li>
-                        <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}><Link><ion-icon name="heart" id="heart"></ion-icon> <span>Like</span></Link></li>
+                        <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}><Link to={`/home/playlists/${playList[0].name}`} state={{userID: (JSON).parse(localStorage.getItem('user')).uid, playlistIndex: 0}}><ion-icon name="heart" id="heart"></ion-icon> <span>Like</span></Link></li>
                         <li className={"playlists"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
                             <Link className={"playlists_title"} to="/home/playlists">Your playlists</Link>
                             <div>
@@ -116,7 +116,7 @@ const HomePage = () => {
                                     playList.length > 0
                                     ?
                                         playList.map((playlist, index) => {
-                                            return <Link
+                                            return index !== 0 ? <Link
                                                 to={`/home/playlists/${playlist.name}`}
                                                 state={{
                                                     userID: (JSON).parse(localStorage.getItem('user')).uid,
@@ -124,7 +124,7 @@ const HomePage = () => {
                                                 }}
                                             >
                                                 {playlist.name}
-                                            </Link>
+                                            </Link> : ''
                                         })
                                     :
                                         <Link to={"/home/create-playlist-page"}>
@@ -135,7 +135,7 @@ const HomePage = () => {
                                 }
                             </div>
                         </li>
-                        <li><Link to={"/home/"}><ion-icon name="heart-outline" id={"menu_heart"}></ion-icon></Link></li>
+                        <li><Link to={`/home/playlists/${playList[0].name}`} state={{userID: (JSON).parse(localStorage.getItem('user')).uid, playlistIndex: 0}}><ion-icon name="heart-outline" id={"menu_heart"}></ion-icon></Link></li>
                         <li><Link to={"/home/playlists"}><ion-icon name="folder-open-outline"></ion-icon></Link></li>
                     </ul>
                 </div>

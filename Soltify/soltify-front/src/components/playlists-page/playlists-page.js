@@ -37,7 +37,7 @@ const PlaylistsPage = () => {
                     </Link>
                     {
                         playlistList.map((playlist, index) => {
-                            return <Link
+                            return index !== 0 ? <Link
                                 to={`/home/playlists/${playlist.name}`}
                                 className={"playlist_item"}
                                 state={{
@@ -51,7 +51,7 @@ const PlaylistsPage = () => {
                                     <span>{playlist.songs.length} songs</span>
                                 </div>
                                 <ion-icon name="chevron-forward-outline" id={"playlist_item_open_btn"}></ion-icon>
-                            </Link>
+                            </Link> : ''
                         })
                     }
                 </div>

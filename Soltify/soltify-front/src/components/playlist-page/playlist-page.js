@@ -1,63 +1,60 @@
-import React, {useEffect, useState} from "react";
-import {useParams, useLocation, useOutletContext, Link} from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import './playlist-page.css';
-import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
-import { getUserExactPlaylist } from "../services/playlist-service";
-import { getUserData } from "../services/user-service";
+
+import { useParams, useLocation, Link } from "react-router-dom";
+
 import { getPlaylistSongs } from "../services/song-service";
+import { getUserExactPlaylist } from "../services/playlist-service";
+import {getUserData, userUID} from "../services/user-service";
+
+import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
+
+import { db } from "../../firebase";
+import {arrayUnion, doc, getDoc, updateDoc} from "firebase/firestore";
 
 import playlistDefault from '../../assets/playlistdefault.jpg';
-import likedPlaylist from '../../assets/likedplaylist.jpg';
-import animalsImg from '../../assets/music/1.png';
-import riverImg from '../../assets/music/2.webp';
-import endImg from '../../assets/music/3.jpeg';
-import babymamImg from '../../assets/music/4.jpeg';
-import brendImg from '../../assets/music/5.jpeg';
-
-import Input from "../utilities/input-item/input";
 
 
 const PlaylistPage = () => {
 
-    const location = useLocation();
     const {playlistName} = useParams();
     const [playlist, setPlaylist1] = useState({songs: []});
+
     const [songs, setSongs] = useState([]);
     const [owner, setOwner] = useState("");
 
     const [deletePopupState, setDeletePopupState] = useState(false);
     const [updatePopupState, setUpdatePopupState] = useState(false);
 
+    const [newPlaylistName, setNewPlaylistName] = useState(playlistName)
+
+    const location = useLocation();
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const playlistResult = await getUserExactPlaylist(location.state.userID, location.state.playlistIndex);
-                console.log("getUserExactPlaylist");
+                const playlistResult = await getUserExactPlaylist(location.state?.userID, location.state?.playlistIndex);
                 setPlaylist1(playlistResult);
 
-                const songsResult = await getPlaylistSongs(playlistResult.songs);
-                setSongs(songsResult);
-                console.log(songs);
-            } catch (error) {
+                const songsResult = await getPlaylistSongs(playlistResult?.songs);
+            } catch(error) {
                 console.error("Error fetching data:", error);
             }
         };
-
-        fetchData();
-    }, [location.state.userID, location.state.playlistIndex]);
+        fetchData().then()
+    }, [location.state?.userID, location.state?.playlistIndex])
 
     useEffect(() => {
         const fetchOwnerData = async () => {
             try {
-                const ownerResult = await getUserData(location.state.userID);
+                const ownerResult = await getUserData(location.state?.userID);
                 setOwner(ownerResult);
-            } catch (error) {
+            } catch(error) {
                 console.error("Error fetching owner data:", error);
             }
         };
-
-        fetchOwnerData();
-    }, [location.state.userID]);
+        fetchOwnerData().then()
+    }, [location.state?.userID])
 
     useEffect(() => {
         document.addEventListener("click", e => {
@@ -65,7 +62,21 @@ const PlaylistPage = () => {
                 setDeletePopupState(false); setUpdatePopupState(false);
             }
         })
-    }, )
+    })
+
+    const updatePlaylistData = () => {
+        const ref = doc(db, "users", userUID)
+        const snap = getDoc(ref)
+
+        updateDoc(ref, {
+            playlist: arrayUnion({
+                img: playlist?.img,
+                name: newPlaylistName
+            })
+        }).then(() => {
+            setUpdatePopupState(false)
+        })
+    }
     
     return <div className={"playlist_background"}>
         {
@@ -88,43 +99,55 @@ const PlaylistPage = () => {
             updatePopupState
             ?
                 <div className={"delete_popup_back"}>
-                    <div className={"delete_popup update"}>
+                    <form onSubmit={updatePlaylistData} className={"delete_popup update"}>
                         <ion-icon name="close-outline" onClick={() => setUpdatePopupState(false)}></ion-icon>
                         <span>Update Playlist</span>
                         <div className={"playlist_ft_imf update"}>
                             <input type="file" id={"img_for_playlist"}/>
-                            <img src={!playlist.img ? playlistDefault : playlist.img} alt={playlist.name} />
+                            <img src={!playlist.img ? playlistDefault : playlist?.img} alt={playlist?.name} />
                             <label htmlFor="img_for_playlist"></label>
                         </div>
                         <div className={"input_block"}>
-                            <input name="lastname" type="text" placeholder={"Enter playlist-page name"} />
+                            <input name="lastname" value={newPlaylistName} type="text" placeholder={"Enter new playlist name"} onChange={e => setNewPlaylistName(e.target.value)} />
                         </div>
                         <div className={"decision_btns"}>
-                            <button>Change</button>
+                            <button type="submit">Change</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             :
                 ''
         }
         <div className={"playlist_info_back"}>
-            <img src={!playlist.img ? playlistDefault : playlist.img} className={"playlist_info_back_img"} alt={playlistDefault} />
+            <img src={!playlist?.img ? playlistDefault : playlist?.img} className={"playlist_info_back_img"} alt={playlistDefault} />
             <div className={"playlist_info"}>
                 <div className={"playlist_img"}>
-                    <img src={!playlist.img ? playlistDefault : playlist.img} alt={playlist.name} />
+                    <img src={!playlist?.img ? playlistDefault : playlist?.img} alt={playlist?.name} />
                 </div>
                 <div className={"playlist_details"}>
                     <span>Playlist</span>
                     <div className={"playlist_name"}>{playlistName}</div>
-                    <div className={"playlist_owner"}> {owner ? `${owner.name} ${owner.lastname}` : ""} <span>•</span> {playlist.songs.length} songs</div>
-                    <div className={"playlist_options"}>
-                        <button className={"play_playlist"}>Play</button>
-                        <div className={"update_option"} onClick={() => setUpdatePopupState(true)}>
-                            <ion-icon name="create-outline"></ion-icon>
-                        </div>
-                        <div className={"delete_option"} onClick={() => setDeletePopupState(true)}>
-                            <ion-icon name="trash-outline"></ion-icon>
-                        </div>
+                    <div className={"playlist_owner"}> {owner ? `${owner?.name} ${owner?.lastname}` : ""} <span>•</span> {playlist?.songs?.length} songs</div>
+                        <div className={"playlist_options"}>
+                            <button className={"play_playlist"}>Play</button>
+                            {
+                                location.state?.playlistIndex !== 0
+                                ?
+                                    <div className={"update_option"} onClick={() => setUpdatePopupState(true)}>
+                                        <ion-icon name="create-outline"></ion-icon>
+                                    </div>
+                                :
+                                    ''
+                            }
+                            {
+                                location.state?.playlistIndex !== 0
+                                ?
+                                    <div className={"delete_option"} onClick={() => setDeletePopupState(true)}>
+                                        <ion-icon name="trash-outline"></ion-icon>
+                                    </div>
+                                :
+                                    ''
+                            }
                     </div>
                 </div>
             </div>

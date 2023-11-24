@@ -26,6 +26,8 @@
     width: 1230px;
     overflow-x: scroll;
 
+    box-sizing: border-box;
+
     display: flex;
     gap: 20px;
 }

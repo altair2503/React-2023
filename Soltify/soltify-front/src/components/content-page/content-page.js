@@ -29,7 +29,7 @@ const ContentPage = () => {
                         <div className={"recently_list"}>
                             {
                                 playlistList.map((playlist, index) => {
-                                    return <Link
+                                    return index !== 0 ?<Link
                                         to={`/home/playlists/${playlist.name}`}
                                         className={"recently_item"}
                                         state={{
@@ -38,7 +38,7 @@ const ContentPage = () => {
                                     }}>
                                         { <img src={!playlist.img ? playlistDefault : playlist.img} alt={playlist.name} />}
                                         <span>{playlist.name}</span>
-                                    </Link>
+                                    </Link> : ''
                                 })
                             }
                         </div>

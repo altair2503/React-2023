@@ -27,14 +27,16 @@ const SignUp = ()=>{
         }
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password).then((cred)=> {
-                console.log("created")
-                console.log(cred)
                 setDoc(doc(db, "users", cred.user.uid), {
                     name: firstname,
                     lastname: lastname,
                     email: email,
                     date: new Date(),
-                    liked: []
+                    playlist: [{
+                        img: "https://firebasestorage.googleapis.com/v0/b/soltify-2.appspot.com/o/images%2Flikedplaylist.jpg?alt=media&token=11245159-b850-4f0c-941d-31c3516e51f5",
+                        name: "Liked",
+                        songs: []
+                    }]
                 });
                 const user =  cred.user;
                 localStorage.setItem('token', user.accessToken);
