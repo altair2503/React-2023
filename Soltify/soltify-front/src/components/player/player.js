@@ -1,29 +1,37 @@
 import React, {useEffect, useRef, useState} from "react";
 import './player.css';
 
-import AddToPlaylist from "../utilities/add-to-playlist/add-to-playlist";
-import { getSongs, getMusic } from "../services/song-service";
+import { Link, useNavigate } from "react-router-dom";
+import { userUID } from "../services/user-service";
 
-import {Link, useNavigate} from "react-router-dom";
+import AddToPlaylist from "../utilities/add-to-playlist/add-to-playlist";
+
+import { getUserPlaylist } from "../services/playlist-service";
+import { getMusic } from "../services/song-service";
+
 
 const Player = ({props}) => {
 
     let playlist = props.playlist;
     let prevPlaylist = playlist.slice();
-    const [playerActive, setPlayerActive] = useState(false);
-    const audioPlayer = useRef()
-    const [index, setIndex] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [volume, setVolume] = useState(50);
+
+    const [userPlaylist, setUserPlaylist] = useState([]);
+
     const [mute, setMute] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [playerActive, setPlayerActive] = useState(false);
     const [repeat, setRepeat] = useState(false);
     const [mixed, setMixed] = useState(false);
-    const [playlistAddState, setPlaylistAddState] = useState(false);
-    const [elapsed, setElapsed] = useState(0);
-    const [duration, setDuration] = useState(0);
+
+    const [index, setIndex] = useState(0);
     const [progress, setProgress] = useState(0);
-    const progressRef = useRef();
+    const [duration, setDuration] = useState(0);
+    const [elapsed, setElapsed] = useState(0);
+    const [volume, setVolume] = useState(50);
+
+    const audioPlayer = useRef()
     const navigate = useNavigate();
+    const progressRef = useRef();
 
     useEffect(() => {
         if(localStorage.getItem("playerCondition") === "true") {
@@ -43,7 +51,7 @@ const Player = ({props}) => {
     }, [volume, isPlaying]);
 
     useEffect(() => {
-        setAudioMusic();
+        setAudioMusic().then();
         props.index = index;
     }, [index])
 
@@ -53,14 +61,25 @@ const Player = ({props}) => {
         setIsPlaying(true);
     }, [props])
 
+    useEffect(() => {
+        if(elapsed && elapsed === duration) {
+            if(repeat) {
+                setElapsed(0);
+                audioPlayer.current.play();
+            }
+            else toggleSkip(true);
+        }
+    }, [elapsed]);
+
+    useEffect(() => {
+        getUserPlaylist(userUID).then((r) => setUserPlaylist(r));
+    })
+
     const getCurrentDuration = () => {
         const currentProgress = (audioPlayer.current?.currentTime / audioPlayer.current?.duration) * 100;
         setProgress(currentProgress);
 
         document.querySelector(".progress_bar").style.width = `${progress}%`;
-    }
-
-    function progressMoving(e) {
     }
 
     function changeCurrent(e) {
@@ -90,7 +109,7 @@ const Player = ({props}) => {
     }
 
     function formatTime(time) {
-        if(time && !isNaN(time)){
+        if(time && !isNaN(time)) {
             const minutes = Math.floor(time / 60);
             const seconds = Math.floor(time % 60) < 10 ? `0${Math.floor(time % 60)}` : Math.floor(time % 60);
 
@@ -102,42 +121,30 @@ const Player = ({props}) => {
     const setAudioMusic = async() => {
         await getMusic(playlist[index].musicID)
         .then((result) => {
-            console.log(result);
             audioPlayer.current.src = result.url;
         });
-        if(isPlaying){
-            audioPlayer.current.play();
-        }
+
+        if(isPlaying) audioPlayer.current.play();
     }
 
     const togglePlay = () => {
-        if(!audioPlayer.current.src){
-            setAudioMusic();
+        if(!audioPlayer.current.src) {
+            setAudioMusic().then()
         }
 
-        if(!isPlaying){
-            audioPlayer.current.play();
-        } else {
-            audioPlayer.current.pause();
-        }
-        
+        if(!isPlaying) audioPlayer.current.play()
+        else audioPlayer.current.pause()
 
         setIsPlaying(prev => !prev)
     }
 
     const toggleSkip = (forward) => {
-        if(forward){
-            if(index >= playlist.length - 1) {
-                setIndex(0);
-            } else {
-                setIndex(prev => prev + 1);
-            }
-        } else{
-            if(index > 0) {
-                setIndex(prev => prev - 1);
-            } else {
-                setIndex(prev => playlist.length - 1);
-            }
+        if(forward) {
+            if(index >= playlist.length - 1) setIndex(0);
+            else setIndex(prev => prev + 1);
+        } else {
+            if(index > 0) setIndex(prev => prev - 1);
+            else setIndex(prev => playlist.length - 1);
         }
     }
 
@@ -152,38 +159,34 @@ const Player = ({props}) => {
     }
 
     const toggleMix = () => {
-        if(mixed === false){
-          let shuffledArray = playlist.slice(index + 1);
-          let shuffleArray =  async() => {
-              let array = shuffledArray.slice();
-              for (let i = array.length - 1; i > 0; i--) {
-                  let j = Math.floor(Math.random() * (i + 1));
-                  [array[i], array[j]] = [array[j], array[i]];
-              }
-              return array
-          }
-          shuffleArray().then((res) => {
-              playlist = [...playlist.slice(0, index+1), ...res]
-          })
-          setMixed(true)
+        if(mixed === false) {
+            let shuffledArray = playlist.slice(index + 1);
+
+            let shuffleArray =  async() => {
+                let array = shuffledArray.slice();
+
+                for(let i = array.length - 1; i > 0; i--) {
+                    let j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array
+            }
+
             shuffleArray().then((res) => {
-                playlist = [...playlist.slice(0, index+1), ...res]
+                playlist = [...playlist.slice(0, index + 1), ...res]
             })
             setMixed(true)
+
+            shuffleArray().then((res) => {
+                playlist = [...playlist.slice(0, index + 1), ...res]
+            })
+            setMixed(true)
+
         } else {
-          playlist = [...playlist.slice(0, index+1), ...prevPlaylist.slice(index+1, prevPlaylist.length)]
+          playlist = [...playlist.slice(0, index + 1), ...prevPlaylist.slice(index + 1, prevPlaylist.length)]
           setMixed(false)
         }
     }
-
-    useEffect(()=> {
-        if(elapsed && elapsed === duration){
-            if(repeat){
-                setElapsed(0);
-                audioPlayer.current.play();
-            } else toggleSkip(true);
-        }
-    }, [elapsed]);
 
     function changeImageCursor(event) {
         event.target.offsetWidth < 400 ? event.target.style.cursor = 'pointer' : event.target.style.cursor = 'default'
@@ -200,32 +203,28 @@ const Player = ({props}) => {
         }
     }
 
-    const findSong = (song)=> {
-      return playlist.find((song) => song.url === song)
-    }
-
     return (
         <div className={!playerActive ? "player_background mini" : "player_background"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
-            <img src={playlist[index].img} alt={playlist[index].img} className={"player_background_img"} />
+            <img src={playlist[index]?.img} alt={playlist[index]?.img} className={"player_background_img"} />
             <div className="player_background_layer">
                 <audio ref={audioPlayer} muted={mute} onTimeUpdate={getCurrentDuration}/>
                 <div className="close" onClick={() => playerActiveCondition(false)}>
                     <ion-icon name="close-outline"></ion-icon>
                 </div>
                 <div className="song_img">
-                    <img src={playlist[index].img} alt={playlist[index].img} onClick={() => playerActiveCondition(true)} onMouseMove={(event) => changeImageCursor(event)} />
+                    <img src={playlist[index]?.img} alt={playlist[index]?.img} onClick={() => playerActiveCondition(true)} onMouseMove={(event) => changeImageCursor(event)} />
                     <div className="song_details for_mini_player">
-                        <div className="name">{playlist[index].name}</div>
-                        <Link to={"/home/artist"} className="artist"> {playlist[index].artist.username}</Link>
+                        <div className="name">{playlist[index]?.name}</div>
+                        <Link to={"/home/artist"} className="artist"> {playlist[index]?.artist.username}</Link>
                     </div>
                 </div>
                 <div className="player_controllers">
                     <div className="song_details">
-                        <div className="name">{playlist[index].name}</div>
-                        <div className="artist"> {playlist[index].artist.username}</div>
+                        <div className="name">{playlist[index]?.name}</div>
+                        <div className="artist"> {playlist[index]?.artist.username}</div>
                     </div>
                     <div className="song_center">
-                        <div className="song_progress" ref={progressRef} onMouseMove={(e) => progressMoving(e)} onMouseDown={(e) => changeCurrent(e)}>
+                        <div className="song_progress" ref={progressRef} onMouseDown={(e) => changeCurrent(e)}>
                             <div className="progress_bar"></div>
                             <div className="timer">
                                 <span className="current">{formatTime(elapsed)}</span>
@@ -246,7 +245,7 @@ const Player = ({props}) => {
                     </div>
                     <div className="player_options">
                         <ion-icon name="heart" id="heart"></ion-icon>
-                        <AddToPlaylist />
+                        <AddToPlaylist userPlaylists={userPlaylist} id={props.id} />
                         <ion-icon name="scan-outline" id="scan" onClick={() => playerActiveCondition(true)}></ion-icon>
                     </div>
                     <div className="song_volume">

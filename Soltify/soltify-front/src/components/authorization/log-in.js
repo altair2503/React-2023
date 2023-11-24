@@ -1,13 +1,13 @@
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 import Input from "../utilities/input/input";
 import styles from "./authorization.module.css";
 
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
-import { auth } from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { collection, getDocs, where, query } from "firebase/firestore";
+import { db, auth } from "../../firebase";
 
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import {db} from "../../firebase";
-import {collection, getDocs, where, query} from "firebase/firestore";
 
 const LogIn = key => {
 

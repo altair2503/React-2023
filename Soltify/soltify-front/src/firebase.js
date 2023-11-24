@@ -3,12 +3,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCrhx7Pm_uzi1_oqB3dp4d_fmHh543gjhM",
-    authDomain: "soltify-2.firebaseapp.com",
-    projectId: "soltify-2",
-    storageBucket: "soltify-2.appspot.com",
-    messagingSenderId: "663047973954",
-    appId: "1:663047973954:web:b0328effee5b4003ae11db"
+    apiKey: "AIzaSyAhPXbzSMIqK_Zbwo7fK0fOKrYiLeq30i4",
+    authDomain: "soltify-c7f8e.firebaseapp.com",
+    projectId: "soltify-c7f8e",
+    storageBucket: "soltify-c7f8e.appspot.com",
+    messagingSenderId: "249320840104",
+    appId: "1:249320840104:web:668f0274a40d20e5eadb9d",
+    measurementId: "G-HC71DLF9Q0"
 };
   
 const app = initializeApp(firebaseConfig);

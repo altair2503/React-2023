@@ -7,7 +7,9 @@ import {useNavigate} from "react-router-dom";
 import {signOut} from "firebase/auth";
 import {auth, db} from "../../firebase";
 import { doc, getDoc } from "firebase/firestore";
-import avatar from "../../assets/avatar.png";
+
+import defaultAvatar from "../../assets/defaultAvatar.jpg";
+import avatar from "../../assets/music.jpg";
 
 let user = "";
 
@@ -26,18 +28,17 @@ const convertSecondsToDate = (seconds) => {
 };
 
 if(localStorage.getItem('user')){
-    const getUserData = async()=>{
+    const getUserData = async() => {
         const docRef = doc(db, "users", (JSON).parse(localStorage.getItem('user')).uid);
         const docSnap = await getDoc(docRef);
 
-        if(docSnap.exists){
+        if(docSnap.exists) {
             user = ({...docSnap.data(),
                 formattedDate: convertSecondsToDate(docSnap.data().date.seconds)});
         } else {
             console.log("No such document");
         }
     }
-
     await getUserData();
 }
 
@@ -99,7 +100,7 @@ const AccountPage = () => {
         <span className={"acc_title"}>Your Account</span>
         <div className={"user_info"}>
             <div className={"user_info_left"}>
-                { localStorage.getItem("user") == null ? <div className="default_img"><img src={avatar} alt={avatar} /></div> : <img src={userImg} alt={userImg} /> }
+                <img src={localStorage.getItem("user") !== null ? defaultAvatar : avatar} alt={userImg} />
                 <button onClick={Logout} className={"log_out_btn"}>Log out</button>
             </div>
             <div className={"user_info_right"}>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { useParams, useLocation, useOutletContext } from "react-router-dom";
+import {useParams, useLocation, useOutletContext, Link} from "react-router-dom";
 import './playlist-page.css';
 import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
 import { getUserExactPlaylist } from "../services/playlist-service";
@@ -135,13 +135,24 @@ const PlaylistPage = () => {
                     <div>Artist</div>
                     <div>Time</div>
                 </div>
-                <div className={"playlist_song_list"}>
-                    {
-                        songs.map((song, index) => {
-                            return <PlaylistMusicItem props={song} index={index + 1} type={true} playlist={songs} />
-                        })
-                    }
-                </div>
+                {
+                    songs.length > 0
+                    ?
+                        <div className={"playlist_song_list"}>
+                            {
+                                songs.map((song, index) => {
+                                    return <PlaylistMusicItem props={song} index={index + 1} artist={false} type={true} playlist={songs} />
+                                })
+                            }
+                        </div>
+                    :
+                        <div className={"playlist_song_list"}>
+                            <div className={"if_zero"}>
+                                <span>There are no songs in this playlist yet. <br/> Do you want to add them?</span>
+                                <Link to={""}>Add songs</Link>
+                            </div>
+                        </div>
+                }
             </div>
         </div>
     </div>

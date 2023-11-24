@@ -124,44 +124,42 @@
     padding: 12px 0 15px;
     font-size: 15.5px;
 }
-.playlists ul
+.playlists div
 {
     height: 140px;
     overflow-y: auto;
 }
-.playlists ul::-webkit-scrollbar
+.playlists div::-webkit-scrollbar
 {
     width: 4px;
 }
-.playlists ul::-webkit-scrollbar-track
+.playlists div::-webkit-scrollbar-track
 {
     background: #1E1E1E;
 }
-.playlists ul::-webkit-scrollbar-thumb
+.playlists div::-webkit-scrollbar-thumb
 {
     background: #25DC60;
     border-radius: 4px;
 }
-.playlists ul li
+.playlists div a
 {
     width: 100%;
     height: fit-content;
 
     display: block;
 
+    font-size: 13px !important;
+    opacity: .85;
+
     margin-top: 11px;
+    padding: 0 !important;
 }
-.playlists ul li:first-child
+.playlists div a:first-child
 {
     margin-top: 0;
 }
-.playlists ul li a
-{
-    font-size: 13px;
-    opacity: .85;
-    padding: 0;
-}
-.playlists ul li a:hover
+.playlists div a:hover
 {
     opacity: 1;
 }

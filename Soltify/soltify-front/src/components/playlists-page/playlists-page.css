@@ -74,6 +74,7 @@
     height: 215px;
 
     border-radius: 15px;
+    object-fit: cover;
 }
 .playlist_item_info
 {

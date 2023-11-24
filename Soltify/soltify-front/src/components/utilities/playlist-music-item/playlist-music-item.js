@@ -17,7 +17,7 @@ if(userUID) {
     })
 }
 
-const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist}) => {
+const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, isSearch}) => {
 
     const [playlistAddState, setPlaylistAddState] = useState(false);
     const [songOptionListState, setSongOptionListState] = useState(false);
@@ -51,30 +51,35 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist}) =
     if(type) {
         return (
             <div className={"song_back"} onClick={() => selectSong(playlist, index - 1)}>
-                <div className={"song_place"}>
-                    <span className={"place_index"}>{index}</span>
-                </div>
+                {
+                    !isSearch
+                    ?
+                        <div className={"song_place"}>
+                            <span className={"place_index"}>{index}</span>
+                        </div>
+                    :
+                        ''
+                }
                 <div className={"song_left"}>
-                    <img src={props.img} alt={props.img} />
+                    <img src={props?.img} alt={props?.img} />
                     <div>
-                        {props.name}
-                        <Link to={"/home/artist"}>{props.artist}</Link>
+                        {props?.name}
+                        <Link to={"/home/artist"}>{props?.artist}</Link>
                     </div>
                 </div>
                 {
-                    !artist ? <Link to={"/home/artist"} className={"song_artist"}>{props.artist}</Link> : ''
+                    !artist ? <Link to={"/home/artist"} className={"song_artist"}>{props?.artist}</Link> : ''
                 }
-                <div className={!artist ? "song_time" : "song_time_artist"}>{props.time}</div>
-                <Link to={"/home/artist"} className={"song_artist"}>{props.artist.username}</Link>
-                <div className={"song_time"}>{props.duration}</div>
+                <div className={!artist ? "song_time" : "song_time_artist"}>{props?.time}</div>
+                <div className={"song_time"}>{props?.duration}</div>
                 <div className={"song_options"}>
-                    <ion-icon name="ellipsis-horizontal" id={"open_song_options_btn"} onClick={() => setSongOptionListState(songOptionListState => !songOptionListState)}></ion-icon>
+                    <ion-icon name="ellipsis-horizontal" id={"open_song_options_btn"} onClick={() => setSongOptionListState(songOptionListState => !songOptionListState)} style={isSearch ? {color: '#fff'} : {color: '#25DC60'}}></ion-icon>
                     {
                         songOptionListState
                         ?
                             <ul className={"options_list"}>
                                 <li className={"options_list_li"}><ion-icon name="heart"></ion-icon> Add to Like</li>
-                                <AddToPlaylist type={true} userPlaylists={userPlaylist} id={props.id} />
+                                <AddToPlaylist type={true} userPlaylists={userPlaylist} id={props?.id} />
                                 {
                                     !isPlaylist ? <li><ion-icon name="trash-outline"></ion-icon> Remove</li> : ''
                                 }
@@ -88,19 +93,25 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist}) =
     }
 
     return <div className={"song_back_min"} onClick={() => selectSong(playlist, index - 1)}>
-        <div className={"song_place"}>
-            <span className={"place_index"}>{index}</span>
-            <span>-</span>
-            <img src={crown} alt={crown} />
-        </div>
+        {
+            !isSearch
+            ?
+                <div className={"song_place"}>
+                    <span className={"place_index"}>{index}</span>
+                    <span>-</span>
+                    <img src={crown} alt={crown} />
+                </div>
+            :
+                ''
+        }
         <div className={"song_left_min"}>
-            <img src={props.img} alt={props.img} />
+            <img src={props?.img} alt={props?.img} />
             <div>
-                {props.name}
-                <Link to={"/home/artist"}>{props.artist.username}</Link>
+                {props?.name}
+                <Link to={"/home/artist"}>{props?.artist?.username}</Link>
             </div>
         </div>
-        <div className={"song_time_min"}>{props.duration}</div>
+        <div className={"song_time_min"}>{props?.duration}</div>
         <div className={"song_options"}>
             <ion-icon name="ellipsis-horizontal" id={"open_song_options_btn"} onClick={() => setSongOptionListState(songOptionListState => !songOptionListState)}></ion-icon>
             {
@@ -108,7 +119,7 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist}) =
                 ?
                     <ul className={"options_list"}>
                         <li><ion-icon name="heart"></ion-icon> Add to Like</li>
-                        <AddToPlaylist type={true} userPlaylists={userPlaylist} id={props.id} />
+                        <AddToPlaylist type={true} userPlaylists={userPlaylist} id={props?.id} />
                         {
                             !isPlaylist ? <li><ion-icon name="trash-outline"></ion-icon> Remove </li> : ''
                         }

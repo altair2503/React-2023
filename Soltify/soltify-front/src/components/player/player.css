@@ -62,6 +62,7 @@
     height: 440px;
 
     border-radius: 5px;
+    object-fit: cover;
 }
 
 .player_controllers
@@ -318,6 +319,7 @@ ion-icon
     height: 75px;
 
     border-radius: 3px;
+    object-fit: cover;
 }
 
 .player_background.mini .player_controllers

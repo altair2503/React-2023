@@ -12,7 +12,6 @@ export async function getUserPlaylist(userID) {
     }
 }
 
-
 export async function getUserExactPlaylist(userID, index) {
     const docRef = doc(db, "users", userID);
     const docSnap = await getDoc(docRef);

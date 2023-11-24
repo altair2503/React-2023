@@ -7,8 +7,8 @@ import { auth } from "../../firebase";
 import Player from "../player/player";
 import './home-page.css';
 
-import userImg from '../../assets/music.jpg';
-import avatar from '../../assets/avatar.png';
+import avatar from '../../assets/music.jpg';
+import defaultAvatar from "../../assets/defaultAvatar.jpg";
 import logo from '../../assets/logo.png';
 
 import { getUserPlaylist } from "../services/playlist-service";
@@ -40,6 +40,8 @@ const HomePage = () => {
     const [hideAccount, setHideAccount] = useState(true);
     const [hideSearch, setHideSearch] = useState(true);
 
+    const [searchQuery, setSearchQuery] = useState("");
+
     useEffect(() => {
         changeTopBarTitle();
         changeSearchAndAccountBtn();
@@ -50,6 +52,7 @@ const HomePage = () => {
         else if(location.pathname.includes("/home/artist")) setTopBarTitle("Artist")
         else if(location.pathname.includes("/home/playlists/")) setTopBarTitle("Playlist")
         else if(location.pathname === "/home/create-playlist") setTopBarTitle("Create PL")
+        else if(location.pathname === "/home/search") setTopBarTitle("Search")
         else if(location.pathname === "/home/account") setTopBarTitle("Account")
         else if(location.pathname === "/home/") setTopBarTitle("Liked")
         else setTopBarTitle("Soltify")
@@ -85,6 +88,13 @@ const HomePage = () => {
         }
     }
 
+    const openSearchPage = () => {
+        if(searchQuery !== "") {
+            navigate("/home/search"); return
+        }
+        navigate("/home/search");
+    }
+
     return <div className={"background"}>
         <div className={"background_layer"}>
             <div className={"home_top"}>
@@ -98,26 +108,24 @@ const HomePage = () => {
                         <li className={"diff_li"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}><Link><ion-icon name="heart" id="heart"></ion-icon> <span>Like</span></Link></li>
                         <li className={"playlists"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
                             <Link className={"playlists_title"} to="/home/playlists">Your playlists</Link>
-                            <ul>
+                            <div>
                                 {
                                     playList.map((playlist, index) => {
-                                        return <li>
-                                            <Link
-                                                to={`/home/playlists/${playlist.name}`}
-                                                className={"playlist_item"}
-                                                state={
-                                                    {
-                                                        userID: (JSON).parse(localStorage.getItem('user')).uid,
-                                                        playlistIndex: index
-                                                    }
+                                        return <Link
+                                            to={`/home/playlists/${playlist.name}`}
+                                            state={
+                                                {
+                                                    userID: (JSON).parse(localStorage.getItem('user')).uid,
+                                                    playlistIndex: index
                                                 }
-                                            >
-                                                {playlist.name}
-                                            </Link>
-                                        </li>
+                                            }
+                                        >
+                                            {playlist.name}
+                                        </Link>
+
                                     }
                                 )}
-                            </ul>
+                            </div>
                         </li>
                         <li><Link to={"/home/"}><ion-icon name="heart-outline" id={"menu_heart"}></ion-icon></Link></li>
                         <li><Link to={"/home/playlists"}><ion-icon name="folder-open-outline"></ion-icon></Link></li>
@@ -131,9 +139,9 @@ const HomePage = () => {
                                 <ion-icon name="log-out-outline" onClick={Logout} id={"button_for_logout"}></ion-icon>
                             :
                                 <div className={"search"}>
-                                    <input type="text" placeholder="Search..."/>
-                                    <button className={"search_btn"}>
-                                        <ion-icon name="search-outline"></ion-icon>
+                                    <input type="text" placeholder="Search..." onChange={e => setSearchQuery(e.target.value)} />
+                                    <button className={"search_btn"} onClick={openSearchPage}>
+                                        <ion-icon name="search-outline" onClick={openSearchPage}></ion-icon>
                                     </button>
                                 </div>
                         }
@@ -142,14 +150,14 @@ const HomePage = () => {
                             !hideAccount
                             ?
                                 <Link to={localStorage.getItem("user") ? "/home/account" : "/log-in"} className={"user_link"}>
-                                    { localStorage.getItem("user") == null ? <div className="default_avatar"><img src={avatar} alt={avatar} /></div> : <img src={userImg} alt={userImg} /> }
+                                    { <img src={localStorage.getItem("user") == null ? defaultAvatar : avatar} alt={defaultAvatar} /> }
                                 </Link>
                             :
                                 <ion-icon name="chevron-back-outline" onClick={() => navigate(-1)} id={"go_back_button"}></ion-icon>
                         }
                     </div>
                     <div className={"content"}>
-                        <Outlet context={{playlist, setPlaylist, index, setIndex}} />
+                        <Outlet context={{playlist, setPlaylist, index, setIndex, searchQuery}} />
                     </div>
                 </div>
             </div>

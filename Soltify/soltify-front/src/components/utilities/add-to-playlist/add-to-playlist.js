@@ -1,16 +1,19 @@
 import React, {useEffect, useState} from "react";
 import './add-to-playlist.css';
 
-import { addUserExactPlaylist } from "../../services/playlist-service";
+import {addUserExactPlaylist, getUserPlaylist} from "../../services/playlist-service";
 
 import {userUID} from "../../services/user-service";
+import playlistDefault from "../../../assets/playlistdefault.jpg";
 
 
-const AddToPlaylist = ({type, userPlaylists, id}) => {
+const AddToPlaylist = ({type, userPlaylists, id, isSearch}) => {
 
     const [playlistAddState, setPlaylistAddState] = useState(false);
 
+
     useEffect(() => {
+        console.log(userPlaylists)
         document.addEventListener("click", e => {
             if(e.target.className === "list_to_add" || e.target.className === "list_to_add_ul") {
                 setPlaylistAddState(true); return;
@@ -30,22 +33,18 @@ const AddToPlaylist = ({type, userPlaylists, id}) => {
                     <div className="list_to_add">
                         <span className={"back_to_options"} onClick={() => setPlaylistAddState(false)}><ion-icon name="arrow-back-outline"></ion-icon> Add to playlist: <ion-icon name="arrow-back-outline" style={{opacity: '0'}}></ion-icon></span>
                         <ul className={"list_to_add_ul"}>
-                            {/*{*/}
-                            {/*    userPlaylists.map((pl, ind) => {*/}
-                            {/*        return <li className={"list_to_add_ul"}>*/}
-                            {/*            <span>{pl.name} <ion-icon name="add-outline"></ion-icon></span>*/}
-                            {/*        </li>*/}
-                            {/*    })*/}
-                            {/*}*/}
                             {
-                                userPlaylists.map((pl, ind) => {
-                                    if(!pl.songs.includes(id)){
+                                userPlaylists?.map((pl, ind) => {
+                                    if(pl.songs > 0 && !pl.songs.includes(id)) {
                                         return <li className={"list_to_add_ul"} onClick={() => addUserExactPlaylist(userUID, ind, id)}>
-                                                <span> {pl.name} <ion-icon name="add-outline"></ion-icon></span>
+                                            <img src={!pl.img ? playlistDefault : pl.img} alt={pl.img} />
+                                            <span>{pl.name} <ion-icon name="add-outline"></ion-icon></span>
+                                            <ion-icon name="checkmark-outline" id={"in_playlist"}></ion-icon>
                                         </li>
                                     } else {
                                         return <li className={"list_to_add_ul"}>
-                                            <span> {pl.name} <ion-icon name="add-outline"></ion-icon></span> ✔
+                                            <img src={!pl.img ? playlistDefault : pl.img} alt={pl.img} />
+                                            <span>{pl.name} <ion-icon name="add-outline"></ion-icon></span>
                                         </li>
                                     }
                                 })
@@ -70,14 +69,17 @@ const AddToPlaylist = ({type, userPlaylists, id}) => {
                     <span className={"list_to_add_title"}>Add to playlist:</span>
                     <ul className={"list_to_add_ul"}>
                         {
-                            userPlaylists.map((pl, ind) => {
-                                if(!pl.songs.includes(id)){
+                            userPlaylists?.map((pl, ind) => {
+                                if(pl.songs > 0 && !pl.songs.includes(id)) {
                                     return <li className={"list_to_add_ul"} onClick={() => addUserExactPlaylist(userUID, ind, id)}>
-                                        <span> {pl.name} <ion-icon name="add-outline"></ion-icon></span>
+                                        <img src={!pl.img ? playlistDefault : pl.img} alt={pl.img} />
+                                        <span>{pl.name} <ion-icon name="add-outline"></ion-icon></span>
+                                        <ion-icon name="checkmark-outline" id={"in_playlist"}></ion-icon>
                                     </li>
                                 } else {
                                     return <li className={"list_to_add_ul"}>
-                                        <span> {pl.name} <ion-icon name="add-outline"></ion-icon></span> ✔
+                                        <img src={!pl.img ? playlistDefault : pl.img} alt={pl.img} />
+                                        <span>{pl.name} <ion-icon name="add-outline"></ion-icon></span>
                                     </li>
                                 }
                             })

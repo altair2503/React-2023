@@ -18,6 +18,7 @@
     height: 100%;
 
     border-radius: 15px;
+    object-fit: cover;
 }
 
 .playlist_info_back
@@ -265,6 +266,42 @@
     height: 52px;
 }
 
+.if_zero
+{
+    padding: 20px 15px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    color: #FFFFFF;
+
+    font-size: 15px;
+}
+.if_zero a
+{
+    margin-top: 15px;
+
+    width: 140px;
+    height: 46px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #313131;
+    border-radius: 25px;
+
+    text-decoration: none;
+
+    color: #FFFFFF;
+}
+.if_zero a:hover
+{
+    background: #3B3B3B;
+}
+
 
 @media (max-width: 450px) {
 
@@ -310,13 +347,13 @@
         background: rgba(0, 0, 0, .25);
         box-sizing: border-box;
 
-        padding: 100px 15px 45px;
+        padding: 85px 15px 45px;
         margin: 0;
     }
     .playlist_img
     {
-        width: 200px;
-        height: 200px;
+        width: 195px;
+        height: 195px;
 
         box-shadow: 0 0 20px rgba(0, 0, 0, .2);
     }
@@ -402,8 +439,11 @@
     }
     .decision_btns
     {
-        margin-top: 20px;
         width: 100%;
+        margin-top: 20px;
+
+        display: flex;
+        justify-content: center;
     }
     .delete_popup button
     {
@@ -415,8 +455,8 @@
 
     .delete_popup .playlist_ft_imf
     {
-        width: 65%;
-        height: auto;
+        width: 190px;
+        height: 190px;
 
         margin: 20px auto 30px;
     }
@@ -439,5 +479,20 @@
         height: 52px;
     }
 
+    .if_zero
+    {
+        padding: 20px 15px;
+        font-size: 14px;
+    }
+    .if_zero a
+    {
+        margin-top: 20px;
+
+        width: 150px;
+        height: 45px;
+
+        background: #212121;
+        color: #FFFFFF;
+    }
 
 }

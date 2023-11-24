@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import './create-playlist-page.css';
 
+import { useNavigate } from "react-router-dom";
+
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -15,13 +17,16 @@ const CreatePlaylistPage = () => {
     const [playlistIMG, setPlaylistIMG] = useState("");
     const [playlistSource, setPlaylistSource] = useState("");
     const [playlistTitle, setPlaylistTitle] = useState("");
-    const storage = getStorage();
-  
+
+    const navigate = useNavigate()
+    const storage = getStorage()
 
     const selectIMG = (event)=> {
         setPlaylistSource(event.target.files[0]);
+
         const reader = new FileReader();
         reader.readAsDataURL(event.target.files[0]);
+
         reader.onload = (event) => {
           setPlaylistIMG(event.target.result);
         }
@@ -44,8 +49,7 @@ const CreatePlaylistPage = () => {
                 console.log('File available at', downloadURL);
                 uploadPlaylist(downloadURL);
             });
-        }
-        );
+        });
     }
 
     const createPlaylist = async() => {
@@ -53,10 +57,10 @@ const CreatePlaylistPage = () => {
             await uploadIMG();
             return;
         }
-        uploadPlaylist("");
+        await uploadPlaylist("");
     }
 
-    const uploadPlaylist = async(imgURL)=> {
+    const uploadPlaylist = async(imgURL) => {
         const userRef = doc(db, "users", (JSON).parse(localStorage.getItem('user')).uid);
 
         await updateDoc(userRef, {
@@ -65,10 +69,11 @@ const CreatePlaylistPage = () => {
                 "img": imgURL,
                 "songs": []
             })
-        })
-            .then(() => {
-                console.log("successfuly added");
-            });
+        }).then(() => {
+            navigate("/home/playlists")
+        }).finally(() => {
+            window.location.reload()
+        });
     };
 
     return <div>

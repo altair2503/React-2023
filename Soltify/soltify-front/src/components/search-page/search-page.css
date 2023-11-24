@@ -1,0 +1,174 @@
+.search_background
+{
+}
+.search_page_input
+{
+    display: none;
+    position: relative;
+
+    width: 100%;
+    margin-bottom: 20px;
+}
+.search_page_input input
+{
+    width: 100%;
+    height: 46px;
+
+    background: #1E1E1E;
+    border-radius: 25px;
+    border: none;
+
+    font-size: 14.5px;
+    padding: 0 20px 0 45px;
+}
+.search_page_input ion-icon
+{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 15px;
+
+    font-size: 20px;
+    --ionicon-stroke-width: 35px;
+
+    color: #FFFFFF;
+    opacity: .7;
+}
+
+.search_results
+{
+    margin-bottom: 150px;
+}
+.found_title
+{
+    font-size: 19px;
+    color: #FFFFFF;
+
+    margin-bottom: 20px;
+}
+
+.found_artists_list
+{
+    width: 1230px;
+    overflow-x: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    margin-bottom: 60px;
+    padding: 0 5px;
+}
+.found_artists_list::-webkit-scrollbar
+{
+    display: none;
+}
+.found_artist
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 10px;
+    text-decoration: none;
+}
+.found_artist img
+{
+    width: 140px;
+    height: 140px;
+
+    border-radius: 50%;
+    object-fit: cover;
+}
+.found_artist_info
+{
+    color: #FFFFFF;
+}
+.found_artist_info span
+{
+    font-size: 15px;
+    opacity: .85;
+}
+.found_artist_info ion-icon
+{
+    display: none;
+
+    color: #FFFFFF;
+    font-size: 22px;
+
+    opacity: .6;
+}
+
+
+@media (max-width: 450px) {
+
+    .search_page_input
+    {
+        display: block;
+    }
+    .found_title
+    {
+        display: flex;
+        justify-content: center;
+    }
+
+    .search_results
+    {
+        margin-bottom: 170px;
+    }
+
+    .found_artists_list
+    {
+        width: 100%;
+        display: block;
+
+        box-sizing: border-box;
+        overflow-x: visible;
+
+        margin-bottom: 40px;
+        gap: 0;
+    }
+    .found_artist
+    {
+        flex-direction: row;
+        gap: 0;
+
+        margin-bottom: 15px;
+    }
+    .found_artist:last-child
+    {
+        margin-bottom: 0;
+    }
+    .found_artist img
+    {
+        width: 50px;
+        height: 50px;
+
+        margin-right: 15px;
+    }
+    .found_artist_info
+    {
+        color: #FFFFFF;
+        flex: 1;
+
+        display: flex;
+        justify-content: space-between;
+    }
+    .found_artist_info span
+    {
+        opacity: 1;
+    }
+    .found_artist_info ion-icon
+    {
+        display: block;
+    }
+
+    .found_songs_list
+    {
+        padding: 0 5px;
+    }
+
+
+
+}

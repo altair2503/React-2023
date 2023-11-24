@@ -1,8 +1,7 @@
 import React from "react";
 import './artist-page.css';
 
-import avatar from "../../assets/avatar.png";
-import userImg from "../../assets/music.jpg";
+import avatar from "../../assets/music.jpg";
 import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
 import animals from "../../assets/music/1.mp3";
 import animalsImg from "../../assets/music/1.png";
@@ -16,6 +15,7 @@ import brend from "../../assets/music/5.mp3";
 import brendImg from "../../assets/music/5.jpeg";
 import likedPlaylist from "../../assets/likedplaylist.jpg";
 import playlistDefault from "../../assets/playlistdefault.jpg";
+import defaultAvatar from "../../assets/defaultAvatar.jpg";
 
 
 let playlist = [
@@ -66,7 +66,7 @@ const ArtistPage = () => {
         <div className={"artist_info_back"}>
             <img src={playlistDefault} className={"artist_info_back_img"} alt={playlistDefault} />
             <div className={"artist_top"}>
-                { localStorage.getItem("user") != null ? <div className="default_img"><img src={avatar} alt={avatar} /></div> : <img src={userImg} alt={userImg} /> }
+                { <img src={localStorage.getItem("user") == null ? defaultAvatar : avatar} alt={defaultAvatar} /> }
                 <div className={"artist_info"}>
                     <span>Artist</span>
                     <div className={"artist_name"}>Scriptonite</div>

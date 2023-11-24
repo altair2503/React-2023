@@ -113,13 +113,13 @@ header ul
 .shapes:nth-child(2) .shape_f
 {
     box-shadow: 50px -450px 500px rgba(3, 20, 52, .5),
-                80px -500px 300px rgba(23, 159, 185, .25),
-                110px -350px 500px rgba(0, 0, 0, .1);
+    80px -500px 300px rgba(23, 159, 185, .25),
+    110px -350px 500px rgba(0, 0, 0, .1);
 }
 .shapes:nth-child(2) .shape_s
 {
     box-shadow: 0 -400px 500px rgba(91, 0, 43, .5),
-                -100px -400px 500px rgba(213, 39, 32, .3);
+    -100px -400px 500px rgba(213, 39, 32, .3);
 }
 
 .model img
@@ -339,15 +339,8 @@ header ul
         height: 60px;
         width: 78%;
 
-        background: #25DC60;
         border-radius: 30px;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
         font-size: 23px;
-        font-weight: 500;
 
         color: #fff;
         text-decoration: none;

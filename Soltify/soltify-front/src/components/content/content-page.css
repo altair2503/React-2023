@@ -68,6 +68,7 @@
     height: 215px;
 
     border-radius: 15px;
+    object-fit: cover;
 }
 .recently_item span
 {
