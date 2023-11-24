@@ -1,6 +1,3 @@
-.search_background
-{
-}
 .search_page_input
 {
     display: none;
@@ -57,6 +54,8 @@
     align-items: center;
     gap: 25px;
 
+    box-sizing: border-box;
+
     margin-bottom: 60px;
     padding: 0 5px;
 }
@@ -98,6 +97,31 @@
     font-size: 22px;
 
     opacity: .6;
+}
+
+.if_zero.in_search
+{
+    margin-top: 60px;
+}
+.if_zero.in_search ion-icon
+{
+    font-size: 60px;
+    margin-bottom: 35px;
+}
+.if_zero.in_search div
+{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.if_zero.in_search div span:last-child
+{
+    font-size: 15px;
+    opacity: .75;
+}
+.if_zero.in_search div span:first-child
+{
+    font-size: 17.5px;
 }
 
 
@@ -167,6 +191,30 @@
     .found_songs_list
     {
         padding: 0 5px;
+    }
+
+    .if_zero.in_search
+    {
+        margin-top: 60px;
+    }
+    .if_zero.in_search ion-icon
+    {
+        font-size: 55px;
+        margin-bottom: 35px;
+    }
+    .if_zero.in_search div
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .if_zero.in_search div span:last-child
+    {
+        font-size: 14.5px;
+    }
+    .if_zero.in_search div span:first-child
+    {
+        font-size: 16.5px;
     }
 
 

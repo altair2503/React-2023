@@ -11,7 +11,6 @@ const AddToPlaylist = ({type, id, isSearch, user}) => {
 
     const [playlistAddState, setPlaylistAddState] = useState(false);
 
-
     useEffect(() => {
         document.addEventListener("click", e => {
             if(e.target.className === "list_to_add" || e.target.className === "list_to_add_ul") {
@@ -35,16 +34,16 @@ const AddToPlaylist = ({type, id, isSearch, user}) => {
                             {
                                 user.playlist?.map((pl, ind) => {
                                     if(pl.songs > 0 && !pl.songs.includes(id)) {
-                                        return <li className={"list_to_add_ul"} onClick={() => addUserExactPlaylist(userUID, ind, id)}>
+                                        return ind !== 0 ? <li className={"list_to_add_li"} onClick={() => addUserExactPlaylist(userUID, ind, id)}>
                                             <img src={!pl.img ? playlistDefault : pl.img} alt={pl.img} />
                                             <span>{pl.name} <ion-icon name="add-outline"></ion-icon></span>
                                             <ion-icon name="checkmark-outline" id={"in_playlist"}></ion-icon>
-                                        </li>
+                                        </li> : ''
                                     } else {
-                                        return <li className={"list_to_add_ul"} onClick={() => addUserExactPlaylist(userUID, ind, id)}>
+                                        return ind !== 0 ? <li className={"list_to_add_ul"} onClick={() => addUserExactPlaylist(userUID, ind, id)}>
                                             <img src={!pl.img ? playlistDefault : pl.img} alt={pl.img} />
                                             <span>{pl.name} <ion-icon name="add-outline"></ion-icon></span>
-                                        </li>
+                                        </li> : ''
                                     }
                                 })
                             }
@@ -70,16 +69,16 @@ const AddToPlaylist = ({type, id, isSearch, user}) => {
                         {
                             user.playlist?.map((pl, ind) => {
                                 if(pl.songs > 0 && !pl.songs.includes(id)) {
-                                    return <li className={"list_to_add_ul"} onClick={() => addUserExactPlaylist(userUID, ind, id)}>
+                                    return ind !== 0 ? <li className={"list_to_add_ul"} onClick={() => addUserExactPlaylist(userUID, ind, id)}>
                                         <img src={!pl.img ? playlistDefault : pl.img} alt={pl.img} />
                                         <span>{pl.name} <ion-icon name="add-outline"></ion-icon></span>
                                         <ion-icon name="checkmark-outline" id={"in_playlist"}></ion-icon>
-                                    </li>
+                                    </li> : ''
                                 } else {
-                                    return <li className={"list_to_add_ul"} onClick={() => addUserExactPlaylist(userUID, ind, id)}>
+                                    return ind !== 0 ? <li className={"list_to_add_ul"} onClick={() => addUserExactPlaylist(userUID, ind, id)}>
                                         <img src={!pl.img ? playlistDefault : pl.img} alt={pl.img} />
                                         <span>{pl.name} <ion-icon name="add-outline"></ion-icon></span>
-                                    </li>
+                                    </li> : ''
                                 }
                             })
                         }

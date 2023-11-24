@@ -1,6 +1,5 @@
-import styles from './input.module.css'
 import React from "react";
-import SignUp from "../../authorization/sign-up";
+import styles from './input.module.css'
 
 const Input = ({props, value, onChange}) => {
     return (

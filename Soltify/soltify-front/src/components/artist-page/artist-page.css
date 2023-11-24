@@ -17,23 +17,7 @@
     height: 250px;
 
     border-radius: 50%;
-}
-.default_img
-{
-    width: 250px;
-    height: 250px;
-
-    background: #4b4b4b;
-    border-radius: 50%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.default_img img
-{
-    width: 190px;
-    height: 190px;
+    object-fit: cover;
 }
 
 .artist_info

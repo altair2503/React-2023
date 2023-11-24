@@ -38,8 +38,8 @@
     width: 215px;
 
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    align-items: center;
 
     text-align: center;
     text-decoration: none;
@@ -113,6 +113,24 @@
     opacity: .6;
 }
 
+.if_zero.in_search.playlist ion-icon
+{
+    --ionicon-stroke-width: 16;
+    font-size: 75px;
+}
+.if_zero.in_search.playlist div span
+{
+    font-size: 15.5px;
+
+    opacity: 1 !important;
+    color: #ffffff;
+}
+.if_zero.in_search.playlist a
+{
+    width: 170px;
+    margin-top: 10px;
+}
+
 
 @media (max-width: 450px) {
 
@@ -177,6 +195,15 @@
     #playlist_item_open_btn
     {
         display: block;
+    }
+
+    .if_zero.in_search.playlist ion-icon
+    {
+        font-size: 74px;
+    }
+    .if_zero.in_search.playlist div span
+    {
+        font-size: 15.5px;
     }
 
 }

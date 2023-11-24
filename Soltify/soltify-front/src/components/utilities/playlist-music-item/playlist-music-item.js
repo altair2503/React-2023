@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import './playlist-music-item.css';
 
 import {Link, useNavigate, useOutletContext} from "react-router-dom";
+import { getUserPlaylist } from "../../services/playlist-service";
+import { userUID } from "../../services/user-service";
 
 import crown from '../../../assets/crown.svg';
 import AddToPlaylist from "../add-to-playlist/add-to-playlist";
@@ -9,7 +11,6 @@ import {doc, updateDoc} from "firebase/firestore";
 import {db} from "../../../firebase";
 
 const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, isSearch, user, plIndex}) => {
-
     const [playlistAddState, setPlaylistAddState] = useState(false);
     const [songOptionListState, setSongOptionListState] = useState(false);
     const navigate = useNavigate();
@@ -40,7 +41,10 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
             if(e.target.className === "add_to_playlist_btn for_options") {
                 setPlaylistAddState(true); return
             }
-            if(e.target.className === "list_to_add_ul" || e.target.className === "options_list_li") {
+            if(e.target.className === "options_list_li") {
+                setSongOptionListState(true); return;
+            }
+            if(e.target.className === "list_to_add_ul") {
                 setPlaylistAddState(true); return;
             }
             if(e.target.id !== "open_song_options_btn" && e.target.className !== "back_to_options") {

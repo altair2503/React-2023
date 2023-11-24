@@ -7,7 +7,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../firebase";
 
-import Input from "../utilities/input/input";
+import Input from "../utilities/input-item/input";
 
 import playlistDefault from '../../assets/playlistdefault.jpg'
 
@@ -16,6 +16,8 @@ const CreatePlaylistPage = () => {
     const [playlistIMG, setPlaylistIMG] = useState("");
     const [playlistSource, setPlaylistSource] = useState("");
     const [playlistTitle, setPlaylistTitle] = useState("");
+
+    const [playlistCreatingState, setPlaylistCreatingState] = useState(false);
 
     const navigate = useNavigate()
     const storage = getStorage()
@@ -38,7 +40,7 @@ const CreatePlaylistPage = () => {
         uploadTask.on('state_changed',
             (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
+            document.querySelector(".creating_progress_bar div").style.width = progress + "%";
         }, 
         (error) => {
             console.log(error);
@@ -52,10 +54,12 @@ const CreatePlaylistPage = () => {
     }
 
     const createPlaylist = async() => {
-        if(playlistSource){
+        if(playlistSource) {
+            setPlaylistCreatingState(true)
             await uploadIMG();
             return;
         }
+        setPlaylistCreatingState(true)
         await uploadPlaylist("");
     }
 
@@ -68,10 +72,27 @@ const CreatePlaylistPage = () => {
                 "img": imgURL,
                 "songs": []
             })
-        }).then(() => setPlaylistTitle(""));
+        }).then(() => {
+            setPlaylistCreatingState(false);
+            setPlaylistTitle("");
+        }).finally(() => navigate("/home/playlists"))
     };
 
     return <div>
+        {
+            playlistCreatingState
+            ?
+                <div className={"creating_progress"}>
+                    <div className={"progress_popup"}>
+                        <span>Playlist is creating ...</span>
+                        <div className={"creating_progress_bar"}>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            :
+                ''
+        }
         <span className={"acc_title"}>Create Playlist</span>
         <div className={"create_area"}>
             <div className={"playlist_ft_imf"}>

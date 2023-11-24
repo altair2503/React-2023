@@ -1,20 +1,23 @@
 import React, {useEffect, useState} from "react";
 import {useParams, useLocation, useOutletContext, Link, useNavigate} from "react-router-dom";
 import './playlist-page.css';
-import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
-import { getUserExactPlaylist } from "../services/playlist-service";
-import { getUserData } from "../services/user-service";
+
+
 import { getPlaylistSongs } from "../services/song-service";
+import { getUserExactPlaylist } from "../services/playlist-service";
+import {getUserData, userUID} from "../services/user-service";
+
+import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
+
+import { db } from "../../firebase";
+import {arrayUnion, doc, getDoc, updateDoc} from "firebase/firestore";
 
 import playlistDefault from '../../assets/playlistdefault.jpg';
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from "firebase/storage";
-import {doc, updateDoc} from "firebase/firestore";
-import {db} from "../../firebase";
 
 
 
 const PlaylistPage = () => {
-
     const [songs, setSongs] = useState([]);
     const {index} = useParams();
     const [ind, setInd] = useState("");
@@ -26,7 +29,6 @@ const PlaylistPage = () => {
     const navigate = useNavigate();
     const [deletePopupState, setDeletePopupState] = useState(false);
     const [updatePopupState, setUpdatePopupState] = useState(false);
-
 
 
     const selectIMG = (event)=> {
@@ -97,7 +99,6 @@ const PlaylistPage = () => {
     }
 
 
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -133,7 +134,8 @@ const PlaylistPage = () => {
                 setDeletePopupState(false); setUpdatePopupState(false);
             }
         })
-    }, )
+    })
+
     
     return <div className={"playlist_background"}>
         {
@@ -187,12 +189,24 @@ const PlaylistPage = () => {
                     <div className={"playlist_owner"}> {user ? `${user?.name} ${user?.lastname}` : ""} <span>•</span> {user?.playlist[ind]?.songs.length} songs</div>
                     <div className={"playlist_options"}>
                         <button className={"play_playlist"}>Play</button>
-                        <div className={"update_option"} onClick={() => setUpdatePopupState(true)}>
-                            <ion-icon name="create-outline"></ion-icon>
-                        </div>
-                        <div className={"delete_option"} onClick={() => setDeletePopupState(true)}>
-                            <ion-icon name="trash-outline"></ion-icon>
-                        </div>
+                            {
+                                index !== "0"
+                                ?
+                                    <div className={"update_option"} onClick={() => setUpdatePopupState(true)}>
+                                        <ion-icon name="create-outline"></ion-icon>
+                                    </div>
+                                :
+                                    ''
+                            }
+                            {
+                                index !== "0"
+                                ?
+                                    <div className={"delete_option"} onClick={() => setDeletePopupState(true)}>
+                                        <ion-icon name="trash-outline"></ion-icon>
+                                    </div>
+                                :
+                                    ''
+                            }
                     </div>
                 </div>
             </div>
@@ -217,7 +231,7 @@ const PlaylistPage = () => {
                         <div className={"playlist_song_list"}>
                             <div className={"if_zero"}>
                                 <span>There are no songs in this playlist yet. <br/> Do you want to add them?</span>
-                                <Link to={""}>Add songs</Link>
+                                <Link to={"/home/search"}>Add songs</Link>
                             </div>
                         </div>
                 }

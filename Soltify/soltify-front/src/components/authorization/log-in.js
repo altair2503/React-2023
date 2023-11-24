@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-import Input from "../utilities/input/input";
+import Input from "../utilities/input-item/input";
 import styles from "./authorization.module.css";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -16,7 +16,7 @@ const LogIn = key => {
 
     const navigate = useNavigate();
 
-    const signIn = async (e) => {
+    const signIn = async(e) => {
         e.preventDefault();
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -35,8 +35,8 @@ const LogIn = key => {
         }
     }
 
-    const getUserData = async (user) => {
-        if (!user) {
+    const getUserData = async(user) => {
+        if(!user) {
             return
         }
         const usersCollection = collection(db, "users");
@@ -68,18 +68,18 @@ const LogIn = key => {
                 <span className={styles.subtitle}>to continue to Soltify</span>
             </div>
             <form onSubmit={signIn}>
-            <div className={styles.inputs}>
-                <Input props={{name: 'Email'}}
-                       value={email}
-                       onChange={(e) => setEmail(e.target.value)}
-                />
-                <Input props={{name: 'Password', type: "password"}}
-                       value={password}
-                       onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Log in</button>
-                <a href="/sign-up" className={styles.sign_in_link}>Not registered yet? <span>Create an account</span></a>
-            </div>
+                <div className={styles.inputs}>
+                    <Input props={{name: 'Email'}}
+                           value={email}
+                           onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <Input props={{name: 'Password', type: "password"}}
+                           value={password}
+                           onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button type="submit">Log in</button>
+                    <a href="/sign-up" className={styles.sign_in_link}>Not registered yet? <span>Create an account</span></a>
+                </div>
             </form>
         </div>
         </div>

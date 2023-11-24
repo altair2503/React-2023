@@ -22,6 +22,7 @@
     height: 250px;
 
     border-radius: 50%;
+    object-fit: cover;
 }
 .default_img
 {
@@ -125,6 +126,7 @@
     height: 100%;
 
     border-radius: 50%;
+    object-fit: cover;
 }
 .delete_popup.update .input_block
 {

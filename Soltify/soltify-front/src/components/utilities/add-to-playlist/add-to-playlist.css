@@ -36,6 +36,10 @@
     color: #FFFFFF;
     font-size: 25px;
 }
+.list_to_add_title
+{
+    white-space: nowrap;
+}
 .list_to_add ul
 {
     height: 135px;

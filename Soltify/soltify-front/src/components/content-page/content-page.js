@@ -32,7 +32,7 @@ const ContentPage = () => {
 
     return <div className={"content_page_back"}>
         {
-            user.playlist?.length > 0
+            user.playlist?.length > 1
             ?
                 <div className={"content_item_back"}>
                     <span className={"content_title"}>Recently Played</span>
@@ -40,7 +40,7 @@ const ContentPage = () => {
                         <div className={"recently_list"}>
                             {
                                 user.playlist?.map((userPL, index) => {
-                                    return <Link
+                                    return index !== 0 ? <Link
                                         to={`/home/playlists/${index}`}
                                         className={"recently_item"}
                                         state={{
@@ -49,7 +49,7 @@ const ContentPage = () => {
                                     }}>
                                         { <img src={!userPL.img ? playlistDefault : userPL.img} alt={userPL.name} />}
                                         <span>{userPL.name}</span>
-                                    </Link>
+                                    </Link> : ""
                                 })
                             }
                         </div>
