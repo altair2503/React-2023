@@ -194,6 +194,7 @@ const Player = ({props, user, setBegin}) => {
     useEffect(() => {
         playlist = props.playlist;
         setIndex(props.index);
+        setIsPlaying(true);
     }, [props])
 
     useEffect(() => {
