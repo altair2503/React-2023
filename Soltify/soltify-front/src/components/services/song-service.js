@@ -35,14 +35,20 @@ export async function getArtistSongs(artistID) {
 }
 
 export async function getPlaylistSongs(playlist) {
-  const dbInstance = collection(db, 'songs');
-  const songsData = await getDocs(dbInstance);
-  const filteredSongs = songsData.docs.filter(item => playlist.includes(item.id));
-  
-  return Promise.all(filteredSongs.map(async (item) => {                
-    const artistData = await getArtist(item.data()['artistID']);
-    return { ...item.data(), id: item.id, artist: artistData };
-  }));
+  let result = [];
+
+  const promises = playlist.map(async (id) => {
+    const dbInstance = doc(db, 'songs', id);
+    const songsData = await getDoc(dbInstance);
+    result.push(songsData);
+
+
+    const artistData = await getArtist(songsData.data()['artistID']);
+    return { ...songsData.data(), id: songsData.id, artist: artistData };
+  });
+
+  const finalResult = await Promise.all(promises);
+  return finalResult;
 }
 
 export async function getMusic(id) {

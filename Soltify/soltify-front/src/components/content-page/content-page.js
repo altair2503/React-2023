@@ -64,7 +64,7 @@ const ContentPage = () => {
             <div className={"song_list"}>
                 {
                     topSongs?.map((song, index) => {
-                        return <PlaylistMusicItem props={song} index={index + 1} isPlaylist={true} playlist={topSongs} user={user} />
+                        return <PlaylistMusicItem props={song} index={index} isPlaylist={true} playlist={topSongs} user={user} />
                     })
                 }
             </div>

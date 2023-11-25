@@ -25,3 +25,17 @@ export async function addUserExactPlaylist(userID, index, songID) {
         "playlist": songs
     });
 }
+
+export async function removeUserExactPlaylist(userID, index, songIndex) {
+    const docRef = doc(db, "users", userID);
+    const docSnap = await getDoc(docRef);
+
+    let songs = docSnap.data()['playlist'];
+    songs[index]['songs'].splice(songIndex, 1);
+
+    await updateDoc(docRef, {
+        "playlist": songs
+    });
+}
+
+

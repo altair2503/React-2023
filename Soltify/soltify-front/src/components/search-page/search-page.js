@@ -5,90 +5,22 @@ import { Link, useOutletContext } from "react-router-dom";
 
 import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
 
-import animals from "../../assets/music/1.mp3"
-import river from "../../assets/music/2.mp3"
-import end from "../../assets/music/3.mp3"
-import babymama from "../../assets/music/4.mp3"
-import brend from "../../assets/music/5.mp3"
-
-import animalsImg from '../../assets/music/1.png';
-import riverImg from '../../assets/music/2.webp';
-import endImg from '../../assets/music/3.jpeg';
-import babymamImg from '../../assets/music/4.jpeg';
-import brendImg from '../../assets/music/5.jpeg';
-
 import defaultAvatar from '../../assets/defaultAvatar.jpg';
+import {getArtistAndSongs, getArtists, getUserRealTimeData, userUID} from "../services/user-service";
+import {getSongs} from "../services/song-service";
 
 
-let playlist = [
-    {
-        id: 1,
-        name: "Животные",
-        artist: "Скриптонит",
-        url: animals,
-        img: animalsImg,
-        time: '3:02'
-    },
-    {
-        id: 2,
-        name: "Ты не верь слезам",
-        artist: "Скриптонит",
-        url: river,
-        img: riverImg,
-        time: '4:17'
-    },
-    {
-        id: 3,
-        name: "До конца",
-        artist: "Скриптонит",
-        url: end,
-        img: endImg,
-        time: '2:54'
-    },
-    {
-        id: 4,
-        name: "Бэби мама",
-        artist: "Скриптонит",
-        url: babymama,
-        img: babymamImg,
-        time: '3:51'
-    },
-    {
-        id: 5,
-        name: "Мультибрендовый",
-        artist: "Скриптонит",
-        url: brend,
-        img: brendImg,
-        time: '4:32'
-    },
-]
-let artists = [
-    {
-        id: 1,
-        name: "Скриптонит",
-    },
-    {
-        id: 2,
-        name: "Arctic Monkeys",
-    },
-    {
-        id: 3,
-        name: "Jony",
-    },
-    {
-        id: 4,
-        name: "Мияги",
-    },
-    {
-        id: 5,
-        name: "Darkhan Juzz",
-    }
-]
+// let playlist = [];
+// let artists = [];
+// await getArtists().then((result) => setArtists(result));
+// await getSongs().then((result) => setPlaylist(result));
 
 
 const SearchPage = () => {
+    const [playlist, setPlaylist] = useState([]);
+    const [artists, setArtists] = useState([]);
+    const {searchQuery, user} = useOutletContext();
 
-    const {searchQuery} = useOutletContext();
 
     const [searchPageQuery, setSearchPageQuery] = useState("")
 
@@ -99,22 +31,40 @@ const SearchPage = () => {
         if(searchQuery !== "") {
             setFoundSongs(playlist.filter(song => {
                 return song.name.toLowerCase().includes(searchQuery.toLowerCase())
-                    || song.artist.toLowerCase().includes(searchQuery.toLowerCase())
+                    || song.artist.username.toLowerCase().includes(searchQuery.toLowerCase())
             }))
             setFoundArtists(artists.filter(artist => {
-                return artist.name.toLowerCase().includes(searchQuery.toLowerCase())
+                return artist.username.toLowerCase().includes(searchQuery.toLowerCase())
             }))
         }
         else if(searchPageQuery !== "") {
             setFoundSongs(playlist.filter(song => {
                 return song.name.toLowerCase().includes(searchPageQuery.toLowerCase())
-                    || song.artist.toLowerCase().includes(searchPageQuery.toLowerCase())
+                    || song.artist.username.toLowerCase().includes(searchPageQuery.toLowerCase())
             }))
             setFoundArtists(artists.filter(artist => {
-                return artist.name.toLowerCase().includes(searchPageQuery.toLowerCase())
+                return artist.username.toLowerCase().includes(searchPageQuery.toLowerCase())
             }))
         }
-    }, [searchQuery, searchPageQuery]);
+    }, [searchQuery, searchPageQuery, playlist, artists]);
+
+    useEffect( () => {
+        const fetchUserData = async () => {
+            try {
+                await getArtists().then((result) => setArtists(result));
+                await getSongs().then((result) => setPlaylist(result));
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchUserData();
+    }, [])
+
+    useEffect(() => {
+        console.log(playlist);
+        console.log(artists);
+    }, [playlist, artists]);
 
     const fillSearchInput = (query) => {
         if(query === "") {
@@ -141,10 +91,10 @@ const SearchPage = () => {
                                     <div className={"found_artists_list"}>
                                         {
                                             foundArtists.map((artist, index) => {
-                                                return <Link to={"/home/artist"} className={"found_artist"}>
+                                                return <Link to={`/home/artist/${artist.username}`} className={"found_artist"}>
                                                     <img src={defaultAvatar} alt={defaultAvatar} />
                                                     <div className={"found_artist_info"}>
-                                                        <span>{artist.name}</span>
+                                                        <span>{artist.username}</span>
                                                         <ion-icon name="chevron-forward-outline"></ion-icon>
                                                     </div>
                                                 </Link>
@@ -163,7 +113,7 @@ const SearchPage = () => {
                                     <div className={"found_songs_list"}>
                                         {
                                             foundSongs.map((song, index) => {
-                                                return <PlaylistMusicItem props={song} type={true} index={index + 1} artist={false} isSearch={true} playlist={playlist} />
+                                                return <PlaylistMusicItem props={song} type={true} index={index} user={user} artist={false} isSearch={true} playlist={foundSongs} isPlaylist={true    } />
                                             })
                                         }
                                     </div>
