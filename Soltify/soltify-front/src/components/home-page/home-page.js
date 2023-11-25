@@ -153,7 +153,7 @@ const HomePage = () => {
                             !hideAccount
                             ?
                                 <Link to={localStorage.getItem("user") ? "/home/account" : "/log-in"} className={"user_link"}>
-                                    { <img src={user.img === "" ? defaultAvatar : user.img} alt={defaultAvatar} /> }
+                                    { <img src={user?.img === "" ? defaultAvatar : user?.img} alt={defaultAvatar} /> }
                                 </Link>
                             :
                                 <ion-icon name="chevron-back-outline" onClick={() => navigate(-1)} id={"go_back_button"}></ion-icon>
