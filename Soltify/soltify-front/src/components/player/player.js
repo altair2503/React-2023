@@ -6,8 +6,10 @@ import { getMusic } from "../services/song-service";
 
 
 const Player = ({props, user}) => {
+
     let playlist = props.playlist;
     let prevPlaylist = playlist.slice();
+
     const [mute, setMute] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [playerActive, setPlayerActive] = useState(false);
@@ -21,8 +23,9 @@ const Player = ({props, user}) => {
     const [volume, setVolume] = useState(50);
 
     const audioPlayer = useRef()
-    const navigate = useNavigate();
     const progressRef = useRef();
+
+    const navigate = useNavigate();
 
     const getCurrentDuration = () => {
         const currentProgress = (audioPlayer.current?.currentTime / audioPlayer.current?.duration) * 100;
@@ -68,7 +71,7 @@ const Player = ({props, user}) => {
     }
 
     const setAudioMusic = async() => {
-        await getMusic(playlist[index].musicID)
+        await getMusic(playlist[index]?.musicID)
         .then((result) => {
             audioPlayer.current.src = result.url;
         });
