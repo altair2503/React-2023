@@ -15,11 +15,11 @@ const ArtistPage = () => {
     const {username} = useParams();
     const {setPlaylist} = useOutletContext();
     const {setIndex} = useOutletContext();
+    const {user} = useOutletContext();
 
     const startPlaylist = () => {
         setPlaylist(artist?.songs);
         setIndex(0);
-        console.log(artist?.songs);
     }
 
     useEffect(() => {
@@ -59,7 +59,7 @@ const ArtistPage = () => {
             <div className={"artist_song_list"}>
                 {
                     artist?.songs.map((song, index) => {
-                        return <PlaylistMusicItem props={song} playlist={artist.songs} index={index + 1} type={true}  isPlaylist={true} artist={true} />
+                        return <PlaylistMusicItem props={song} playlist={artist.songs} index={index} type={true} user={user} isPlaylist={true} artist={true} />
                     })
                 }
             </div>

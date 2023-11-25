@@ -29,6 +29,7 @@ const PlaylistPage = () => {
     const navigate = useNavigate();
     const [deletePopupState, setDeletePopupState] = useState(false);
     const [updatePopupState, setUpdatePopupState] = useState(false);
+    const {setPlaylist, setIndex} = useOutletContext();
 
 
     const selectIMG = (event)=> {
@@ -98,6 +99,11 @@ const PlaylistPage = () => {
         });
     }
 
+    const startPlaylist = () => {
+        setPlaylist(songs);
+        setIndex(0);
+    }
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -135,6 +141,8 @@ const PlaylistPage = () => {
             }
         })
     })
+
+
 
     
     return <div className={"playlist_background"}>
@@ -188,7 +196,7 @@ const PlaylistPage = () => {
                     <div className={"playlist_name"}>{user.playlist[ind]?.name}</div>
                     <div className={"playlist_owner"}> {user ? `${user?.name} ${user?.lastname}` : ""} <span>•</span> {user?.playlist[ind]?.songs.length} songs</div>
                     <div className={"playlist_options"}>
-                        <button className={"play_playlist"}>Play</button>
+                        <button className={"play_playlist"} onClick={startPlaylist}>Play</button>
                             {
                                 index !== "0"
                                 ?
@@ -223,7 +231,7 @@ const PlaylistPage = () => {
                         <div className={"playlist_song_list"}>
                             {
                                 songs?.map((song, index) => {
-                                    return <PlaylistMusicItem props={song} index={index + 1} artist={false} type={true} playlist={songs} user={user} plIndex={index}/>
+                                    return <PlaylistMusicItem props={song} index={index} artist={false} type={true} playlist={songs} user={user} plIndex={ind}/>
                                 })
                             }
                         </div>

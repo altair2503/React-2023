@@ -1,11 +1,15 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './player.css';
+
 import { Link, useNavigate } from "react-router-dom";
-import AddToPlaylist from "../utilities/add-to-playlist/add-to-playlist";
 import { getMusic } from "../services/song-service";
 
+import AddToPlaylist from "../utilities/add-to-playlist/add-to-playlist";
+import {addUserExactPlaylist, removeUserExactPlaylist} from "../services/playlist-service";
+import {userUID} from "../services/user-service";
 
-const Player = ({props, user}) => {
+
+const Player = ({props, user, setBegin}) => {
 
     let playlist = props.playlist;
     let prevPlaylist = playlist.slice();
@@ -50,6 +54,7 @@ const Player = ({props, user}) => {
             setIsPlaying(true);
         }
     }
+
 
     function changeVolume(e) {
         let progressWidth = e.target.clientWidth;
@@ -155,6 +160,14 @@ const Player = ({props, user}) => {
         }
     }
 
+    const addOrRemove = () => {
+        if(user.playlist[0].songs.includes(props.playlist[props.index].id)){
+            removeUserExactPlaylist(userUID, 0, props.index);
+        } else{
+            addUserExactPlaylist(userUID, 0, props.playlist[props.index].id)
+        }
+    }
+
     useEffect(() => {
         if(localStorage.getItem("playerCondition") === "true") {
             setPlayerActive(true)
@@ -170,6 +183,7 @@ const Player = ({props, user}) => {
             setElapsed(_elapsed);
         }, 10);
 
+
     }, [volume, isPlaying]);
 
     useEffect(() => {
@@ -180,7 +194,6 @@ const Player = ({props, user}) => {
     useEffect(() => {
         playlist = props.playlist;
         setIndex(props.index);
-        setIsPlaying(true);
     }, [props])
 
     useEffect(() => {
@@ -192,6 +205,10 @@ const Player = ({props, user}) => {
             else toggleSkip(true);
         }
     }, [elapsed]);
+
+    useEffect(() => {
+        setIsPlaying(!audioPlayer?.current?.paused);
+    }, [audioPlayer?.current?.paused])
 
     return (
         <div className={!playerActive ? "player_background mini" : "player_background"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
@@ -234,8 +251,11 @@ const Player = ({props, user}) => {
                         </div>
                     </div>
                     <div className="player_options">
-                        <ion-icon name="heart" id="heart"></ion-icon>
-                        <AddToPlaylist id={props?.id} user={user}/>
+                        <ion-icon name="heart" id="heart"
+                              onClick={addOrRemove}
+                              style={user.playlist[0].songs.includes(props.playlist[props.index].id) ? {color: "red"} : {color: "#fff"}}
+                        ></ion-icon>
+                        <AddToPlaylist id={props.playlist[props.index].id} user={user}/>
                         <ion-icon name="scan-outline" id="scan" onClick={() => playerActiveCondition(true)}></ion-icon>
                     </div>
                     <div className="song_volume">

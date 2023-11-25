@@ -36,4 +36,15 @@ export async function getArtistAndSongs(username){
     return artist;
 }
 
+export async function getArtists(){
+    let artists = [];
+    const artistSnapshot = await getDocs(query(collection(db, "users"), where("username", "!=", null)));
+    artistSnapshot.forEach((doc) => {
+        artists.push({id: doc.id, ...doc.data(), songs: []});
+    });
+
+
+    return artists;
+}
+
 

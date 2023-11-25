@@ -91,6 +91,7 @@ const HomePage = () => {
         fetchUserData();
     }, [])
 
+
     return <div className={"background"}>
         <div className={"background_layer"}>
             <div className={"home_top"}>

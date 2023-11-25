@@ -9,6 +9,8 @@ import { db } from "../../../firebase";
 import AddToPlaylist from "../add-to-playlist/add-to-playlist";
 
 import crown from '../../../assets/crown.svg';
+import {addUserExactPlaylist} from "../../services/playlist-service";
+import {userUID} from "../../services/user-service";
 
 
 const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, isSearch, user, plIndex}) => {
@@ -29,7 +31,7 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
     const removeFromPlaylist = async () => {
         const userRef = doc(db, "users", (JSON).parse(localStorage.getItem('user')).uid);
         let upl = user.playlist;
-        upl[plIndex]?.songs.splice(index - 1, 1)
+        upl[plIndex]?.songs.splice(index, 1)
 
         await updateDoc(userRef, {
             "playlist": upl
@@ -56,12 +58,12 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
 
     if(type) {
         return (
-            <div className={"song_back"} onClick={() => selectSong(playlist, index - 1)}>
+            <div className={"song_back"} onClick={() => selectSong(playlist, index)}>
                 {
                     !isSearch
                     ?
                         <div className={"song_place"}>
-                            <span className={"place_index"}>{index}</span>
+                            <span className={"place_index"}>{index + 1}</span>
                         </div>
                     :
                         ''
@@ -83,7 +85,7 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
                         songOptionListState
                         ?
                             <ul className={"options_list"}>
-                                <li><ion-icon name="heart"></ion-icon> Add to Like</li>
+                                <li onClick={() => addUserExactPlaylist(userUID, 0, playlist[index].id)}><ion-icon name="heart"></ion-icon> Add to Like</li>
                                 <AddToPlaylist type={true} user={user} id={props?.id} />
                                 {
                                     !isPlaylist ? <li onClick={removeFromPlaylist}><ion-icon name="trash-outline"></ion-icon> Remove</li> : ''
@@ -97,12 +99,12 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
         )
     }
 
-    return <div className={"song_back_min"} onClick={() => selectSong(playlist, index - 1)}>
+    return <div className={"song_back_min"} onClick={() => selectSong(playlist, index)}>
         {
             !isSearch
             ?
                 <div className={"song_place"}>
-                    <span className={"place_index"}>{index}</span>
+                    <span className={"place_index"}>{index + 1}</span>
                     <span>-</span>
                     <img src={crown} alt={crown} />
                 </div>
@@ -123,7 +125,7 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
                 songOptionListState
                 ?
                     <ul className={"options_list"}>
-                        <li><ion-icon name="heart"></ion-icon> Add to Like</li>
+                        <li onClick={() => addUserExactPlaylist(userUID, 0, playlist[index].id)}><ion-icon name="heart"></ion-icon> Add to Like</li>
                         <AddToPlaylist type={true} user={user} id={props?.id} />
                         {
                             !isPlaylist ? <li onClick={removeFromPlaylist}><ion-icon name="trash-outline"></ion-icon> Remove </li> : ''
