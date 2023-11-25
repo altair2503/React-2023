@@ -20,6 +20,7 @@ import PlaylistPage from "./components/playlist-page/playlist-page";
 import AccountPage from "./components/account-page/account-page";
 import ArtistPage from "./components/artist-page/artist-page";
 import ErrorPage from './components/error-page/error-page';
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 
 const router = createBrowserRouter([
@@ -93,6 +94,9 @@ root.render(
         <RouterProvider router={router}/>
     </React.StrictMode>
 );
+
+serviceWorkerRegistration.register();
+
 
 // // If you want to start measuring performance in your app, pass a function
 // // to log results (for example: reportWebVitals(console.log))
