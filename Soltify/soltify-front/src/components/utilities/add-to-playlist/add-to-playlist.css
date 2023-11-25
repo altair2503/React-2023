@@ -89,6 +89,14 @@
     border-radius: 6px;
     display: none;
 }
+.list_to_add ul li #in_playlist_big
+{
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    font-size: 16px !important;
+}
 .list_to_add ul li #in_playlist
 {
     position: absolute;
@@ -103,13 +111,14 @@
     font-size: 18px;
     --ionicon-stroke-width: 42px;
     color: #131313;
-
-    display: none;
 }
 .list_to_add ul li span
 {
     pointer-events: none;
     position: relative;
+
+    width: fit-content;
+    margin-right: 15px;
 }
 .list_to_add ul li span ion-icon
 {

@@ -37,7 +37,7 @@ const AddToPlaylist = ({type, id, isSearch, user}) => {
                                         return ind !== 0 ? <li onClick={() => addUserExactPlaylist(userUID, ind, id)}>
                                             <img src={!pl.img ? playlistDefault : pl.img} alt={pl.img} />
                                             <span>{pl.name} <ion-icon name="add-outline"></ion-icon></span>
-                                            <ion-icon name="checkmark-outline" id={"in_playlist"}></ion-icon>
+                                            <ion-icon name="checkmark-outline" id={window.innerWidth > 451 ? "in_playlist_big" :"in_playlist"}></ion-icon>
                                         </li> : ''
                                     } else {
                                         return ind !== 0 ? <li onClick={() => addUserExactPlaylist(userUID, ind, id)}>
@@ -72,7 +72,7 @@ const AddToPlaylist = ({type, id, isSearch, user}) => {
                                     return ind !== 0 ? <li onClick={() => addUserExactPlaylist(userUID, ind, id)}>
                                         <img src={!pl.img ? playlistDefault : pl.img} alt={pl.img} />
                                         <span>{pl.name} <ion-icon name="add-outline"></ion-icon></span>
-                                        <ion-icon name="checkmark-outline" id={"in_playlist"}></ion-icon>
+                                        <ion-icon name="checkmark-outline" id={window.innerWidth > 451 ? "in_playlist_big" :"in_playlist"}></ion-icon>
                                     </li> : ''
                                 } else {
                                     return ind !== 0 ? <li onClick={() => addUserExactPlaylist(userUID, ind, id)}>
