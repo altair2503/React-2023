@@ -41,7 +41,7 @@ const ArtistPage = () => {
         <div className={"artist_info_back"}>
             <img src={playlistDefault} className={"artist_info_back_img"} alt={playlistDefault} />
             <div className={"artist_top"}>
-                { <img src={artist?.avatar ? artist?.avatar : defaultAvatar} alt={defaultAvatar} /> }
+                { <img src={artist?.img ? artist?.img : defaultAvatar} alt={defaultAvatar} /> }
                 <div className={"artist_info"}>
                     <span>Artist</span>
                     <div className={"artist_name"}>{artist?.username}</div>

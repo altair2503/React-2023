@@ -113,21 +113,32 @@
     grid-column-start: 1;
     grid-row-start: 4;
 }
-.song_list .song_back_min:nth-child(6)
+.song_list .song_back_min:nth-child(5)
 {
-    grid-column-start: 2;
-    grid-row-start: 2;
+    grid-column-start: 1;
+    grid-row-start: 5;
 }
 .song_list .song_back_min:nth-child(7)
 {
     grid-column-start: 2;
-    grid-row-start: 3;
+    grid-row-start: 2;
 }
 .song_list .song_back_min:nth-child(8)
 {
     grid-column-start: 2;
+    grid-row-start: 3;
+}
+.song_list .song_back_min:nth-child(9)
+{
+    grid-column-start: 2;
     grid-row-start: 4;
 }
+.song_list .song_back_min:nth-child(10)
+{
+    grid-column-start: 2;
+    grid-row-start: 5;
+}
+
 
 @media (max-width: 450px) {
 

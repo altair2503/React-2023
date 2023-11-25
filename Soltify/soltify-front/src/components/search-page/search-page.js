@@ -92,7 +92,7 @@ const SearchPage = () => {
                                         {
                                             foundArtists.map((artist, index) => {
                                                 return <Link to={`/home/artist/${artist.username}`} className={"found_artist"}>
-                                                    <img src={defaultAvatar} alt={defaultAvatar} />
+                                                    <img src={artist?.img ? artist?.img : defaultAvatar} alt={defaultAvatar} />
                                                     <div className={"found_artist_info"}>
                                                         <span>{artist.username}</span>
                                                         <ion-icon name="chevron-forward-outline"></ion-icon>
