@@ -18,14 +18,14 @@ const PlaylistMusicItem = ({props, index, type, isPlaylist, artist, playlist, is
     const [playlistAddState, setPlaylistAddState] = useState(false);
     const [songOptionListState, setSongOptionListState] = useState(false);
 
-    const {setPlaylist} = useOutletContext();
-    const {setIndex} = useOutletContext();
+    const {setPlaylist, setIndex, setIsPlaying} = useOutletContext();
 
     const navigate = useNavigate();
 
     const selectSong = (songs, index)=> {
         setPlaylist(songs);
         setIndex(index);
+        setIsPlaying(true);
     }
 
     const removeFromPlaylist = async () => {

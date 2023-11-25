@@ -30,6 +30,7 @@ const LogIn = key => {
                 console.error("User object is undefined")
             }
             navigate("/");
+            window.location.reload();
         } catch (error) {
             console.error(error);
         }

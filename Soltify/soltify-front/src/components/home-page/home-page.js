@@ -21,6 +21,8 @@ const HomePage = () => {
     const [hideSearch, setHideSearch] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
     const [user, setUser] = useState({});
+    const [isPlaying, setIsPlaying] = useState(false);
+
 
 
     useEffect(() => {
@@ -160,7 +162,7 @@ const HomePage = () => {
                         }
                     </div>
                     <div className={"content"}>
-                        <Outlet context={{playlist, user, setPlaylist, index, setIndex, searchQuery}} />
+                        <Outlet context={{playlist, user, setPlaylist, index, setIndex, searchQuery, setIsPlaying}} />
                     </div>
                 </div>
             </div>
@@ -171,6 +173,12 @@ const HomePage = () => {
                     "index": index,
                 }}
                 user={user}
+                isPlaying={isPlaying}
+                setIsPlaying={setIsPlaying}
+                playlist={playlist}
+                setPlaylist={setPlaylist}
+                index={index}
+                setIndex={setIndex}
                 /> : ""}
         </div>
     </div>

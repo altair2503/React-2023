@@ -9,18 +9,16 @@ import {addUserExactPlaylist, removeUserExactPlaylist} from "../services/playlis
 import {userUID} from "../services/user-service";
 
 
-const Player = ({props, user, setBegin}) => {
-
-    let playlist = props.playlist;
-    let prevPlaylist = playlist.slice();
+const Player = ({props, user, setBegin, isPlaying, setIsPlaying, index, setIndex, playlist, setPlaylist}) => {
+    const [prevPlaylist, setPrevPlaylist] = useState([]);
 
     const [mute, setMute] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [] = useState(false);
     const [playerActive, setPlayerActive] = useState(false);
     const [repeat, setRepeat] = useState(false);
     const [mixed, setMixed] = useState(false);
 
-    const [index, setIndex] = useState(0);
+
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(0);
     const [elapsed, setElapsed] = useState(0);
@@ -86,7 +84,7 @@ const Player = ({props, user, setBegin}) => {
 
     const togglePlay = () => {
         if(!audioPlayer.current.src) {
-            setAudioMusic().then()
+            setAudioMusic()
         }
 
         if(!isPlaying) audioPlayer.current.play()
@@ -117,31 +115,26 @@ const Player = ({props, user, setBegin}) => {
 
     const toggleMix = () => {
         if(mixed === false) {
-            let shuffledArray = playlist.slice(index + 1);
-
-            let shuffleArray =  async() => {
-                let array = shuffledArray.slice();
-
-                for(let i = array.length - 1; i > 0; i--) {
-                    let j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array
-            }
-
-            shuffleArray().then((res) => {
-                playlist = [...playlist.slice(0, index + 1), ...res]
-            })
-            setMixed(true)
-
-            shuffleArray().then((res) => {
-                playlist = [...playlist.slice(0, index + 1), ...res]
-            })
-            setMixed(true)
-
+            // setPrevPlaylist([...playlist]);
+            // let shuffledArray = playlist.slice(index + 1);
+            //
+            // let shuffleArray =  async() => {
+            //     let array = shuffledArray.slice();
+            //
+            //     for(let i = array.length - 1; i > 0; i--) {
+            //         let j = Math.floor(Math.random() * (i + 1));
+            //         [array[i], array[j]] = [array[j], array[i]];
+            //     }
+            //     return array
+            // }
+            //
+            // shuffleArray().then((res) => {
+            //     setPlaylist([...playlist.slice(0, index + 1), ...res]);
+            // })
+            setMixed(true);
         } else {
-          playlist = [...playlist.slice(0, index + 1), ...prevPlaylist.slice(index + 1, prevPlaylist.length)]
-          setMixed(false)
+          // setPlaylist([...playlist.slice(0, index + 1), ...prevPlaylist.slice(index + 1, prevPlaylist.length)]);
+          setMixed(false);
         }
     }
 
@@ -169,6 +162,10 @@ const Player = ({props, user, setBegin}) => {
     }
 
     useEffect(() => {
+        setAudioMusic();
+    }, [playlist, index]);
+
+    useEffect(() => {
         if(localStorage.getItem("playerCondition") === "true") {
             setPlayerActive(true)
         } else setPlayerActive(false)
@@ -185,17 +182,6 @@ const Player = ({props, user, setBegin}) => {
 
 
     }, [volume, isPlaying]);
-
-    useEffect(() => {
-        setAudioMusic().then();
-        props.index = index;
-    }, [index])
-
-    useEffect(() => {
-        playlist = props.playlist;
-        setIndex(props.index);
-        setIsPlaying(true);
-    }, [props])
 
     useEffect(() => {
         if(elapsed && elapsed === duration) {
@@ -223,7 +209,7 @@ const Player = ({props, user, setBegin}) => {
                     <img src={playlist[index]?.img} alt={playlist[index]?.img} onClick={() => playerActiveCondition(true)} onMouseMove={(event) => changeImageCursor(event)} />
                     <div className="song_details for_mini_player">
                         <div className="name">{playlist[index]?.name}</div>
-                        <Link to={"/home/artist"} className="artist"> {playlist[index]?.artist.username}</Link>
+                        <Link to={`/home/artist/${playlist[index]?.artist.username}`} className="artist"> {playlist[index]?.artist.username}</Link>
                     </div>
                 </div>
                 <div className="player_controllers">
