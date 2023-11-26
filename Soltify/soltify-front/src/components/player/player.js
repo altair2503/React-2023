@@ -37,19 +37,62 @@ const Player = ({props, user, setBegin, isPlaying, setIsPlaying, index, setIndex
     }
 
     function changeCurrent(e) {
-        let progressWidth = e.target.clientWidth;
-        let clickedOffSetX = e.nativeEvent.offsetX;
+        const progressWidth = progressRef.current.clientWidth;
+        const clickedOffSetX = e.nativeEvent.offsetX;
 
-        audioPlayer.current.currentTime = (clickedOffSetX / progressWidth) * duration;
+        let isDragging = false;
 
-        const currentProgress = (audioPlayer.current?.currentTime / audioPlayer.current?.duration) * 100;
-        setProgress(currentProgress);
+        const handleMouseMove = (moveEvent) => {
+            audioPlayer.current.muted = true;
+            isDragging = true;
 
-        document.querySelector(".progress_bar").style.width = `${progress}%`;
+            const newPosition = (moveEvent.clientX - progressRef.current.getBoundingClientRect().left) / progressWidth * duration;
 
-        if(!isPlaying) {
-            audioPlayer.current.play();
-            setIsPlaying(true);
+            const validNewPosition = Math.max(0, Math.min(newPosition, duration));
+
+            audioPlayer.current.currentTime = validNewPosition;
+
+            const currentProgress = (validNewPosition / duration) * 100;
+            setProgress(currentProgress);
+
+            document.querySelector(".progress_bar").style.width = `${currentProgress}%`;
+        };
+
+        const handleMouseUp = () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+
+            if (!isPlaying && !isDragging) {
+                audioPlayer.current.play();
+                setIsPlaying(true);
+            }
+
+            audioPlayer.current.muted = false;
+        };
+
+        audioPlayer.current.muted = true;
+
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+
+        if (!isDragging) {
+            const newPosition = (clickedOffSetX / progressWidth) * duration;
+
+            const validNewPosition = Math.max(0, Math.min(newPosition, duration));
+
+            audioPlayer.current.currentTime = validNewPosition;
+
+            const currentProgress = (validNewPosition / duration) * 100;
+            setProgress(currentProgress);
+
+            document.querySelector(".progress_bar").style.width = `${currentProgress}%`;
+
+            if (!isPlaying) {
+                audioPlayer.current.play();
+                setIsPlaying(true);
+            }
+
+            audioPlayer.current.muted = false;
         }
     }
 
@@ -62,6 +105,7 @@ const Player = ({props, user, setBegin, isPlaying, setIsPlaying, index, setIndex
         document.querySelector(".volume_progress_bar").style.width = `${volumeValue}%`;
         setVolume(volumeValue);
     }
+
 
     function formatTime(time) {
         if(time && !isNaN(time)) {
@@ -113,27 +157,46 @@ const Player = ({props, user, setBegin, isPlaying, setIsPlaying, index, setIndex
         }
     }
 
+    const makeMix = () => {
+        setPrevPlaylist([...playlist]);
+        let shuffledArray = playlist.slice(index + 1);
+
+        let shuffleArray =  async() => {
+            let array = shuffledArray.slice();
+
+            for(let i = array.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array
+        }
+
+        shuffleArray().then((res) => {
+            setPlaylist([...playlist.slice(0, index + 1), ...res]);
+        })
+    }
+
     const toggleMix = () => {
         if(mixed === false) {
-            // setPrevPlaylist([...playlist]);
-            // let shuffledArray = playlist.slice(index + 1);
-            //
-            // let shuffleArray =  async() => {
-            //     let array = shuffledArray.slice();
-            //
-            //     for(let i = array.length - 1; i > 0; i--) {
-            //         let j = Math.floor(Math.random() * (i + 1));
-            //         [array[i], array[j]] = [array[j], array[i]];
-            //     }
-            //     return array
-            // }
-            //
-            // shuffleArray().then((res) => {
-            //     setPlaylist([...playlist.slice(0, index + 1), ...res]);
-            // })
+            setPrevPlaylist([...playlist]);
+            let shuffledArray = playlist.slice(index + 1);
+
+            let shuffleArray =  async() => {
+                let array = shuffledArray.slice();
+
+                for(let i = array.length - 1; i > 0; i--) {
+                    let j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array
+            }
+
+            shuffleArray().then((res) => {
+                setPlaylist([...playlist.slice(0, index + 1), ...res]);
+            })
             setMixed(true);
         } else {
-          // setPlaylist([...playlist.slice(0, index + 1), ...prevPlaylist.slice(index + 1, prevPlaylist.length)]);
+          setPlaylist([...playlist.slice(0, index + 1), ...prevPlaylist.slice(index + 1, prevPlaylist.length)]);
           setMixed(false);
         }
     }
@@ -163,7 +226,10 @@ const Player = ({props, user, setBegin, isPlaying, setIsPlaying, index, setIndex
 
     useEffect(() => {
         setAudioMusic();
-    }, [playlist, index]);
+        if(mixed){
+            makeMix();
+        }
+    }, [playlist[index]]);
 
     useEffect(() => {
         if(localStorage.getItem("playerCondition") === "true") {
