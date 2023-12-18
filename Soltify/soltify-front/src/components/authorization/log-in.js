@@ -21,7 +21,6 @@ const LogIn = key => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            console.log(user)
             if (user && user.uid) {
                 const userData = await getUserData(user);
                 localStorage.setItem('token', user.accessToken);

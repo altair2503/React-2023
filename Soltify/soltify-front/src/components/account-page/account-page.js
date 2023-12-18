@@ -1,14 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import './account-page.css';
 
-import userImg from '../../assets/music.jpg';
 
 import {useNavigate, useOutletContext} from "react-router-dom";
 import {signOut} from "firebase/auth";
 
 import defaultAvatar from "../../assets/defaultAvatar.jpg";
-import avatar from "../../assets/music.jpg";
-import {getUserRealTimeData, userUID} from "../services/user-service";
 import {auth, db} from "../../firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {arrayUnion, doc, updateDoc} from "firebase/firestore";
@@ -106,7 +103,7 @@ const AccountPage = () => {
                         <span>Update Account</span>
                         <div className={"account_img_update"}>
                             <input type="file" id={"img_for_account"} onChange={selectIMG}/>
-                            <img src={updatedUser?.img === "" ? defaultAvatar : updatedUser.img} alt={userImg}/>
+                            <img src={updatedUser?.img === "" ? defaultAvatar : updatedUser.img} alt={defaultAvatar}/>
                             <label htmlFor="img_for_account"></label>
                         </div>
                         <div className={"input_block"}>
@@ -126,7 +123,7 @@ const AccountPage = () => {
         <span className={"acc_title"}>Your Account</span>
         <div className={"user_info"}>
             <div className={"user_info_left"}>
-                <img src={user?.img !== "" ? user.img : defaultAvatar} alt={userImg} />
+                <img src={user?.img !== "" ? user.img : defaultAvatar} alt={defaultAvatar} />
                 <button onClick={Logout} className={"log_out_btn"}>Log out</button>
             </div>
             <div className={"user_info_right"}>

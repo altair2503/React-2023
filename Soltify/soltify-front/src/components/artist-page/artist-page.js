@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import './artist-page.css';
 
-import avatar from "../../assets/music.jpg";
 import PlaylistMusicItem from "../utilities/playlist-music-item/playlist-music-item";
 import playlistDefault from "../../assets/playlistdefault.jpg";
 import defaultAvatar from "../../assets/defaultAvatar.jpg";
