@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './add-song-page.css';
 
 import Input from "../utilities/input-item/input";
-// import { addMusic, addSong } from "../services/song-service";
+import { addMusic, addSong } from "../services/song-service";
 
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from "firebase/storage";
 
@@ -41,7 +41,7 @@ const AddSongPage = () => {
         audio.addEventListener('loadedmetadata', () => {
             const minutes = Math.floor(audio.duration / 60);
             const seconds = Math.round(audio.duration % 60);
-            // setSong({ ..._song, duration: `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}` });
+            setSong({ ..._song, duration: `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}` });
         });
     }
 
@@ -62,7 +62,7 @@ const AddSongPage = () => {
                 getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
                     console.log('File available at', downloadURL);
                     _song = {..._song, "img": downloadURL};
-                    // await addSong(_song);
+                    await addSong(_song);
                     window.alert("Song added");
                 });
             });
@@ -85,11 +85,11 @@ const AddSongPage = () => {
                     <input type="file" onChange={selectSong} />
                     {
                         song.file
-                        ?
+                            ?
                             <audio controls>
                                 <source src={song.file} type="audio/ogg" />
                             </audio>
-                        :
+                            :
                             ""
                     }
                 </div>
