@@ -10,6 +10,7 @@ import {getArtistAndSongs} from "../services/user-service";
 
 
 const ArtistPage = () => {
+
     const [artist, setArtist] = useState();
     const {username} = useParams();
     const {setPlaylist} = useOutletContext();
@@ -33,7 +34,7 @@ const ArtistPage = () => {
             }
         };
 
-        fetchUserData();
+        fetchUserData().then();
     }, []);
 
     return <div className={"artist_back"}>
