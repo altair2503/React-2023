@@ -21,6 +21,7 @@ import AccountPage from "./components/account-page/account-page";
 import ArtistPage from "./components/artist-page/artist-page";
 import ErrorPage from './components/error-page/error-page';
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import AddSongPage from "./components/add-song-page/add-song-page";
 
 
 const router = createBrowserRouter([
@@ -83,7 +84,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/app",
-        element: <App />,
+        element: <AddSongPage />,
         errorElement: <ErrorPage />
     },
 ])

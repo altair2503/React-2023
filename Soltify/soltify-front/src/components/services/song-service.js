@@ -1,5 +1,5 @@
 import { db } from "../../firebase";
-import {doc, getDoc, getDocs, collection, onSnapshot, query, where} from "firebase/firestore";
+import {doc, getDoc, getDocs, addDoc, collection, onSnapshot, query, where} from "firebase/firestore";
 
 const getArtist = async (id) => {
   const docRef = doc(db, "users", id);
@@ -60,7 +60,16 @@ export async function getMusic(id) {
       console.log("No such document");
       return null;
     }
-  }
+}
 
+export async function addMusic(_url) {
+    const docRef = await addDoc(collection(db, "music"), {
+      url: _url
+    });
+    return docRef.id;
+}
 
-  
+export async function addSong(_song) {
+  const docRef = await addDoc(collection(db, "songs"), _song);
+  return true;
+}
