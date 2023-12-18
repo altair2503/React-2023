@@ -265,6 +265,8 @@ const Player = ({props, user, setBegin, isPlaying, setIsPlaying, index, setIndex
 
     return (
         <div className={!playerActive ? "player_background mini" : "player_background"} onClick={() => localStorage.getItem("user") == null ? navigate('/log-in') : ''}>
+            <img src={playlist[index]?.img} alt={playlist[index]?.img} className={"player_background_animated_left"} />
+            <img src={playlist[index]?.img} alt={playlist[index]?.img} className={"player_background_animated_right"} />
             <img src={playlist[index]?.img} alt={playlist[index]?.img} className={"player_background_img"} />
             <div className="player_background_layer">
                 <audio ref={audioPlayer} muted={mute} onTimeUpdate={getCurrentDuration}/>
