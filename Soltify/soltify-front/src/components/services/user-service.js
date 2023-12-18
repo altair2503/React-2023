@@ -1,5 +1,5 @@
 import { db } from "../../firebase";
-import {collection, doc, getDoc, getDocs, onSnapshot, query, where} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where} from "firebase/firestore";
 import {convertSecondsToDate} from "./time-converter-service";
 import {getArtistSongs} from "./song-service";
 
@@ -47,4 +47,12 @@ export async function getArtists(){
     return artists;
 }
 
+export async function becomeArtist(userID, username) {
+    const docRef = doc(db, "users", userID);
+
+    await updateDoc(docRef, {
+        "username": username
+    });
+
+}
 

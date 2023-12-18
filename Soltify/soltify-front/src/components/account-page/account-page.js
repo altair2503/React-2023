@@ -9,6 +9,7 @@ import defaultAvatar from "../../assets/defaultAvatar.jpg";
 import {auth, db} from "../../firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {arrayUnion, doc, updateDoc} from "firebase/firestore";
+import {becomeArtist, userUID} from "../services/user-service";
 
 const AccountPage = () => {
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ const AccountPage = () => {
     const {user} = useOutletContext();
     const [updatedUser, setUpdatedUser] = useState({...user});
     const [userIMG, setUserIMG] = useState("");
+    const [username, setUsername] = useState("");
     const [imgSource, setImgSource] = useState(user.img);
     const storage = getStorage()
 
@@ -85,12 +87,19 @@ const AccountPage = () => {
         });
     };
 
+    const changeStatus = ()=> {
+        becomeArtist(userUID, updatedUser.username).then(() => {
+            window.alert("You become artist");
+        })
+    }
+
     useEffect(() => {
         document.addEventListener("click", e => {
             if(e.target.className === "delete_popup_back") {
                 setUpdateAccPopupState(false);
             }
         })
+        console.log(user.username);
     }, [])
 
     return <div className={"acc_back"}>
@@ -130,6 +139,17 @@ const AccountPage = () => {
                 <div className={"user_name"}>{user.name} {user.lastname}</div>
                 <div className={"user_email"}>{user.email}</div>
                 <div className={"user_reg_date"}>part of Soltify since {user.formattedDate} </div>
+                {
+                    user.username === undefined ?
+                        (<div>
+                            <input type="text" placeholder={"Enter username"} onChange={e => setUpdatedUser({...updatedUser, "username": e.target.value})}/>
+                            <button onClick={changeStatus}>Become user</button>
+                        </div>
+                        )
+                    : "You're already artist"
+                }
+
+
             </div>
             <div className={"update_account"} onClick={() => setUpdateAccPopupState(true)}>
                 Update <ion-icon name="create-outline"></ion-icon>
