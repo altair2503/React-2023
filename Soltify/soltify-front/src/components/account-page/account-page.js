@@ -8,7 +8,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import { doc, updateDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 
-import { becomeArtist, userUID } from "../services/user-service";
+import {becomeArtist, getArtistAndSongs, userUID} from "../services/user-service";
 
 import defaultAvatar from "../../assets/defaultAvatar.jpg";
 import addSongIcon from '../../assets/add-song-icon.svg';
@@ -20,6 +20,7 @@ import congratulations from "../../assets/congratulation.gif";
 const AccountPage = () => {
 
     const {user} = useOutletContext();
+    const [artist, setArtist] = useState(null);
     const [updatedUser, setUpdatedUser] = useState({...user});
 
     const [congratulationState, setCongratulationState] = useState(false);
@@ -114,8 +115,22 @@ const AccountPage = () => {
                 setUpdateAccPopupState(false);
             }
         })
-        console.log(user.username);
-    }, [])
+
+        if(user.username !== undefined){
+            const fetchUserData = async () => {
+                try {
+                    getArtistAndSongs(user.username)
+                        .then((u) => {
+                            setArtist(u);
+                        });
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                }
+            };
+
+            fetchUserData().then();
+        }
+    }, [user.username])
 
     return <div className={ user?.username ? "acc_back_artist" : "acc_back" }>
         {
@@ -178,7 +193,7 @@ const AccountPage = () => {
                     <img src={user?.img !== "" ? user.img : defaultAvatar} alt={defaultAvatar} />
                 </div>
                 <div className={"user_info_right"}>
-                    { user?.username ? <div className={"username"}>{user?.username} • 8 songs</div> : '' }
+                    { user?.username ? <div className={"username"}>{user?.username} • {artist?.songs.length} songs</div> : '' }
                     <div className={"user_name"}>{user?.name} {user?.lastname}</div>
                     <div className={"user_email"} style={user?.username && window.innerWidth > 451 ? {marginBottom: '40px'} : {marginBottom: '0'}}>{user?.email}</div>
                     { user?.username ? '' : <div className={"user_reg_date"}>part of Soltify since {user?.formattedDate} </div> }
@@ -230,9 +245,9 @@ const AccountPage = () => {
                     </div>
                     <div className={"artist_song_list"}>
                         {
-                            // artist?.songs.map((song, index) => {
-                            //     return <PlaylistMusicItem props={song} playlist={artist.songs} index={index} type={true} user={user} isPlaylist={true} artist={true} />
-                            // })
+                            artist?.songs.map((song, index) => {
+                                return <PlaylistMusicItem props={song} playlist={artist.songs} index={index} type={true} user={user} isPlaylist={true} artist={true} />
+                            })
                         }
                     </div>
                 </div>
