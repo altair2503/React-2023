@@ -9,6 +9,7 @@
     display: flex;
 
     gap: 70px;
+    margin-bottom: 30px;
 }
 .user_info_left
 {
@@ -47,6 +48,7 @@
     width: 135px;
     height: 48px;
     border-radius: 25px;
+    padding: 0;
 }
 .user_info_right
 {
@@ -60,7 +62,6 @@
 .user_email
 {
     color: rgba(255, 255, 255, .8);
-    margin-bottom: 40px;
 }
 
 .update_account
@@ -137,8 +138,126 @@
     margin-top: 35px;
 }
 
+.user_reg_date
+{
+    margin: 30px 0;
+    font-size: 15.5px;
+}
+
+.username
+{
+    margin-bottom: 15px;
+    font-size: 18px;
+    opacity: .95;
+}
+.account_artist_options
+{
+    display: flex;
+    gap: 15px;
+}
+.account_artist_options .log_out_btn
+{
+    margin: 0;
+}
+.account_artist_options .update_account
+{
+    margin: 0;
+    padding: 0;
+
+    width: 50px;
+    height: 50px;
+}
+.add_song_btn
+{
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 25px;
+    background: rgba(200, 200, 200, .4);
+
+    color: #FFFFFF;
+    cursor: pointer;
+}
+.add_song_btn ion-icon
+{
+    font-size: 28px;
+}
+
+.delete_popup_back.cong
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    visibility: hidden;
+}
+.delete_popup_back.cong.active
+{
+    visibility: visible;
+}
+.delete_popup.congratulation
+{
+    width: 380px;
+    height: 200px;
+
+    justify-content: end;
+    position: relative;
+
+    font-size: 14.5px;
+    padding-top: 0;
+
+    transform: scale(0);
+    transition: .5s;
+}
+.delete_popup_back.cong.active .delete_popup.congratulation
+{
+    transform: scale(1);
+}
+.delete_popup.congratulation ion-icon
+{
+    z-index: 10;
+}
+.delete_popup.congratulation .first_cong
+{
+    width: 250px;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    margin: -90px 0 0 20px;
+}
+.delete_popup.congratulation .sec_cong
+{
+    width: 170px;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    margin: -35px 20px 0 0;
+    transform: scaleX(-1);
+}
+
 
 @media (max-width: 450px) {
+
+    .acc_back_artist
+    {
+        background: #131313;
+        box-sizing: border-box;
+
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 100vh;
+    }
 
     .acc_title
     {
@@ -153,20 +272,27 @@
         margin-top: 15px;
         gap: 35px;
     }
+    .user_info.for_artist
+    {
+        width: 100%;
+
+        flex-direction: column;
+        align-items: center;
+
+        backdrop-filter: blur(35px);
+        -webkit-backdrop-filter: blur(35px);
+        background: rgba(0, 0, 0, .25);
+        box-sizing: border-box;
+
+        margin: 0;
+        padding: 100px 0 45px;
+
+        gap: 30px;
+    }
     .user_info_left img
     {
-        width: 140px;
-        height: 140px;
-    }
-    .default_img
-    {
-        width: 150px !important;
-        height: 150px !important;
-    }
-    .default_img img
-    {
-        width: 100px !important;
-        height: 100px !important;
+        width: 180px;
+        height: 180px;
     }
     .log_out_btn
     {
@@ -181,6 +307,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+    .username
+    {
+        margin-bottom: 8px;
+        font-size: 18.5px;
     }
     .user_name
     {
@@ -200,6 +331,31 @@
     .update_account
     {
         margin-top: 0;
+    }
+
+    .account_artist_options
+    {
+        margin-top: 32px;
+    }
+    .account_artist_options .update_account.become_artist
+    {
+        width: auto !important;
+        padding: 0 25px !important;
+    }
+
+    .delete_popup.congratulation
+    {
+        width: 80%;
+    }
+    .delete_popup.congratulation .first_cong
+    {
+        width: 230px;
+        margin: -70px 0 0 0;
+    }
+    .delete_popup.congratulation .sec_cong
+    {
+        width: 160px;
+        margin: -20px 5px 0 0;
     }
 
 }

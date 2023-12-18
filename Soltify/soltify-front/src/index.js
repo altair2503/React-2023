@@ -83,6 +83,11 @@ const router = createBrowserRouter([
         ]
     },
     {
+        path: "/add-song",
+        element: <AddSongPage />,
+        errorElement: <ErrorPage />
+    },
+    {
         path: "/app",
         element: <AddSongPage />,
         errorElement: <ErrorPage />

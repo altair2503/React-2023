@@ -1,0 +1,279 @@
+.song_add_container
+{
+    height: 100vh;
+
+    background: #181818;
+    box-sizing: border-box;
+
+    padding: 20px 16px;
+}
+.song_add_background
+{
+    width: 100%;
+    height: 100%;
+
+    background: #121212;
+    box-sizing: border-box;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: relative;
+    padding: 45px 25px;
+}
+.add_area
+{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y: auto;
+}
+.add_area::-webkit-scrollbar
+{
+    width: 4px;
+}
+.add_area::-webkit-scrollbar-track
+{
+    background: transparent;
+}
+.add_area::-webkit-scrollbar-thumb
+{
+    background: #25DC60;
+    border-radius: 4px;
+}
+
+.title_cont
+{
+    text-align: center;
+    margin: 0 0 40px;
+}
+.title
+{
+    font-size: 40px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 3px;
+}
+.subtitle
+{
+    font-size: 15.5px;
+    color: rgba(255, 255, 255, .8);
+}
+
+.song_cover
+{
+    width: 340px;
+    height: 340px;
+
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #3B3B3B;
+    border-radius: 10px;
+
+    margin-bottom: 30px;
+
+    cursor: pointer;
+}
+.song_cover input
+{
+    display: none !important;
+}
+.song_cover label
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    cursor: pointer;
+
+    width: 100%;
+    height: 100%;
+}
+.song_cover img
+{
+    width: 100%;
+    height: 100%;
+
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.song_container p
+{
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 17px;
+    color: #fff;
+
+    margin-bottom: 25px;
+    gap: 10px;
+}
+.song_container p ion-icon
+{
+    font-size: 23px;
+}
+
+.song_choose
+{
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 25px;
+}
+.song_choose input
+{
+    display: none;
+}
+.song_choose label
+{
+    width: 100%;
+    height: 54px;
+
+    border-radius: 10px;
+    background: rgb(103, 103, 103);
+    color: #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    cursor: pointer;
+
+    position: relative;
+    z-index: 2;
+}
+.song_choose label ion-icon
+{
+    font-size: 23px;
+}
+.audio_file
+{
+    width: 100%;
+    height: 0;
+
+    position: relative;
+    top: -60px;
+
+    transition: .5s;
+}
+.audio_file.active
+{
+    height: 50px;
+    margin: 10px 0 15px;
+
+    top: 0;
+}
+
+.input_block
+{
+    position: relative;
+    margin-bottom: 30px;
+}
+.input_block:focus-within input
+{
+    border-color: #25DC60;
+}
+.input_block:focus-within label
+{
+    color: #25DC60;
+}
+.input_block.fill_all input
+{
+    border-color: #25DC60;
+}
+.input_block.fill_all label
+{
+    color: #25DC60;
+}
+.input_block input
+{
+    width: 340px;
+    height: 54px;
+
+    border-radius: 12px;
+    border: 2px solid #F1F2F3;
+    background: transparent;
+    box-sizing: border-box;
+
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+
+    padding: 0 24px;
+    outline: none;
+
+    color: #FFF;
+}
+input::placeholder
+{
+    color: rgba(241, 242, 243, 0.75);
+}
+.input_block label
+{
+    background: #121212;
+
+    position: absolute;
+    left: 15px;
+    top: -8px;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    color: rgba(241, 242, 243, 0.95);
+
+    padding: 0 10px;
+}
+
+
+@media (max-width: 450px) {
+
+    .song_add_container
+    {
+        padding: 15px 13px;
+    }
+    .song_add_background
+    {
+        border-radius: 20px;
+        padding: 45px 15px 40px;
+    }
+    .add_area::-webkit-scrollbar
+    {
+        display: none;
+    }
+
+    .song_container
+    {
+        width: 100%;
+    }
+
+    .song_cover
+    {
+        width: 100%;
+        height: auto;
+    }
+    .song_choose label
+    {
+        width: 100%;
+    }
+
+    input
+    {
+        width: 100% !important;
+    }
+
+}
