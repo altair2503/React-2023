@@ -2,6 +2,17 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### What is Soltify?
+> Soltify is a cloud-based music platform that allows users to download, store songs. Also listen to your own and other songs whenever and wherever you want.
+> With Soltify, you have the ability to manage your personal music library at your fingertips. Users can easily organize their music collection, create playlists according to their mood and preferences. Also, in addition to playlists, you will have a standard playlist - Liked. The platform interface provides a hassle-free and enjoyable journey of learning music.
+>
+> Soltify is not just a music platform; it is a lifestyle that improves the way you communicate with and enjoy your favorite songs. Enhance your music experience with Soltify and embark on a journey where your music is always at hand, easily fitting into the rhythm of your life.
+
+#### To create the project, technologies such as:
+
+    React - was used in the front side 
+    Firebase - was used in the back side to retrieve, store songs and images
+
 ## Available Scripts
 
 In the project directory, you can run:
