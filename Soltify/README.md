@@ -29,7 +29,7 @@ PROJECT FEATURES
 #### Pre-Final features:
 1. Unique and adaptive(PC and Mobile versions) UI 
 2. Created own API using Firebase Cloud Database (it is implemented with service song-service)
-3. Real-time updating (used Firebase Realtime Database in service user-service)
+3. Real-time updating (used Firebase Realtime Database in service user-service):
 
        export function getUserRealTimeData(userUID, setUser) {onSnapshot(doc(db, "users", userUID), (doc) => {
            let user = ({...doc.data(),
@@ -38,14 +38,184 @@ PROJECT FEATURES
            });
        }
    
-5. CRUD Playlist (It is implemented in playlist-page and use servuce playlist-service)
+4. CRUD Playlist (It is implemented in playlist-page and use servuce playlist-service)
+
+       export async function getUserExactPlaylist(userID, index) {
+           const docRef = doc(db, "users", userID);
+           const docSnap = await getDoc(docRef);
+
+           return docSnap.data()['playlist'][index];
+       }
+
+       export async function addUserExactPlaylist(userID, index, songID) {
+           const docRef = doc(db, "users", userID);
+           const docSnap = await getDoc(docRef);
+
+           let songs = docSnap.data()['playlist'];
+           songs[index]['songs'].push(songID);
+        
+           await updateDoc(docRef, {
+               "playlist": songs
+           });
+       }
+
+       export async function removeUserExactPlaylist(userID, index, songIndex) {
+           const docRef = doc(db, "users", userID);
+           const docSnap = await getDoc(docRef);
+        
+           let songs = docSnap.data()['playlist'];
+           songs[index]['songs'].splice(songIndex, 1);
+        
+           await updateDoc(docRef, {
+               "playlist": songs
+           });
+       }
+   
 6. Artist page (implemented in artist-page.js)
-7. Search by artist name and song name (implemented in search component)
-8. Add songs to playlist and “Liked”,  remove from it (implemented in playlist-music-item and use service playlist-service)
+
+        export async function getArtistAndSongs(username){
+           let artist = {};
+           const artistSnapshot = await getDocs(query(collection(db, "users"), where("username", "==", username)));
+               artistSnapshot.forEach((doc) => {
+               artist = {id: doc.id, ...doc.data(), songs: []};
+           });
+
+           artist.songs = await getArtistSongs(artist.id);
+           return artist;
+        }
+   
+6. Search by artist name and song name (implemented in search component)
+
+        useEffect(() => {
+           if(searchQuery !== "") {
+               setFoundSongs(playlist.filter(song => {
+                   return song.name.toLowerCase().includes(searchQuery.toLowerCase())
+                       || song.artist.username.toLowerCase().includes(searchQuery.toLowerCase())
+               }))
+               setFoundArtists(artists.filter(artist => {
+                   return artist.username.toLowerCase().includes(searchQuery.toLowerCase())
+               }))
+           }
+           else if(searchPageQuery !== "") {
+               setFoundSongs(playlist.filter(song => {
+                   return song.name.toLowerCase().includes(searchPageQuery.toLowerCase())
+                       || song.artist.username.toLowerCase().includes(searchPageQuery.toLowerCase())
+               }))
+               setFoundArtists(artists.filter(artist => {
+                   return artist.username.toLowerCase().includes(searchPageQuery.toLowerCase())
+               }))
+           }
+        }, [searchQuery, searchPageQuery, playlist, artists]);
+   
+7. Add songs to playlist and “Liked”,  remove from it (implemented in playlist-music-item and use service playlist-service)
+
+        export async function addUserExactPlaylist(userID, index, songID) {
+           const docRef = doc(db, "users", userID);
+           const docSnap = await getDoc(docRef);
+
+           let songs = docSnap.data()['playlist'];
+           songs[index]['songs'].push(songID);
+
+           await updateDoc(docRef, {
+               "playlist": songs
+           });
+        }
+
+        export async function removeUserExactPlaylist(userID, index, songIndex) {
+           const docRef = doc(db, "users", userID);
+           const docSnap = await getDoc(docRef);
+
+           let songs = docSnap.data()['playlist'];
+           songs[index]['songs'].splice(songIndex, 1);
+
+           await updateDoc(docRef, {
+               "playlist": songs
+           });
+        }
 
 #### New business feautres:
-1. Become artist (implemented in account-page component and use serivce user-service)
-2. Add song (implemented in account-page component and use service song-service)
+1. Become artist (implemented in account-page component and use serivce user-service):
+
+        export async function becomeArtist(userID, username) {
+           const docRef = doc(db, "users", userID);
+
+           await updateDoc(docRef, {
+               "username": username
+           });
+        }
+
+2. Add song (implemented in account-page component and use service song-service):
+
+        const upload = ()=> {
+           if(songName === "") {
+               window.alert("Select song name");
+               return;
+           }
+           if(preview.source === null) {
+               window.alert("Select preview");
+               return;
+           }
+           if(song.source === null) {
+               window.alert("Select song");
+               return;
+           }
+           let _song = {"artistID": userUID, "duration": song.duration, "name": songName}
+
+           setSongAddingState(true)
+           uploadSong(_song).then();
+       }
+
+        const uploadSong = async(_song) => {
+           let totalProgress = 0;
+
+           const storageRef = ref(storage, 'songs/' + song.source.name);
+           const uploadTask = uploadBytesResumable(storageRef, song.source);
+
+           uploadTask.on('state_changed',
+               (snapshot) => {
+               totalProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 90;
+               document.querySelector(".creating_progress_bar div").style.width = totalProgress + "%";
+           },
+           (error) => {
+               console.log(error);
+           },
+           async () => {
+               getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+                   console.log('File available at', downloadURL);
+                   _song = {..._song, "musicID": await addMusic(downloadURL)};
+                   await uploadIMG(_song, totalProgress);
+               });
+           });
+       }
+
+       const uploadIMG = async(_song, totalProgress) => {
+           const storageRef = ref(storage, 'images/' + preview.source.name);
+           const uploadTask = uploadBytesResumable(storageRef, preview.source);
+
+           uploadTask.on('state_changed',
+           (snapshot) => {
+               const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 10;
+               totalProgress += Math.abs((totalProgress - 90) - progress)
+               document.querySelector(".creating_progress_bar div").style.width = totalProgress + "%";
+           },
+           (error) => {
+               console.log(error);
+           },
+           async () => {
+               getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+               _song = {..._song, "img": downloadURL};
+               await addSong(_song);
+               })
+               .then(() => {
+                   setSongAddingState(false);
+               })
+               .finally(() => {
+                   navigate("/home/account")
+               });
+           });
+       }
+
+
 3. Background animation (it is implemented in player component)
       
       
