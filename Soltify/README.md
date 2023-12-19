@@ -30,10 +30,19 @@ PROJECT FEATURES
 1. Unique and adaptive(PC and Mobile versions) UI 
 2. Created own API using Firebase Cloud Database (it is implemented with service song-service)
 3. Real-time updating (used Firebase Realtime Database in service user-service)
-4. CRUD Playlist (It is implemented in playlist-page and use servuce playlist-service)
-5. Artist page (implemented in artist-page.js)
-6. Search by artist name and song name (implemented in search component)
-7. Add songs to playlist and “Liked”,  remove from it (implemented in playlist-music-item and use service playlist-service)
+           
+      export function getUserRealTimeData(userUID, setUser) {
+           onSnapshot(doc(db, "users", userUID), (doc) => {
+               let user = ({...doc.data(),
+                   formattedDate: convertSecondsToDate(doc.data().date.seconds)});
+               setUser(user);
+           });
+      }
+   
+5. CRUD Playlist (It is implemented in playlist-page and use servuce playlist-service)
+6. Artist page (implemented in artist-page.js)
+7. Search by artist name and song name (implemented in search component)
+8. Add songs to playlist and “Liked”,  remove from it (implemented in playlist-music-item and use service playlist-service)
 
 #### New business feautres:
 1. Become artist (implemented in account-page component and use serivce user-service)
